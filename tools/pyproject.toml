@@ -1,0 +1,20 @@
+[project]
+name = "invtools"
+version = "1.0.0"
+description = "Case authoring tools for Investafiction: validator, builder, solvability and safety checks"
+requires-python = ">=3.10"
+dependencies = ["jsonschema>=4.18"]
+license = { text = "PolyForm-Noncommercial-1.0.0" }
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+invtools = "invtools.__main__:main"
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["invtools"]

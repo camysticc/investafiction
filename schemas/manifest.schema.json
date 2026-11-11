@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://investafiction.test/schemas/manifest.schema.json",
+  "title": "Case pack manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "title", "version", "author", "licence", "specialty", "difficulty", "estimated_minutes", "files"],
+  "properties": {
+    "schema_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,40}$" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "author": { "type": "string", "maxLength": 120 },
+    "licence": { "type": "string", "maxLength": 120 },
+    "assets_licence": { "type": "string", "maxLength": 400 },
+    "specialty": { "type": "string", "maxLength": 80 },
+    "difficulty": { "enum": ["Beginner", "Intermediate", "Hard"] },
+    "estimated_minutes": { "type": "integer", "minimum": 5, "maximum": 600 },
+    "seed": { "type": "integer" },
+    "summary": { "type": "string", "maxLength": 600 },
+    "files": {
+      "type": "object",
+      "description": "Every file in the pack except manifest.json, mapped to its SHA-256 hash in lower case hex.",
+      "additionalProperties": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+    }
+  }
+}

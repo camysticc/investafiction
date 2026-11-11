@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://investafiction.test/schemas/intake.schema.json",
+  "title": "Case intake form",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tasking", "scope", "out_of_scope", "authorities", "constraints", "clock_start", "case_lead"],
+  "properties": {
+    "tasking": { "type": "string" },
+    "scope": { "type": "array", "items": { "type": "string" } },
+    "out_of_scope": { "type": "array", "items": { "type": "string" } },
+    "authorities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "covers"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^AUTH-[A-Z0-9-]+$" },
+          "label": { "type": "string" },
+          "covers": { "type": "string" }
+        }
+      }
+    },
+    "constraints": { "type": "array", "items": { "type": "string" } },
+    "clock_start": { "type": "string", "format": "date-time" },
+    "case_lead": { "type": "string" },
+    "osint_access": { "enum": ["none", "public_only", "public_and_authorised"] },
+    "subjects": { "type": "array", "items": { "type": "string", "pattern": "^ENT-[A-Z0-9-]+$" } }
+  }
+}

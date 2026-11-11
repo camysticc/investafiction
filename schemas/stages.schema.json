@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://investafiction.test/schemas/stages.schema.json",
+  "title": "Case stages, objectives and request types",
+  "description": "Everything here may be shown to the player. The checks that decide when objectives are met live in solution.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["stages", "request_types"],
+  "properties": {
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "target_minutes", "message", "evidence", "objectives"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^S[0-9]+$" },
+          "title": { "type": "string" },
+          "target_minutes": { "type": "integer", "minimum": 1 },
+          "unlock_text": { "type": "string" },
+          "message": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string", "pattern": "^EV-[0-9]{3}$" } },
+          "osint_pages": { "type": "array", "items": { "type": "string", "pattern": "^PG-[0-9]{3}$" } },
+          "objectives": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "text", "required"],
+              "properties": {
+                "id": { "type": "string", "pattern": "^OB-[0-9]+-[0-9]+$" },
+                "text": { "type": "string" },
+                "required": { "type": "boolean" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "request_types": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "label", "target_kinds", "available_from", "needs_dates"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^RT-[A-Z0-9-]+$" },
+          "kind": { "enum": ["authority", "data"] },
+          "label": { "type": "string" },
+          "description": { "type": "string" },
+          "target_kinds": { "type": "array", "items": { "enum": ["person", "organisation", "phone", "account", "vehicle", "address", "device", "online_account"] } },
+          "available_from": { "type": "string", "pattern": "^S[0-9]+$" },
+          "needs_dates": { "type": "boolean" },
+          "allow_all": { "type": "boolean", "description": "Offer an 'every target of this kind' option in the form." }
+        }
+      }
+    }
+  }
+}

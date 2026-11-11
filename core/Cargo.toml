@@ -1,0 +1,30 @@
+[package]
+name = "invcore"
+version = "1.0.0"
+description = "Investafiction core: case packs, evidence store, saves and scoring"
+license-file = "../LICENSE"
+edition = "2024"
+
+[dependencies]
+base64 = "0.23.1"
+chrono = { version = "0.4.45", default-features = false, features = ["std", "clock", "serde"] }
+dirs = "7.0.0"
+hex = "0.4.3"
+jsonschema = { version = "0.61.1", default-features = false }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+sha2 = "0.11.1"
+thiserror = "2.0.21"
+tiny_http = { version = "0.12.0", optional = true }
+zip = { version = "9.5.1", default-features = false, features = ["deflate"] }
+
+[features]
+devserver = ["dep:tiny_http"]
+
+[[bin]]
+name = "invcore-devserver"
+path = "src/bin/devserver.rs"
+required-features = ["devserver"]
+
+[dev-dependencies]
+tempfile = "3.27.0"

@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://investafiction.test/schemas/osint.schema.json",
+  "title": "Simulated web for a case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sites", "pages"],
+  "properties": {
+    "sites": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "domain", "kind"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "name": { "type": "string" },
+          "domain": { "type": "string", "pattern": "^[a-z0-9.-]+\\.(test|invalid|example)$" },
+          "kind": { "enum": ["social", "photo", "forum", "business", "news", "search", "community"] },
+          "colour": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+          "tagline": { "type": "string" }
+        }
+      }
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "site", "url", "kind", "title"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^PG-[0-9]{3}$" },
+          "site": { "type": "string" },
+          "url": { "type": "string", "pattern": "^https://[a-z0-9.-]+\\.(test|invalid|example)(/.*)?$" },
+          "kind": { "enum": ["profile", "page", "post", "listing"] },
+          "title": { "type": "string" },
+          "handle": { "type": "string" },
+          "display_name": { "type": "string" },
+          "avatar": { "type": "string" },
+          "bio": { "type": "string" },
+          "private": { "type": "boolean" },
+          "fields": { "type": "object", "additionalProperties": { "type": "string" } },
+          "body": { "type": "string", "description": "Plain text with simple markdown." },
+          "posts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "time", "text"],
+              "properties": {
+                "id": { "type": "string" },
+                "time": { "type": "string", "format": "date-time" },
+                "text": { "type": "string" },
+                "image": { "type": "string" },
+                "location_tag": { "type": "string" },
+                "scheduled": { "type": "boolean" },
+                "likes": { "type": "integer" },
+                "comments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["by", "text"],
+                    "properties": { "by": { "type": "string" }, "text": { "type": "string" }, "time": { "type": "string" } }
+                  }
+                }
+              }
+            }
+          },
+          "connections": { "type": "array", "items": { "type": "string" } },
+          "links": { "type": "array", "items": { "type": "string", "pattern": "^PG-[0-9]{3}$" } },
+          "search_terms": { "type": "array", "items": { "type": "string" } },
+          "snapshots": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["captured", "note"],
+              "properties": {
+                "captured": { "type": "string", "format": "date-time" },
+                "note": { "type": "string" },
+                "bio": { "type": "string" },
+                "fields": { "type": "object", "additionalProperties": { "type": "string" } },
+                "posts": { "type": "array", "items": { "type": "object" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file"],
+        "properties": {
+          "file": { "type": "string", "pattern": "^(osint|evidence|assets)/[A-Za-z0-9_./-]+\\.(svg|png|jpg|jpeg)$" },
+          "metadata": { "type": "object", "additionalProperties": { "type": "string" } },
+          "licence": { "type": "string" }
+        }
+      }
+    }
+  }
+}

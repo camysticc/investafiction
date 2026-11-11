@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://investafiction.test/schemas/entities.schema.json",
+  "title": "Case entities",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["entities"],
+  "properties": {
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "label"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^ENT-[A-Z0-9-]+$" },
+          "kind": { "enum": ["person", "organisation", "phone", "account", "vehicle", "address", "device", "online_account"] },
+          "label": { "type": "string" },
+          "role": { "type": "string" },
+          "identifiers": { "type": "array", "items": { "type": "string" }, "description": "Values that identify this entity inside evidence data, such as a phone number or account number." },
+          "attributes": { "type": "object", "additionalProperties": { "type": "string" } },
+          "hidden_until": { "type": "string", "pattern": "^S[0-9]+$", "description": "Stage at which the entity appears in the player's entity list." }
+        }
+      }
+    }
+  }
+}

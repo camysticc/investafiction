@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://investafiction.test/schemas/map.schema.json",
+  "title": "Fictional map",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "width", "height", "features", "locations"],
+  "properties": {
+    "name": { "type": "string" },
+    "width": { "type": "number", "description": "Width in metres." },
+    "height": { "type": "number", "description": "Height in metres." },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "name"],
+        "properties": {
+          "kind": { "enum": ["road", "major_road", "rail", "river", "area", "building", "label"] },
+          "name": { "type": "string" },
+          "style": { "enum": ["park", "water", "industrial", "residential", "commercial", "woodland", "retail"] },
+          "points": { "type": "array", "items": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 } }
+        }
+      }
+    },
+    "locations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "kind", "x", "y"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^LOC-[A-Z0-9-]+$" },
+          "label": { "type": "string" },
+          "kind": { "enum": ["camera", "cell_site", "address", "point"] },
+          "x": { "type": "number" },
+          "y": { "type": "number" },
+          "radius": { "type": "number" },
+          "note": { "type": "string" },
+          "stage": { "type": "string", "pattern": "^S[0-9]+$" }
+        }
+      }
+    }
+  }
+}

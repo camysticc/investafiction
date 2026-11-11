@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://investafiction.test/schemas/evidence.schema.json",
+  "title": "Evidence register",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "items"
+  ],
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "type",
+          "file",
+          "source",
+          "source_group",
+          "acquired",
+          "custody",
+          "original_hash"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^EV-[0-9]{3}$"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "bank_statement",
+              "cdr",
+              "anpr",
+              "camera_log",
+              "door_access",
+              "login_log",
+              "server_log",
+              "cloud_log",
+              "usb_history",
+              "browser_history",
+              "file_listing",
+              "spreadsheet",
+              "rota",
+              "location_history",
+              "email",
+              "phone_extraction",
+              "document",
+              "statement",
+              "invoice",
+              "image",
+              "it_change_log",
+              "hr_document",
+              "response"
+            ]
+          },
+          "file": {
+            "type": "string",
+            "pattern": "^evidence/[A-Za-z0-9_.-]+$"
+          },
+          "source": {
+            "type": "string"
+          },
+          "source_group": {
+            "type": "string",
+            "description": "Items in the same group are not independent of each other."
+          },
+          "acquired": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "acquired_by": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "custody": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "time",
+                "action",
+                "by"
+              ],
+              "properties": {
+                "time": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "action": {
+                  "type": "string"
+                },
+                "by": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "clock_offset_minutes": {
+            "type": "integer",
+            "description": "Minutes the source clock runs ahead of true time. Subtract it to correct."
+          },
+          "clock_note": {
+            "type": "string"
+          },
+          "timezone_note": {
+            "type": "string"
+          },
+          "handling": {
+            "type": "string"
+          },
+          "marking": {
+            "enum": [
+              "none",
+              "restricted",
+              "privileged",
+              "personal"
+            ]
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "table": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "time_column": {
+                "type": "string"
+              },
+              "entity_columns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "location_column": {
+                "type": "string"
+              },
+              "x_column": {
+                "type": "string"
+              },
+              "y_column": {
+                "type": "string"
+              },
+              "map_entity": {
+                "type": "string"
+              },
+              "description_columns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "original_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "SHA-256 recorded when the item was first acquired. Compare with the file to check integrity."
+          }
+        }
+      }
+    }
+  }
+}

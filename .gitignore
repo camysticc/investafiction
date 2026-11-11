@@ -1,0 +1,13 @@
+# Build output
+core/target/
+app/src-tauri/target/
+app/src-tauri/gen/
+app/node_modules/
+app/dist/
+packs/dist/_build/
+__pycache__/
+*.pyc
+.pytest_cache/
+devdata/
+*.tmp
+.DS_Store

@@ -1,0 +1,20 @@
+[package]
+name = "investafiction"
+version = "1.0.0"
+description = "Investafiction: a desktop investigation simulator"
+edition = "2021"
+license-file = "../../LICENSE"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde_json = "1"
+invcore = { path = "../../core" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true

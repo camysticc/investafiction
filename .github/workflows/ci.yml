@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  tools:
+    name: Python tools and case packs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r tools/requirements.txt
+      - name: Build every case and run validation, solvability and safety checks
+        run: PYTHONPATH=tools python -m invtools build-all --out /tmp/dist
+      - name: Committed packs match a fresh build
+        run: |
+          python - <<'PY'
+          import glob, os, sys, zipfile
+          bad = []
+          for f in glob.glob("packs/dist/*.invcase"):
+              fresh = os.path.join("/tmp/dist", os.path.basename(f))
+              a = zipfile.ZipFile(f).read("manifest.json")
+              b = zipfile.ZipFile(fresh).read("manifest.json")
+              if a != b:
+                  bad.append(f)
+          if bad:
+              sys.exit(f"Out of date, run build-all and commit: {bad}")
+          PY
+      - run: PYTHONPATH=tools python -m pytest tests/python -q
+
+  core:
+    name: Rust core
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: core
+      - run: cargo test --manifest-path core/Cargo.toml
+
+  interface:
+    name: Interface
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+        working-directory: app
+      - run: npm run build
+        working-directory: app

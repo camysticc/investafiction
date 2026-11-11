@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://investafiction.test/schemas/profile.schema.json",
+  "title": "Player profile",
+  "type": "object",
+  "required": ["name", "first_launch_done", "created"],
+  "properties": {
+    "name": { "enum": ["Officer Smith", "Detective Jones", "Sergeant Nolan"] },
+    "first_launch_done": { "type": "boolean" },
+    "created": { "type": "string", "format": "date-time" },
+    "text_scale": { "type": "number", "minimum": 0.8, "maximum": 1.6 }
+  }
+}

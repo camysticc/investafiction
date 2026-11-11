@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://investafiction.test/schemas/rules.schema.json",
+  "title": "Procedural rules, traps and request rules",
+  "description": "Read only by the core. Never shown to the player before submission.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["traps", "request_rules"],
+  "$defs": {
+    "keywords": {
+      "type": "array",
+      "description": "Each inner list is a group of alternatives. Every group must be matched.",
+      "items": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+    }
+  },
+  "properties": {
+    "traps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "trigger", "penalty", "severity", "lesson"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^TR-[0-9]+$" },
+          "title": { "type": "string" },
+          "category": { "enum": ["alter_original", "scope", "deception", "continuity", "clock", "bias", "overclaim", "sensitive", "collection", "capture", "other"] },
+          "trigger": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind"],
+            "properties": {
+              "kind": { "enum": ["evidence_opened", "persona_access", "excess_views", "finding_claim", "clock_uncorrected", "sensitive_cited", "confirmation_bias", "capture_page", "poor_capture"] },
+              "ids": { "type": "array", "items": { "type": "string" } },
+              "pages": { "type": "array", "items": { "type": "string" } },
+              "max_views": { "type": "integer" },
+              "unless_authority": { "type": "string" },
+              "keywords": { "$ref": "#/$defs/keywords" },
+              "types": { "type": "array", "items": { "enum": ["fact", "inference", "assumption"] } },
+              "contradicting": { "type": "array", "items": { "type": "string" } },
+              "offset_minutes": { "type": "integer" },
+              "tolerance_minutes": { "type": "integer" }
+            }
+          },
+          "penalty": { "type": "number", "minimum": 0, "maximum": 10 },
+          "severity": { "enum": ["minor", "major", "serious"] },
+          "lesson": { "type": "string" },
+          "warning": { "type": "string" }
+        }
+      }
+    },
+    "request_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "request_type", "targets", "grant_message", "releases"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^RR-[0-9]+$" },
+          "request_type": { "type": "string" },
+          "targets": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "must_cover": { "type": "array", "items": { "type": "string", "format": "date" }, "minItems": 2, "maxItems": 2 },
+          "max_days": { "type": "integer" },
+          "justification": { "$ref": "#/$defs/keywords" },
+          "min_groups": { "type": "integer" },
+          "releases": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "evidence": { "type": "array", "items": { "type": "string" } },
+              "authority": { "type": "string" },
+              "osint_pages": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "grant_message": { "type": "string" },
+          "refuse_broad": { "type": "string" },
+          "refuse_dates": { "type": "string" },
+          "refuse_justification": { "type": "string" }
+        }
+      }
+    },
+    "broad_request_penalty": { "type": "number" },
+    "unfounded_request_penalty": { "type": "number" }
+  }
+}
