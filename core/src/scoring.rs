@@ -120,7 +120,27 @@ pub fn score(case: &CaseData, attempt: &Attempt) -> Value {
         .collect();
     let followed = herrings.iter().filter(|h| h["followed"] == json!(true)).count();
     let herring_frac = if sol.herrings.is_empty() { 1.0 } else { 1.0 - followed as f64 / sol.herrings.len() as f64 };
-    let analysis_frac = 0.25 * label_frac + 0.25 * (0.7 * link_found_frac + 0.3 * backed_frac) + 0.3 * tl_frac + 0.2 * herring_frac;
+    // e) statements: expected conflicts and checks found in the comparison tool
+    let pair = |a: &str, b: &str, x: &str, y: &Option<String>| y.as_deref().map(|y| (x == a && y == b) || (x == b && y == a)).unwrap_or(false);
+    let statement_checks: Vec<Value> = sol
+        .statement_checks
+        .iter()
+        .map(|chk| {
+            let found = attempt.claim_links.iter().any(|l| match chk.relation.as_str() {
+                "conflicts" => l.relation == "conflicts" && pair(&chk.claim, chk.other_claim.as_deref().unwrap_or(""), &l.claim, &l.other_claim),
+                "agrees" => matches!(l.relation.as_str(), "agrees" | "adds_detail") && pair(&chk.claim, chk.other_claim.as_deref().unwrap_or(""), &l.claim, &l.other_claim),
+                "contradicted" => l.relation == "contradicts" && l.claim == chk.claim && l.evidence.iter().any(|e| chk.evidence.contains(e)),
+                "supported" => l.relation == "supports" && l.claim == chk.claim && l.evidence.iter().any(|e| chk.evidence.contains(e)),
+                _ => false,
+            });
+            json!({"id": chk.id, "claim": chk.claim, "other_claim": chk.other_claim, "evidence": chk.evidence, "relation": chk.relation, "explain": chk.explain, "found": found})
+        })
+        .collect();
+    let statements_frac = if sol.statement_checks.is_empty() { None } else { Some(statement_checks.iter().filter(|c| c["found"] == json!(true)).count() as f64 / sol.statement_checks.len() as f64) };
+    let analysis_frac = match statements_frac {
+        Some(st) => 0.2 * label_frac + 0.2 * (0.7 * link_found_frac + 0.3 * backed_frac) + 0.25 * tl_frac + 0.15 * herring_frac + 0.2 * st,
+        None => 0.25 * label_frac + 0.25 * (0.7 * link_found_frac + 0.3 * backed_frac) + 0.3 * tl_frac + 0.2 * herring_frac,
+    };
 
     // ---- Report quality (15)
     let r = &attempt.report;
@@ -220,6 +240,34 @@ pub fn score(case: &CaseData, attempt: &Attempt) -> Value {
         stage_times.push(json!({"stage": sid, "title": st.title, "minutes": ((t1.saturating_sub(*t0)) as f64 / 60.0).round(), "target": st.target_minutes}));
     }
 
+    // Skill areas for the skills dashboard. Each area mixes the matching rubric
+    // part with the key findings the author tagged with that area.
+    let kf_frac = |area: &str| -> Option<f64> {
+        let tagged: Vec<&KeyFinding> = sol.findings.iter().filter(|kf| kf.skill.as_deref().unwrap_or("analysis") == area).collect();
+        if tagged.is_empty() {
+            return None;
+        }
+        let hit = tagged.iter().filter(|kf| attempt.findings.iter().any(|f| s.finding_matches(kf, f))).count();
+        Some(hit as f64 / tagged.len() as f64)
+    };
+    let mix = |rubric: Option<f64>, area: &str| -> Option<f64> {
+        match (rubric, kf_frac(area)) {
+            (Some(r), Some(k)) => Some(0.5 * r + 0.5 * k),
+            (Some(r), None) => Some(r),
+            (None, Some(k)) => Some(k),
+            (None, None) => None,
+        }
+    };
+    let viewed = attempt.page_views.len();
+    let capture_frac = if case.osint.pages.is_empty() || viewed == 0 { None } else { Some(1.0 - uncaptured_count(attempt) as f64 / viewed as f64) };
+    let skills = json!({
+        "osint": mix(capture_frac, "osint").map(|x| round1(x * 100.0)),
+        "evidence": mix(Some(0.75 * handling_frac + 0.25 * grading_frac), "evidence").map(|x| round1(x * 100.0)),
+        "analysis": mix(Some(analysis_frac), "analysis").map(|x| round1(x * 100.0)),
+        "reporting": mix(Some(report_frac), "reporting").map(|x| round1(x * 100.0)),
+        "procedure": mix(Some(procedure_pts / 10.0), "procedure").map(|x| round1(x * 100.0)),
+    });
+
     let procedural: Vec<Value> = attempt.traps.iter().map(|t| json!(t)).collect();
     let refused: Vec<&RequestRecord> = attempt.requests.iter().filter(|r| !r.granted).collect();
     let uncaptured: BTreeSet<&String> = attempt.page_views.keys().filter(|p| !attempt.captures.iter().any(|c| &&c.page == p && c.method == "full")).collect();
@@ -229,14 +277,20 @@ pub fn score(case: &CaseData, attempt: &Attempt) -> Value {
         "findings": found, "links": links_found, "timeline": timeline_cmp, "herrings": herrings, "gaps": gaps_admitted,
         "procedural_events": procedural, "refused_requests": refused, "notes": notes, "stage_times": stage_times,
         "next_steps": sol.next_steps, "story": sol.story,
+        "statement_checks": statement_checks, "skills": skills, "mode": attempt.mode, "score_settings": attempt.score_settings,
+        "estimated_minutes": case.manifest.estimated_minutes,
         "detail": {
             "label_quality": round1(label_frac * 100.0), "links_found": round1(link_found_frac * 100.0), "timeline_accuracy": round1(tl_frac * 100.0),
             "herrings_followed": followed, "sections_complete": round1(section_frac * 100.0), "findings_cited": round1(cited_frac * 100.0),
-            "gaps_admitted": round1(gap_frac * 100.0), "received": round1(received_frac * 100.0), "continuity": round1(continuity_frac * 100.0),
+            "gaps_admitted": round1(gap_frac * 100.0), "statements_checked": statements_frac.map(|x| round1(x * 100.0)), "received": round1(received_frac * 100.0), "continuity": round1(continuity_frac * 100.0),
             "hashed": round1(hashed_frac * 100.0), "integrity_reported": round1(integrity_frac * 100.0), "grades_close": close, "grades_compared": graded,
             "pages_viewed_not_captured": uncaptured.len(),
             "active_minutes": (attempt.active_seconds as f64 / 60.0).round(),
             "first_timeline_time": attempt.timeline.first().and_then(|e| parse_time(&e.time)).map(crate::util::iso),
         },
     })
+}
+
+fn uncaptured_count(attempt: &Attempt) -> usize {
+    attempt.page_views.keys().filter(|p| !attempt.captures.iter().any(|c| &&c.page == p && c.method == "full")).count()
 }

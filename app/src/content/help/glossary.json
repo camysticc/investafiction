@@ -1,0 +1,610 @@
+[
+ {
+  "term": "ANPR",
+  "definition": "Automatic number plate recognition. Cameras that read vehicle registration plates and record the time and place."
+ },
+ {
+  "term": "Acquisition hash",
+  "definition": "The hash recorded when an item was first acquired. Later copies are checked against it."
+ },
+ {
+  "term": "Action log",
+  "definition": "The automatic record of every action you take in a case, with times."
+ },
+ {
+  "term": "Affects score",
+  "definition": "A label on settings that change how attempts are marked."
+ },
+ {
+  "term": "Alibi",
+  "definition": "An account of where someone was at a relevant time."
+ },
+ {
+  "term": "Analyst",
+  "definition": "The person who examines material and turns it into findings and an assessment."
+ },
+ {
+  "term": "Archive snapshot",
+  "definition": "An earlier copy of a web page, kept by an archive service."
+ },
+ {
+  "term": "Assessment",
+  "definition": "A judgement about what the evidence shows, with stated confidence."
+ },
+ {
+  "term": "Assessment mode",
+  "definition": "A mode with no hints or warnings, used as a fairer test."
+ },
+ {
+  "term": "Assumption",
+  "definition": "Something accepted as true without evidence. Always label it."
+ },
+ {
+  "term": "Attempt",
+  "definition": "One go at a case. Each case can be attempted many times."
+ },
+ {
+  "term": "Attribution",
+  "definition": "Working out who was responsible for an action."
+ },
+ {
+  "term": "Audit trail",
+  "definition": "A record that shows who did what and when."
+ },
+ {
+  "term": "Authority",
+  "definition": "Permission to carry out a step, such as viewing private material."
+ },
+ {
+  "term": "Backup",
+  "definition": "A spare copy of a save kept in case you need to go back."
+ },
+ {
+  "term": "Badge",
+  "definition": "A cosmetic Academy reward for reaching a milestone."
+ },
+ {
+  "term": "Bank statement",
+  "definition": "A list of transactions on an account over a period."
+ },
+ {
+  "term": "Brief",
+  "definition": "The case introduction: what happened and what you are asked to do."
+ },
+ {
+  "term": "Capture",
+  "definition": "A preserved copy of a web page with its address, time and hash."
+ },
+ {
+  "term": "Case clock",
+  "definition": "The in-case time, which advances while you work."
+ },
+ {
+  "term": "Case lead",
+  "definition": "The person who tasks you and sends messages as the case develops."
+ },
+ {
+  "term": "Case pack",
+  "definition": "A .invcase file containing one complete case."
+ },
+ {
+  "term": "CDR",
+  "definition": "Call detail records: calls, messages and data sessions for a phone number."
+ },
+ {
+  "term": "Cell site",
+  "definition": "A mobile phone mast. Records show which mast a phone used."
+ },
+ {
+  "term": "Chain of custody",
+  "definition": "The record of who handled an item, when and why."
+ },
+ {
+  "term": "Citation",
+  "definition": "A reference to the evidence that supports a finding, such as EV-012."
+ },
+ {
+  "term": "Claim",
+  "definition": "One numbered statement within a witness statement."
+ },
+ {
+  "term": "Clock offset",
+  "definition": "How far a device's clock is fast or slow compared with true time."
+ },
+ {
+  "term": "Collateral intrusion",
+  "definition": "Intrusion into the privacy of people not connected to the enquiry."
+ },
+ {
+  "term": "Confidence",
+  "definition": "How sure you are in an event or assessment."
+ },
+ {
+  "term": "Confirmation bias",
+  "definition": "Favouring evidence that fits your theory and ignoring what does not."
+ },
+ {
+  "term": "Consent extraction",
+  "definition": "A copy of a device's data made with the owner's agreement and limited to it."
+ },
+ {
+  "term": "Continuity gap",
+  "definition": "A break in the chain of custody, such as examining before logging receipt."
+ },
+ {
+  "term": "Corroboration",
+  "definition": "Support for a point from an independent source."
+ },
+ {
+  "term": "Countersignature",
+  "definition": "A second approval needed above a set limit."
+ },
+ {
+  "term": "Cross reference",
+  "definition": "A link between files in a pack that must point to something that exists."
+ },
+ {
+  "term": "Custody",
+  "definition": "Responsibility for an item at a given time."
+ },
+ {
+  "term": "Debrief",
+  "definition": "The feedback shown after you submit a report."
+ },
+ {
+  "term": "Deception",
+  "definition": "Using a false identity or story to get access. A serious breach without authority."
+ },
+ {
+  "term": "Deleted entry",
+  "definition": "A file record that was removed but can still be seen in a listing."
+ },
+ {
+  "term": "Digital evidence principles",
+  "definition": "Rules for handling digital material so it can still be relied on."
+ },
+ {
+  "term": "Door access log",
+  "definition": "Records of which card opened which door and when."
+ },
+ {
+  "term": "Email header",
+  "definition": "Technical lines that show who sent an email, when and through which systems."
+ },
+ {
+  "term": "Entity",
+  "definition": "A person, organisation, account, phone, vehicle, device, address or online account in a case."
+ },
+ {
+  "term": "Evidence item",
+  "definition": "One piece of material in a case, with an id such as EV-004."
+ },
+ {
+  "term": "Examine",
+  "definition": "Look at a working copy of an item. Logged in the chain of custody."
+ },
+ {
+  "term": "Export",
+  "definition": "A file made from your work, such as a PDF report or a CSV timeline."
+ },
+ {
+  "term": "Extraction",
+  "definition": "A copy of data taken from a phone, tablet or computer."
+ },
+ {
+  "term": "Fact",
+  "definition": "Something the evidence shows directly."
+ },
+ {
+  "term": "False match",
+  "definition": "Two things that look linked but belong to different people or businesses."
+ },
+ {
+  "term": "Fast user switching",
+  "definition": "A computer feature that lets a second person log on without the first logging off."
+ },
+ {
+  "term": "Finding",
+  "definition": "A labelled, cited statement you stand behind."
+ },
+ {
+  "term": "Float",
+  "definition": "A sum of cash kept in a till or safe."
+ },
+ {
+  "term": "Grade",
+  "definition": "A judgement of a source's reliability (A to E) and its information (1 to 5)."
+ },
+ {
+  "term": "Graduate",
+  "definition": "The badge for finishing the First Day practice case."
+ },
+ {
+  "term": "Hash",
+  "definition": "A fixed-length fingerprint of a file. Changes if the file changes."
+ },
+ {
+  "term": "Hash mismatch",
+  "definition": "When a file's hash does not match its expected value."
+ },
+ {
+  "term": "Herring",
+  "definition": "See red herring."
+ },
+ {
+  "term": "Hint",
+  "definition": "Help in training mode. Each level costs a few marks except on training cases."
+ },
+ {
+  "term": "Inference",
+  "definition": "A conclusion that follows from evidence but is not stated outright."
+ },
+ {
+  "term": "Integrity",
+  "definition": "Whether data is complete and unchanged."
+ },
+ {
+  "term": "Intake form",
+  "definition": "The structured part of the brief: tasking, scope, authorities and constraints."
+ },
+ {
+  "term": "Intelligence grading",
+  "definition": "Scoring a source and its information so readers know how far to trust them."
+ },
+ {
+  "term": "Invcase",
+  "definition": "The file extension for case packs."
+ },
+ {
+  "term": "IP address",
+  "definition": "A number that identifies a device on a network."
+ },
+ {
+  "term": "Key finding",
+  "definition": "A finding the marking scheme expects you to reach."
+ },
+ {
+  "term": "Legality statement",
+  "definition": "Your record of why the work was lawful, necessary and proportionate."
+ },
+ {
+  "term": "Link",
+  "definition": "A connection between two entities on the link chart, ideally with evidence."
+ },
+ {
+  "term": "Link chart",
+  "definition": "A diagram of entities and the connections between them."
+ },
+ {
+  "term": "Location history",
+  "definition": "Points recorded by a device showing where it has been."
+ },
+ {
+  "term": "Log receipt",
+  "definition": "Record that you have received an item. Do it before examining."
+ },
+ {
+  "term": "Login log",
+  "definition": "A record of logons to computers or systems."
+ },
+ {
+  "term": "Look-alike domain",
+  "definition": "A web or email domain made to resemble a real one."
+ },
+ {
+  "term": "Manifest",
+  "definition": "The list of files in a pack with their hashes."
+ },
+ {
+  "term": "Map pin",
+  "definition": "A point on the map, such as a place from a witness claim."
+ },
+ {
+  "term": "Marking",
+  "definition": "A handling label on an item, such as personal or privileged."
+ },
+ {
+  "term": "Metadata",
+  "definition": "Data about data, such as when a file was created or a photo taken."
+ },
+ {
+  "term": "Missing person enquiry",
+  "definition": "Work to find someone whose whereabouts are unknown and check they are safe."
+ },
+ {
+  "term": "Mode",
+  "definition": "Training or assessment."
+ },
+ {
+  "term": "Necessity",
+  "definition": "Whether a step is needed to answer the tasking."
+ },
+ {
+  "term": "Noise",
+  "definition": "Irrelevant items included to make a case realistic."
+ },
+ {
+  "term": "Objective",
+  "definition": "A task within a stage. Required ones open the next stage."
+ },
+ {
+  "term": "OSINT",
+  "definition": "Open source intelligence: information from publicly available sources."
+ },
+ {
+  "term": "Original",
+  "definition": "The item as acquired. It stays sealed."
+ },
+ {
+  "term": "Out of scope",
+  "definition": "Outside what your tasking and authorities allow."
+ },
+ {
+  "term": "Overclaiming",
+  "definition": "Stating more than the evidence supports."
+ },
+ {
+  "term": "Pattern of life",
+  "definition": "A picture of someone's usual routine built from data."
+ },
+ {
+  "term": "Persona",
+  "definition": "A false online identity. Using one needs specific authority."
+ },
+ {
+  "term": "Practice case",
+  "definition": "First Day, the Academy's guided case."
+ },
+ {
+  "term": "Preset",
+  "definition": "A ready-made group of settings."
+ },
+ {
+  "term": "Privileged material",
+  "definition": "Legal advice that must not be read or relied on. Set it aside."
+ },
+ {
+  "term": "Procedure",
+  "definition": "The proper way of doing things, marked separately from findings."
+ },
+ {
+  "term": "Profile",
+  "definition": "Your chosen name, avatar and badge."
+ },
+ {
+  "term": "Proportionality",
+  "definition": "Whether a step is no more intrusive than it needs to be."
+ },
+ {
+  "term": "Rank",
+  "definition": "A cosmetic Academy title based on XP."
+ },
+ {
+  "term": "Red herring",
+  "definition": "A misleading lead that points away from the truth."
+ },
+ {
+  "term": "Released",
+  "definition": "Made available to you, by a stage opening or a granted request."
+ },
+ {
+  "term": "Replay",
+  "definition": "A playback of your submitted attempt."
+ },
+ {
+  "term": "Reply-To",
+  "definition": "An email header that sets where replies go."
+ },
+ {
+  "term": "Report",
+  "definition": "Your written conclusions with cited findings."
+ },
+ {
+  "term": "Request",
+  "definition": "An application to a third party for data."
+ },
+ {
+  "term": "Retention",
+  "definition": "How long a system keeps records before deleting them."
+ },
+ {
+  "term": "Rota",
+  "definition": "A schedule of who works when."
+ },
+ {
+  "term": "Rubric",
+  "definition": "The marking scheme for a case."
+ },
+ {
+  "term": "Sandbox",
+  "definition": "A safe copy of the First Day case used for Academy tasks."
+ },
+ {
+  "term": "Save",
+  "definition": "The file that holds one attempt."
+ },
+ {
+  "term": "Schema",
+  "definition": "Rules that describe the shape of a file."
+ },
+ {
+  "term": "Scope",
+  "definition": "What you may and may not look at."
+ },
+ {
+  "term": "Serious breach",
+  "definition": "A procedural mistake that caps the result at Pass."
+ },
+ {
+  "term": "Service account",
+  "definition": "An account used by software rather than a person. Its use does not show who was behind it."
+ },
+ {
+  "term": "SHA-256",
+  "definition": "The hash algorithm Investafiction uses."
+ },
+ {
+  "term": "Skill area",
+  "definition": "One of five areas on the dashboard: OSINT, evidence handling, data analysis, reporting, procedure and ethics."
+ },
+ {
+  "term": "Snapshot",
+  "definition": "See archive snapshot."
+ },
+ {
+  "term": "Solution file",
+  "definition": "The answer key inside a pack, read only by the core."
+ },
+ {
+  "term": "Source group",
+  "definition": "Which independent source an item comes from."
+ },
+ {
+  "term": "Stage",
+  "definition": "A phase of a case with its own objectives and material."
+ },
+ {
+  "term": "Statement",
+  "definition": "A witness's written account."
+ },
+ {
+  "term": "Statement check",
+  "definition": "An expected conflict or evidence check in the solution."
+ },
+ {
+  "term": "Stretch objective",
+  "definition": "An optional objective that earns extra credit."
+ },
+ {
+  "term": "Submission",
+  "definition": "Handing in your report. Ends the attempt."
+ },
+ {
+  "term": "Suggested route",
+  "definition": "One good path through a case, shown in the replay."
+ },
+ {
+  "term": "Supported",
+  "definition": "A claim backed by evidence."
+ },
+ {
+  "term": "Synthetic data",
+  "definition": "Invented data that looks realistic but belongs to no real person."
+ },
+ {
+  "term": "Tasking",
+  "definition": "The question you have been asked to answer."
+ },
+ {
+  "term": "Third party",
+  "definition": "An organisation outside the case, such as a bank or network."
+ },
+ {
+  "term": "Time zone",
+  "definition": "A region's standard time. Convert to UTC to compare."
+ },
+ {
+  "term": "Timeline",
+  "definition": "Events in time order, each with a citation."
+ },
+ {
+  "term": "Training mode",
+  "definition": "A mode with hints and warnings."
+ },
+ {
+  "term": "Trap",
+  "definition": "A common procedural mistake built into a case."
+ },
+ {
+  "term": "Unverified",
+  "definition": "A claim nothing can check yet. Not the same as false."
+ },
+ {
+  "term": "USB history",
+  "definition": "A record of USB devices connected to a computer."
+ },
+ {
+  "term": "UTC",
+  "definition": "Coordinated Universal Time, the reference time used in every case."
+ },
+ {
+  "term": "Welfare",
+  "definition": "A person's safety and wellbeing."
+ },
+ {
+  "term": "Witness",
+  "definition": "A person who gives an account of what they saw or know."
+ },
+ {
+  "term": "Working copy",
+  "definition": "A verified copy you examine so the original stays unchanged."
+ },
+ {
+  "term": "XP",
+  "definition": "Experience points earned in the Academy. Cosmetic only."
+ },
+ {
+  "term": "Bayboard",
+  "definition": "A fictional community board site used in starter cases."
+ },
+ {
+  "term": "Kestrel Bay",
+  "definition": "The invented town where the starter cases take place."
+ },
+ {
+  "term": "First Day",
+  "definition": "The Academy practice case about a lost parcel."
+ },
+ {
+  "term": "The Ledger",
+  "definition": "Starter case 1: financial crime, beginner."
+ },
+ {
+  "term": "The Last Signal",
+  "definition": "Starter case 2: missing person and OSINT, intermediate."
+ },
+ {
+  "term": "Quiet Exit",
+  "definition": "Starter case 3: digital forensics and data theft, hard."
+ },
+ {
+  "term": "Quick intro",
+  "definition": "Seven fast Academy missions on a made-up cash shortage."
+ },
+ {
+  "term": "What is this? mode",
+  "definition": "A help mode where you click any part of the screen for an explanation."
+ },
+ {
+  "term": "Help centre",
+  "definition": "The searchable built-in guide, opened with the ? button."
+ },
+ {
+  "term": "Completion card",
+  "definition": "A card for finishing the core Academy path. A milestone, not a qualification."
+ },
+ {
+  "term": "Streak",
+  "definition": "An optional count of days you practised in a row."
+ },
+ {
+  "term": "Dashboard",
+  "definition": "The Progress page with your skill areas and attempts."
+ },
+ {
+  "term": "Debrief detail",
+  "definition": "Whether the debrief shows a summary or everything."
+ },
+ {
+  "term": "Spoiler protection",
+  "definition": "Revealing debrief answers one at a time."
+ },
+ {
+  "term": "Integrity report",
+  "definition": "Your note that an item failed its hash check."
+ },
+ {
+  "term": "Grading accuracy",
+  "definition": "How close your grades are to the expected ones."
+ }
+]

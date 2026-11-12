@@ -1,0 +1,211 @@
+# category	label	options	default  (plan section 11.3)
+general	Language	English (UK) in version 1	English (UK)
+general	Default start screen	Case library, Last case, Academy	Case library
+general	Open last case automatically	On, Off	Off
+general	Date format	DD/MM/YYYY, YYYY-MM-DD, D Mon YYYY	DD/MM/YYYY
+general	Time format	24 hour, 12 hour	24 hour
+general	Time shown in evidence	As recorded, Corrected for clock offset, Both	Both
+general	Week starts on	Monday, Sunday	Monday
+general	Number format	1,234.56 or 1 234,56	1,234.56
+general	Currency display	Symbol, Code	Symbol
+general	Confirm before closing	On, Off	On
+profile	Chosen name	Officer Smith, Detective Jones, Sergeant Nolan	Set on first launch
+profile	Avatar	12 built-in icons, plus frames unlocked in the Academy	First icon
+profile	Badge style	Name and avatar, Name only, Avatar only	Name and avatar
+profile	Show Academy rank on badge	On, Off	On
+profile	Name on report sign-off	On, Off	On
+profile	Reset profile	Button. Returns to the name choice	Not applicable
+appearance	Theme	Light, Dark, High contrast, Match my computer	Dark
+appearance	Accent colour	8 colours	Blue
+appearance	Text size	Small, Medium, Large, Extra large, Huge	Medium
+appearance	Font	Standard, Dyslexia friendly, Monospace for data tables	Standard
+appearance	Line spacing	Tight, Normal, Relaxed	Normal
+appearance	Layout density	Compact, Comfortable, Spacious	Comfortable
+appearance	Corner style	Sharp, Rounded	Rounded
+appearance	Icon style	Outline, Filled	Outline
+appearance	Panel arrangement	Evidence left, Evidence right, Notes along the bottom	Evidence left
+appearance	Remember panel sizes	On, Off	On
+appearance	Interface zoom	75% to 200%	100%
+appearance	Tooltips	Off, Short delay, Long delay	Short delay
+appearance	Show status bar	On, Off	On
+accessibility	Reduce motion	On, Off	Off
+accessibility	Reduce transparency	On, Off	Off
+accessibility	High contrast evidence viewers	On, Off	Off
+accessibility	Colour blind safe palette	None, Red and green, Blue and yellow, Monochrome	None
+accessibility	Focus outline thickness	Thin, Normal, Thick	Normal
+accessibility	Large click targets	On, Off	Off
+accessibility	Underline links	On, Off	Off
+accessibility	Strengthen graph and timeline lines	On, Off	Off
+accessibility	Reading ruler	On, Off	Off
+accessibility	Screen reader descriptions for charts	On, Off	On
+accessibility	Announce saves and stage changes	On, Off	Off
+accessibility	Avoid flashing effects	On, Off	On
+accessibility	Show shortcut hints on buttons	On, Off	Off
+sound	Master volume	0 to 100	60
+sound	Interface sounds	On, Off	On
+sound	Stage unlock chime	On, Off	On
+sound	Warning sound	On, Off	On
+sound	Academy reward sounds	On, Off	On
+sound	Mute when the window is not in focus	On, Off	On
+sound	Sound pack	Quiet, Classic, Minimal	Quiet
+gameplay	Mode (affects score)	Training, Assessment	Training
+gameplay	Hints available (affects score)	None, Level 1 only, Levels 1 and 2, All three	All three
+gameplay	Procedural warnings (affects score)	On, Off	On in training mode
+gameplay	Show stage objectives	Full list, Required only, Collapsed	Full list
+gameplay	Show stretch objectives	On, Off	On
+gameplay	Case clock	Elapsed time, Time left against the estimate, Hidden	Elapsed time
+gameplay	Pause the clock when idle	Off, After 2 minutes, After 5 minutes	After 5 minutes
+gameplay	Highlight new evidence	On, Off	On
+gameplay	Message from the case lead	Pop-up, Panel, Both	Both
+gameplay	Confirm before submitting a report	On, Off	On
+gameplay	Show running findings count	On, Off	On
+gameplay	Debrief detail	Summary, Full	Full
+gameplay	Spoiler protection in the debrief	Reveal one finding at a time, Show all	Reveal one at a time
+gameplay	Allow retry after submission	On, Off	On
+viewers	Rows per page	25, 50, 100, 250	50
+viewers	Show row numbers	On, Off	On
+viewers	Highlight search matches	On, Off	On
+viewers	Wrap long text	On, Off	On
+viewers	Default view for data files	Table, Raw text	Table
+viewers	Email header view	Summary, Full, Both	Summary
+viewers	Message thread style	Bubbles, List	Bubbles
+viewers	Image viewer zoom	Fit, 100%, Fill	Fit
+viewers	Image metadata panel	Always, On request	Always
+viewers	Hex preview for files	Off, On request, Always	On request
+viewers	Open items in	Tabs, Split view	Tabs
+viewers	Remember scroll position	On, Off	On
+viewers	Show clock offset warnings	On, Off	On
+viewers	Mark examined items	Tick, Fade, Both	Tick
+timeline	Default zoom	Day, Hour, Minute, Fit all	Fit all
+timeline	Group by	None, Entity, Source, Evidence type	None
+timeline	Show source icons	On, Off	On
+timeline	Highlight conflicts	On, Off	On
+timeline	Colour by confidence	On, Off	Off
+timeline	Show gap markers	On, Off	On
+timeline	Sort order	Oldest first, Newest first	Oldest first
+timeline	Snap to grid	Off, 5 minutes, 15 minutes, 1 hour	Off
+timeline	Export image size	Small, Medium, Large	Medium
+graph	Layout	Force directed, Circle, Hierarchy, Grid	Force directed
+graph	Node size	Small, Medium, Large	Medium
+graph	Labels	Always, On hover, Selected only	Always
+graph	Edge style	Straight, Curved	Curved
+graph	Dashed lines for links without evidence	On, Off	On
+graph	Show link strength	On, Off	On
+graph	Suggested links	Off, Show hints, Show and highlight	Show hints
+graph	Cluster colouring	On, Off	Off
+graph	Physics	On, Off	On
+graph	Simplify the view above	50, 100, 200 nodes	100 nodes
+graph	Mini map	On, Off	On
+map	Base map	Plain, Labelled, Grid	Labelled
+map	Distance units	Miles, Kilometres	Miles
+map	Show camera ranges	On, Off	On
+map	Show cell coverage circles	On, Off	On
+map	Time slider speed	Slow, Normal, Fast	Normal
+map	Trail length	Short, Medium, Long, Full	Medium
+map	Cluster nearby points	On, Off	On
+map	Show scale bar	On, Off	On
+statements	Layout	Side by side, Stacked	Side by side
+statements	Compare up to	2, 3, 4 statements	3
+statements	Highlight colours	Standard, Colour blind safe	Standard
+statements	Show claim numbers	On, Off	On
+statements	Offer to send times and places to the timeline and map	On, Off	On
+statements	Show running count of conflicts found	On, Off	On
+search	Search mode	Simple, Advanced	Simple
+search	Case sensitive	On, Off	Off
+search	Match whole words	On, Off	Off
+search	Include metadata in search	On, Off	On
+search	Fuzzy matching	On, Off	On
+search	Search history length	0, 10, 50	10
+search	Remember filters between sessions	On, Off	Off
+search	Result highlight colour	Yellow, Green, Blue, Orange	Yellow
+osint	Mock browser start page	Search page, Last page, Blank	Search page
+osint	Show page addresses	On, Off	On
+osint	Capture reminder	On, Off	On
+osint	Hash captures automatically	Always on (locked)	On
+osint	Show privacy badge on profiles	On, Off	On
+osint	Warn before opening a private profile	On, Off	On
+osint	Clue overlays on images	Off, On request	On request
+osint	Archive date style	Same as general, Long form	Same as general
+integrity	Action logging	Always on (locked)	On
+integrity	Log detail	Standard, Detailed	Standard
+integrity	Hash display	Full, Shortened	Shortened
+integrity	Verify hash when opening an original	Always, First time only, Never (training mode only)	Always
+integrity	Warn about continuity gaps	On, Off	On
+integrity	Ask for a reason when opening originals	Always, Training mode only	Always
+integrity	Show custody timeline on items	On, Off	On
+report	Template	Standard, Short form, Detailed	Standard
+report	Citation style	Inline IDs, Footnotes	Inline IDs
+report	Check citations automatically	On, Off	On
+report	Page size	A4, Letter	A4
+report	Export font	Serif, Sans serif	Sans serif
+report	Include evidence list appendix	On, Off	On
+report	Include link chart image	On, Off	On
+report	Include timeline image	On, Off	On
+report	Default export	PDF, Markdown	PDF
+report	Spell check	On, Off	On
+report	Show word count	On, Off	On
+report	Draft autosave interval	30 seconds, 1 minute, 5 minutes	1 minute
+replay	Replay speed	Slow, Normal, Fast	Normal
+replay	Replay detail	Key moments only, Every action	Key moments only
+replay	Show mistakes on the replay	On, Off	On
+replay	Show suggested route	On, Off	On
+replay	Start replay automatically	On, Off	Off
+replay	Dashboard range	Last 5 attempts, Last 10, All	Last 10
+replay	Dashboard chart style	Radar, Bars	Radar
+replay	Best scores count assessment mode only	On, Off	On
+replay	Show suggested next steps	On, Off	On
+replay	Reset progress history	Button with confirmation	Not applicable
+notes	Default finding type	Fact, Inference, Assumption	Assumption
+notes	Show grade fields on findings	Always, When evidence is linked	Always
+notes	Link selected evidence to new findings	On, Off	On
+notes	Note font size	Small, Medium, Large	Medium
+notes	Markdown preview in notes	On, Off	On
+notes	Findings board layout	List, Cards, Grouped by stage	Grouped by stage
+saves	Autosave interval	1, 2, 5, 10 minutes	2 minutes
+saves	Autosave after key actions	On, Off	On
+saves	Backup copies kept	1 to 20	5
+saves	Backup folder	App folder, Custom folder	App folder
+saves	Save when closing	Ask, Always	Always
+saves	Export all saves	Button	Not applicable
+saves	Import saves	Button	Not applicable
+saves	Show storage used	Button	Not applicable
+saves	Clear caches	Button	Not applicable
+saves	Delete all data	Button with two confirmations	Not applicable
+library	Sort by	Title, Difficulty, Time, Recently played	Recently played
+library	View	Grid, List	Grid
+library	Show difficulty badges	On, Off	On
+library	Show time estimates	On, Off	On
+library	Show completed cases	On, Off	On
+library	Confirm before removing a case	On, Off	On
+library	Verify case packs	Always, Only when changed	Only when changed
+academy	Academy reminders	On, Off	On
+academy	Tips frequency	Often, Sometimes, Never	Sometimes
+academy	Contextual help icons	Show, Hide	Show
+academy	'What is this?' mode	On, Off	On
+academy	Open help in	Side panel, Separate window	Side panel
+academy	Help search history	0, 10, 50	10
+academy	Show Academy rewards on profile	On, Off	On
+academy	Reset Academy progress	Button with confirmation	Not applicable
+shortcuts	Shortcut preset	Default, Compact, Mouse free	Default
+shortcuts	Rebind actions	About 40 actions can be changed	Per action
+shortcuts	Show shortcut sheet	Button	Not applicable
+shortcuts	Reset all shortcuts	Button with confirmation	Not applicable
+notifications	Stage unlock banner	On, Off	On
+notifications	Autosave notice	Subtle icon, Pop-up, Off	Subtle icon
+notifications	Hint available indicator	On, Off	On
+notifications	Procedural warning style	Dialog, Banner	Banner
+notifications	Notification duration	3 seconds, 5 seconds, 10 seconds, Until closed	5 seconds
+privacy	Content notice at case start	On, Off	On
+privacy	Sensitive content warnings	Show, Hide	Show
+privacy	Blur images until opened	On, Off	On
+privacy	Hide graphic details	On, Off	On
+privacy	Usage data collection	None. The program sends nothing (locked)	None
+privacy	Warn before opening packs from other authors	On, Off	On
+advanced	Case author mode	Off, On (loads unpacked case folders and shows extra checks)	Off
+advanced	Show internal IDs on items	On, Off	Off
+advanced	Developer tools	On, Off	Off
+advanced	Log level	Errors only, Normal, Verbose	Errors only
+advanced	Experimental features	On, Off	Off
+advanced	Open data folder	Button	Not applicable
+advanced	Export diagnostics	Button. Makes a local file with no case answers or personal data	Not applicable
+advanced	Reset all settings	Button with confirmation	Not applicable

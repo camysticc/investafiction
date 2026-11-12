@@ -4,6 +4,9 @@ import { useApp } from "../lib/store";
 import { Markdown } from "../lib/md";
 import { Cite, Modal } from "./common";
 import { Avatar } from "./Welcome";
+import { useSetting } from "../lib/settings";
+
+const words = (s: string) => (s.trim() ? s.trim().split(/\s+/).length : 0);
 
 const SECTIONS = [
   ["summary", "1. Summary", "What happened, in a few sentences, and your overall assessment."],
@@ -18,6 +21,9 @@ export default function ReportView() {
   const [draft, setDraft] = useState({ summary: r.summary, scope_method: r.scope_method, gaps: r.gaps, recommendations: r.recommendations });
   const [legal, setLegal] = useState({ legality: r.legality.legality, necessity: r.legality.necessity, proportionality: r.legality.proportionality });
   const [preview, setPreview] = useState<string | null>(null);
+  const [confirming, setConfirming] = useState(false);
+  const askFirst = useSetting<boolean>("gameplay.confirm_before_submitting_a_report");
+  const showWords = useSetting<boolean>("report.show_word_count");
   const submitted = game!.attempt.submitted;
   useEffect(() => {
     const h = setTimeout(() => {
@@ -52,6 +58,7 @@ export default function ReportView() {
           <span className="section-title">{label}</span>
           <span className="muted small">{help}</span>
           <textarea disabled={submitted} rows={5} value={draft[k]} onChange={(e) => setDraft({ ...draft, [k]: e.target.value })} />
+          {showWords && <span className="muted small">{words(draft[k])} words</span>}
         </label>
       ))}
       <section className="section">
@@ -78,6 +85,7 @@ export default function ReportView() {
           <span className="section-title">{label}</span>
           <span className="muted small">{help}</span>
           <textarea disabled={submitted} rows={5} value={draft[k]} onChange={(e) => setDraft({ ...draft, [k]: e.target.value })} />
+          {showWords && <span className="muted small">{words(draft[k])} words</span>}
         </label>
       ))}
       <section className="section legality">
@@ -104,8 +112,17 @@ export default function ReportView() {
       {!submitted && (
         <div className="submit-bar">
           <p className="muted small">When you submit, the attempt is marked and the answers are shown. You can start a new attempt afterwards.</p>
-          <button className="primary big" disabled={!r.legality.signed} onClick={submit}>Submit report for marking</button>
+          <button className="primary big" disabled={!r.legality.signed} onClick={() => (askFirst ? setConfirming(true) : submit())}>Submit report for marking</button>
         </div>
+      )}
+      {confirming && (
+        <Modal title="Submit this report?" onClose={() => setConfirming(false)}>
+          <p>Submitting ends this attempt. It is marked straight away and the answers are shown.</p>
+          <div className="row">
+            <button onClick={() => setConfirming(false)}>Keep working</button>
+            <button className="primary" onClick={() => { setConfirming(false); submit(); }}>Submit</button>
+          </div>
+        </Modal>
       )}
       {preview !== null && (
         <Modal title="Report preview" onClose={() => setPreview(null)} wide>

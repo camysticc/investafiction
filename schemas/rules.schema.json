@@ -23,13 +23,13 @@
         "properties": {
           "id": { "type": "string", "pattern": "^TR-[0-9]+$" },
           "title": { "type": "string" },
-          "category": { "enum": ["alter_original", "scope", "deception", "continuity", "clock", "bias", "overclaim", "sensitive", "collection", "capture", "other"] },
+          "category": { "enum": ["alter_original", "scope", "deception", "continuity", "clock", "bias", "overclaim", "sensitive", "collection", "capture", "statements", "other"] },
           "trigger": {
             "type": "object",
             "additionalProperties": false,
             "required": ["kind"],
             "properties": {
-              "kind": { "enum": ["evidence_opened", "persona_access", "excess_views", "finding_claim", "clock_uncorrected", "sensitive_cited", "confirmation_bias", "capture_page", "poor_capture"] },
+              "kind": { "enum": ["evidence_opened", "persona_access", "excess_views", "finding_claim", "clock_uncorrected", "sensitive_cited", "confirmation_bias", "capture_page", "poor_capture", "lie_claim"] },
               "ids": { "type": "array", "items": { "type": "string" } },
               "pages": { "type": "array", "items": { "type": "string" } },
               "max_views": { "type": "integer" },

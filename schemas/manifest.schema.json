@@ -14,7 +14,7 @@
     "licence": { "type": "string", "maxLength": 120 },
     "assets_licence": { "type": "string", "maxLength": 400 },
     "specialty": { "type": "string", "maxLength": 80 },
-    "difficulty": { "enum": ["Beginner", "Intermediate", "Hard"] },
+    "difficulty": { "enum": ["Training", "Beginner", "Intermediate", "Hard"] },
     "estimated_minutes": { "type": "integer", "minimum": 5, "maximum": 600 },
     "seed": { "type": "integer" },
     "summary": { "type": "string", "maxLength": 600 },

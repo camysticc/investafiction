@@ -1,3 +1,4 @@
-/** Tiny helpers so any screen can open the global Settings window or the Academy. */
-export const openSettings = () => window.dispatchEvent(new CustomEvent("inv:settings"));
-export const openAcademy = () => window.dispatchEvent(new CustomEvent("inv:academy"));
+/* Kept for older imports: thin wrappers over the navigation helpers. */
+export { openSettings, openHelp, openQuickIntro } from "./nav";
+import { openAcademy as oa } from "./nav";
+export const openAcademy = () => oa(null);

@@ -2,12 +2,23 @@ import { call } from "../lib/api";
 import { useApp } from "../lib/store";
 import { fmtTime } from "../lib/util";
 import { Cite } from "./common";
+import { useState } from "react";
+import { useSetting } from "../lib/settings";
+import { openReplay } from "../lib/nav";
+import { STATUS_LABEL } from "./Statements";
 
 export default function Debrief() {
   const { game, exportFile, run, setGame } = useApp();
   const r = game!.attempt.result;
   if (!r) return <p>Not submitted yet.</p>;
   const ent = (id: string) => game!.case.entities.find((e) => e.id === id)?.label ?? id;
+  const spoiler = useSetting<string>("gameplay.spoiler_protection_in_the_debrief");
+  const detail = useSetting<string>("gameplay.debrief_detail");
+  const allowRetry = useSetting<boolean>("gameplay.allow_retry_after_submission");
+  const [revealed, setRevealed] = useState(spoiler === "show_all" ? 9999 : 1);
+  const practice = game!.case.manifest.difficulty === "Training";
+  const ss = r.score_settings;
+  void STATUS_LABEL;
   return (
     <div className="debrief">
       <div className="score-head">
@@ -21,10 +32,26 @@ export default function Debrief() {
           <div className="row">
             <button onClick={() => exportFile("debrief_md")}>Export debrief</button>
             <button onClick={() => exportFile("report_pdf")}>Export your report</button>
-            <button className="primary" onClick={() => run(async () => { const n = await call("attempt.reset"); setGame(await call("attempt.open", { case_id: game!.case.manifest.id, attempt_id: n.attempt_id })); })}>Try the case again</button>
+            <button className="primary" onClick={() => openReplay(game!.case.manifest.id, game!.attempt.id)}>Open the replay</button>
+            {allowRetry && <button onClick={() => run(async () => { const n = await call("attempt.reset"); setGame(await call("attempt.open", { case_id: game!.case.manifest.id, attempt_id: n.attempt_id })); })}>Try the case again</button>}
           </div>
+          <p className="muted small">Score settings: {r.mode === "assessment" ? "assessment mode, no hints or warnings" : `training mode, hints ${["none", "level 1", "levels 1 and 2", "all three"][ss?.hints_available ?? 3]}, warnings ${ss?.warnings === false ? "off" : "on"}`}.</p>
         </div>
       </div>
+      {practice && (
+        <div className="banner good-banner">
+          <span>🎓 <b>Practice case finished.</b> It is not marked like a real case. What you did well: {[
+            game!.case.evidence.every((e) => e.received) && "logged every item",
+            game!.case.evidence.every((e) => e.hashed) && "checked every hash",
+            Object.keys(game!.attempt.integrity_reports).length > 0 && "reported the integrity problem",
+            game!.attempt.timeline.length >= 3 && "built a timeline",
+            game!.attempt.links.length > 0 && "drew evidenced links",
+            game!.attempt.claim_links.length > 0 && "compared the statements",
+            game!.attempt.captures.some((c) => c.method === "full") && "captured a page properly",
+            game!.attempt.report.legality.signed && "signed the legality statement",
+          ].filter(Boolean).join(", ") || "you finished it"}. The Graduate badge is yours.</span>
+        </div>
+      )}
       <div className="cats">
         {r.categories.map((c: any) => (
           <div key={c.key} className="cat">
@@ -39,7 +66,7 @@ export default function Debrief() {
       <table className="grid">
         <thead><tr><th /><th>Finding</th><th>Supported by</th><th>Why it matters</th></tr></thead>
         <tbody>
-          {r.findings.map((f: any) => (
+          {r.findings.slice(0, revealed).map((f: any) => (
             <tr key={f.id} className={f.found ? "found" : "missed"}>
               <td>{f.found ? (f.label_ok ? "✓" : "½") : "✗"}</td>
               <td>
@@ -53,6 +80,20 @@ export default function Debrief() {
         </tbody>
       </table>
 
+      {revealed < r.findings.length && <div className="row"><button onClick={() => setRevealed(revealed + 1)}>Reveal the next finding ({r.findings.length - revealed} left)</button><button className="ghost" onClick={() => setRevealed(9999)}>Show all</button></div>}
+      {detail === "full" && r.statement_checks?.length > 0 && (
+        <>
+          <h3>Statement checks</h3>
+          <table className="grid">
+            <thead><tr><th /><th>Claim</th><th>Expected</th><th>Why</th></tr></thead>
+            <tbody>{r.statement_checks.map((c: any) => (
+              <tr key={c.id} className={c.found ? "found" : "missed"}><td>{c.found ? "✓" : "✗"}</td><td><code>{c.claim}</code>{c.other_claim ? <> and <code>{c.other_claim}</code></> : null}</td>
+                <td className="small">{({ conflicts: "Conflicts with another statement", agrees: "Agrees with another statement", contradicted: "Contradicted by evidence", supported: "Supported by evidence" } as Record<string, string>)[c.relation]}{c.evidence?.length ? ` (${c.evidence.join(", ")})` : ""}</td>
+                <td className="small">{c.explain}</td></tr>))}</tbody>
+          </table>
+        </>
+      )}
+      {detail === "full" && <>
       <h3>Red herrings</h3>
       <ul className="plain">
         {r.herrings.map((h: any) => <li key={h.id} className={h.followed ? "bad-text" : ""}><b>{h.label}</b> {h.followed ? "(you followed this)" : "(avoided)"}: {h.explain}</li>)}
@@ -97,6 +138,7 @@ export default function Debrief() {
           <ul className="plain">{r.refused_requests.map((q: any) => <li key={q.id}><b>{q.id}</b> {q.response}</li>)}</ul>
         </>
       )}
+      </>}
       <h3>Time per stage</h3>
       <table className="grid">
         <thead><tr><th>Stage</th><th>Your time</th><th>Target</th></tr></thead>

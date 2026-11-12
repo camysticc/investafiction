@@ -1,0 +1,277 @@
+{
+ "id": "evidence-handling",
+ "n": 2,
+ "title": "Evidence handling",
+ "icon": "🔗",
+ "badge": "Clean Chain",
+ "practice": "Hash a file, log it and fix a continuity gap.",
+ "lessons": [
+  {
+   "id": "evidence.originals",
+   "title": "Why originals are never changed",
+   "minutes": 2,
+   "picture": "seal",
+   "intro": "If an original changes, nobody can be sure what it said before. So originals stay sealed, you work on verified copies, and you record anything you do.",
+   "tryit": {
+    "type": "choose",
+    "prompt": "You spot a typo in an original spreadsheet. What do you do?",
+    "options": [
+     [
+      "Fix it in the original so the record is right",
+      false,
+      "Changing an original destroys proof of what it said. Never do this."
+     ],
+     [
+      "Leave the original alone and note the issue in your working notes",
+      true,
+      "Right. Note it, and work from a verified copy."
+     ],
+     [
+      "Delete the item, since it has an error",
+      false,
+      "Removing evidence is worse still. Keep it and note the problem."
+     ]
+    ]
+   },
+   "check": [
+    {
+     "q": "Who may change an original item?",
+     "options": [
+      "Nobody",
+      "The case lead",
+      "The analyst, if it has a mistake"
+     ],
+     "answer": 0,
+     "hint": "Originals stay exactly as received."
+    },
+    {
+     "q": "What do you examine instead?",
+     "options": [
+      "A summary",
+      "A verified working copy",
+      "Nothing"
+     ],
+     "answer": 1,
+     "hint": "Copies are checked against the original's hash."
+    },
+    {
+     "q": "Why does it matter?",
+     "options": [
+      "It looks tidier",
+      "So the evidence can still be relied on later",
+      "It saves disk space"
+     ],
+     "answer": 1,
+     "hint": "Think about someone checking your work."
+    }
+   ],
+   "learn_more": "concept.digital_evidence_principles"
+  },
+  {
+   "id": "evidence.hashes",
+   "title": "Hashes explained",
+   "minutes": 3,
+   "picture": "hash",
+   "intro": "A hash is a fingerprint of a file. Change a single character and the fingerprint changes completely. Matching hashes show a copy is identical to the original.",
+   "tryit": {
+    "type": "hash",
+    "prompt": "Type in the box. Watch the SHA-256 fingerprint change completely with every character.",
+    "start": "Parcel 4471 delivered 15:42"
+   },
+   "sandbox": {
+    "task": "Check the hash of the tracking export (EV-005).",
+    "tab": "integrity",
+    "badge_on_done": "First Hash",
+    "steps": [
+     {
+      "label": "Check the hash of EV-005",
+      "check": {
+       "kind": "hashed",
+       "ids": [
+        "EV-005"
+       ]
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "You change one letter in a file. Its hash…",
+     "options": [
+      "Changes slightly",
+      "Changes completely",
+      "Stays the same"
+     ],
+     "answer": 1,
+     "hint": "Try it in the box above."
+    },
+    {
+     "q": "Two files have the same hash. This shows…",
+     "options": [
+      "They are almost certainly identical",
+      "They were made on the same day",
+      "Nothing"
+     ],
+     "answer": 0,
+     "hint": "That is what the fingerprint is for."
+    },
+    {
+     "q": "A hash check fails. What do you do?",
+     "options": [
+      "Fix the file",
+      "Report it and do not rely on that copy",
+      "Ignore it"
+     ],
+     "answer": 1,
+     "hint": "Report problems; do not repair them."
+    }
+   ],
+   "learn_more": "feature.integrity"
+  },
+  {
+   "id": "evidence.logging",
+   "title": "Logging receipt and examination",
+   "minutes": 3,
+   "picture": "log",
+   "intro": "Every item needs its receipt logged before you open it. Logging records who received what and when. Examining is logged too, so the chain of custody has no gaps.",
+   "tryit": {
+    "type": "order",
+    "prompt": "Put the steps in the right order.",
+    "items": [
+     "Log receipt of the item",
+     "Check its hash",
+     "Examine a working copy",
+     "Record a finding that cites it"
+    ]
+   },
+   "sandbox": {
+    "task": "Log receipt of every item, then examine one.",
+    "tab": "viewer",
+    "steps": [
+     {
+      "label": "Log receipt of every item (Log all)",
+      "check": {
+       "kind": "received",
+       "all": true
+      }
+     },
+     {
+      "label": "Examine any item",
+      "check": {
+       "kind": "examined",
+       "min": 1
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "What comes first?",
+     "options": [
+      "Examining",
+      "Logging receipt",
+      "Writing a finding"
+     ],
+     "answer": 1,
+     "hint": "You cannot examine what you have not received."
+    },
+    {
+     "q": "Opening an item before logging it causes…",
+     "options": [
+      "A continuity gap",
+      "A faster case",
+      "Nothing"
+     ],
+     "answer": 0,
+     "hint": "It is one of the procedural traps."
+    },
+    {
+     "q": "Where can you see every action you took?",
+     "options": [
+      "The action log",
+      "The map",
+      "The brief"
+     ],
+     "answer": 0,
+     "hint": "It is in the side panel."
+    }
+   ],
+   "learn_more": "concept.chain_of_custody"
+  },
+  {
+   "id": "evidence.custody",
+   "title": "Chain of custody and spotting a gap",
+   "minutes": 3,
+   "picture": "chain",
+   "intro": "The chain of custody shows every hand an item passed through. A gap, such as an item examined before it was received, weakens it. A file that fails its hash must be reported, not fixed.",
+   "tryit": {
+    "type": "spot",
+    "prompt": "Click the line that breaks the chain of custody.",
+    "lines": [
+     "09:00 Received and sealed by case officer",
+     "09:20 Booked into the evidence store",
+     "09:25 Examined by analyst",
+     "09:40 Receipt logged by analyst",
+     "10:00 Hash checked: match"
+    ],
+    "answer": 2,
+    "explain": "The analyst examined the item at 09:25 but only logged receipt at 09:40. That is a continuity gap."
+   },
+   "sandbox": {
+    "task": "One item fails its hash check. Find it and report it.",
+    "tab": "integrity",
+    "steps": [
+     {
+      "label": "Run Hash all",
+      "check": {
+       "kind": "hashed",
+       "all": true
+      }
+     },
+     {
+      "label": "Report the failing item (EV-012)",
+      "check": {
+       "kind": "integrity_report",
+       "ids": [
+        "EV-012"
+       ]
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "An item was examined before receipt was logged. This is…",
+     "options": [
+      "A continuity gap",
+      "Fine",
+      "A hash mismatch"
+     ],
+     "answer": 0,
+     "hint": "Look at the order of events."
+    },
+    {
+     "q": "A copy fails its hash. You should…",
+     "options": [
+      "Edit it until it matches",
+      "Report it and use a verified copy",
+      "Delete it"
+     ],
+     "answer": 1,
+     "hint": "Never try to fix evidence."
+    },
+    {
+     "q": "The chain of custody records…",
+     "options": [
+      "Who handled an item, when and why",
+      "Your score",
+      "The case lead's name only"
+     ],
+     "answer": 0,
+     "hint": "It is the item's history."
+    }
+   ],
+   "learn_more": "feature.integrity"
+  }
+ ]
+}

@@ -10,6 +10,8 @@ pub mod engine;
 pub mod model;
 pub mod pack;
 pub mod pdf;
+pub mod records;
+pub mod replay;
 pub mod report;
 pub mod scoring;
 pub mod util;

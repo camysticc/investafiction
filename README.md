@@ -36,12 +36,18 @@ Each case runs in five or six stages. New material and a message from the case l
 | OSINT | Simulated platforms with public and private profiles, simulated search with near misses, archive snapshots, image clues and proper page capture with time, address and hash |
 | Procedure | Requests for data and authority, procedural traps, training mode with three levels of hint and warnings, assessment mode with feedback only at the end |
 | Output | Structured report builder with a citation check, PDF and Markdown export, a detailed debrief |
+| Statements | Compare witness statements claim by claim, link claims to each other and to evidence, send claims to the timeline or map |
+| Learning | An optional Academy tab with 23 lessons in six tracks, a training sandbox on the First Day practice case, XP, ranks and badges; a quick intro on first start |
+| Review | Investigation replay after submission, and a progress dashboard showing skills by area, trends and common mistakes |
+| Help | An offline help centre with about 120 articles, a glossary, search and a "What is this?" mode |
+| Settings | About 210 settings in 24 categories with search, presets, export and import. Dark theme by default, plus Light, High contrast and Match my computer. Settings not built yet are labelled "not active yet" |
 | Profile | Choose one of three preset names on first launch (Officer Smith, Detective Jones or Sergeant Nolan). Cosmetic only, shown in the top bar and on the report sign-off |
 
 ## Starter pack
 
 | Case | Specialty | Difficulty | Time | Items | Stages | Findings (required / stretch) |
 |---|---|---|---|---|---|---|
+| First Day (practice) | Training case for the Academy | Training | about 20 minutes | 13 | 2 | small |
 | The Ledger | Financial crime | Beginner | about 2 hours | 45 | 5 | 12 / 4 |
 | The Last Signal | OSINT and missing person enquiry | Intermediate | about 2.5 hours | 47 items and 20 web pages | 5 | 16 / 6 |
 | Quiet Exit | Digital forensics and data theft | Hard | about 3.5 hours | 89 items and 4 web pages | 6 | 24 / 8 |
@@ -83,7 +89,7 @@ cd ../core && cargo run --features devserver --bin invcore-devserver -- ./devdat
 ```bash
 cd core && cargo test                         # import security, scoring, full playthroughs of all three cases
 PYTHONPATH=tools python -m pytest tests/python   # validator, determinism, safety scan, solvability
-cd app && npm run typecheck
+cd app && npm run typecheck && npm run test:help   # help centre question bank
 ```
 
 Every change is built and tested on GitHub before it merges (see `.github/workflows`).

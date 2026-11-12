@@ -56,7 +56,8 @@ class Case:
         self.rules = {"traps": [], "request_rules": [], "broad_request_penalty": 2, "unfounded_request_penalty": 1}
         self.solution = {"findings": [], "links": [], "timeline": [], "herrings": [], "grades": {},
                          "objective_checks": {}, "stage_unlocks": {}, "hints": {}, "noise": [], "gaps": [],
-                         "next_steps": "", "story": ""}
+                         "next_steps": "", "story": "", "statement_checks": [], "route": []}
+        self.statements: list[dict] = []
         self.osint = {"sites": [], "pages": [], "images": []}
         self.map: dict | None = None
         self._stage_of: dict[str, str] = {}
@@ -183,11 +184,13 @@ class Case:
         self.rules["traps"].append(tr)
 
     # ---- solution ---------------------------------------------------------------
-    def finding(self, id, statement, type, evidence_any, keywords, explain, required=True, min_sources=2, stage=None):
+    def finding(self, id, statement, type, evidence_any, keywords, explain, required=True, min_sources=2, stage=None, skill=None):
         f = {"id": id, "required": required, "statement": statement, "type": type,
              "evidence_any": evidence_any, "min_sources": min_sources, "keywords": keywords, "explain": explain}
         if stage:
             f["stage"] = stage
+        if skill:
+            f["skill"] = skill
         self.solution["findings"].append(f)
 
     def link(self, a, b, evidence_any, note):
@@ -223,6 +226,36 @@ class Case:
         return path
 
     # ---- output -------------------------------------------------------------------
+    # ---- statements --------------------------------------------------------------
+    def statement(self, evidence, witness, role, date, claims):
+        """Split a statement document into numbered claims. Each claim is text, or
+        (text, {"time": "YYYY-MM-DD HH:MM", "place": "LOC-x", "entities": [...]})."""
+        sid = f"ST-{len(self.statements) + 1}"
+        out = []
+        for i, cl in enumerate(claims, 1):
+            text, extra = (cl, {}) if isinstance(cl, str) else cl
+            c = {"id": f"{sid}.{i}", "text": text}
+            if extra.get("time"):
+                c["time"] = iso(t(extra["time"]))
+            if extra.get("place"):
+                c["place"] = extra["place"]
+            if extra.get("entities"):
+                c["entities"] = list(extra["entities"])
+            out.append(c)
+        self.statements.append({"id": sid, "evidence": evidence, "witness": witness, "role": role, "date": date, "claims": out})
+        return sid
+
+    def check(self, claim, relation, explain, other=None, evidence=None):
+        chk = {"id": f"SC-{len(self.solution['statement_checks']) + 1}", "claim": claim, "relation": relation, "explain": explain}
+        if other:
+            chk["other_claim"] = other
+        if evidence:
+            chk["evidence"] = list(evidence)
+        self.solution["statement_checks"].append(chk)
+
+    def route(self, stage, label, note):
+        self.solution["route"].append({"stage": stage, "label": label, "note": note})
+
     def write(self, out: Path) -> None:
         out = Path(out)
         by_id = {s["id"]: s for s in self.stages}
@@ -240,6 +273,8 @@ class Case:
             dump_json(self.osint, out / "osint" / "osint.json")
         if self.map:
             dump_json(self.map, out / "map" / "map.json")
+        if self.statements:
+            dump_json({"statements": self.statements}, out / "statements.json")
         for rel, data in self.files.items():
             p = out / rel
             p.parent.mkdir(parents=True, exist_ok=True)

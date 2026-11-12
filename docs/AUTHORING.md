@@ -117,8 +117,28 @@ A request rule names a request type and the targets that make sense. The player 
 | `confirmation_bias` | A report finding backs a theory while the contradicting items were never looked at |
 | `capture_page` | The player captures a page about someone outside scope |
 | `poor_capture` | The player uses a quick screenshot instead of a proper capture |
+| `lie_claim` | A finding calls a witness a liar (keywords) and cites their statement or names them, without citing the evidence that actually contradicts them |
 
 Altering an original, broken continuity, over-broad requests and unjustified requests are built in.
+
+### Statements and statement checks (version 1.3)
+
+Any statement document can be broken into numbered claims so players can compare it with others in the Statements tab.
+
+```python
+S1 = c.statement("EV-007", "A. Witness", "Customer", "2026-02-05", [
+    "I was at home all afternoon.",
+    "Nobody knocked.",
+])
+c.check(f"{S1}.2", "conflicts", "Why these two claims clash.", other=f"{S2}.3")
+c.check(f"{S1}.2", "supported", "Which item backs it up.", evidence=["EV-013"])
+```
+
+Relations are `agrees`, `conflicts`, `supported` and `contradicted`. A check that names `other` compares two claims; one that names `evidence` compares a claim with items. Statement checks count towards the analysis part of the score when a case has them.
+
+### Skill tags and the suggested route
+
+Give each key finding a `skill=` (`osint`, `evidence`, `analysis`, `reporting` or `procedure`) so the skills dashboard can show where a player is strong. Add `c.route(stage, label, note)` steps to describe one good way through the case; the investigation replay shows it after submission, labelled as one route, not the only one.
 
 ## 5. Check and calibrate
 

@@ -1,0 +1,362 @@
+{
+ "id": "getting-started",
+ "n": 1,
+ "title": "Getting started",
+ "icon": "🧭",
+ "badge": null,
+ "practice": "Find three items in a small evidence set.",
+ "lessons": [
+  {
+   "id": "gs.workspace",
+   "title": "Meet the workspace",
+   "minutes": 3,
+   "picture": "workspace",
+   "intro": "A case is worked in the workspace. The evidence list sits on the left, the tools in the middle and your objectives, findings and notes on the right.",
+   "tryit": {
+    "type": "sort",
+    "prompt": "Put each thing where it lives in the workspace.",
+    "buckets": [
+     "Left: evidence list",
+     "Middle: tools",
+     "Right: side panel"
+    ],
+    "items": [
+     [
+      "The list of items in the case",
+      0
+     ],
+     [
+      "The timeline",
+      1
+     ],
+     [
+      "Your findings",
+      2
+     ],
+     [
+      "The link chart",
+      1
+     ],
+     [
+      "Filter by type or status",
+      0
+     ],
+     [
+      "Stage objectives",
+      2
+     ]
+    ]
+   },
+   "sandbox": {
+    "task": "Open the Timeline tab, then open the Findings panel on the right.",
+    "tab": "viewer",
+    "steps": [
+     {
+      "label": "Open the Timeline tab",
+      "check": {
+       "kind": "tab",
+       "tab": "timeline"
+      }
+     },
+     {
+      "label": "Open the Findings panel",
+      "check": {
+       "kind": "side",
+       "panel": "findings"
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "Where do you see what each stage needs you to do?",
+     "options": [
+      "The objectives panel",
+      "The web browser",
+      "The evidence viewer"
+     ],
+     "answer": 0,
+     "hint": "It is in the side panel on the right."
+    },
+    {
+     "q": "What does the brief button show?",
+     "options": [
+      "Your score",
+      "The case brief and messages from your case lead",
+      "The help centre"
+     ],
+     "answer": 1,
+     "hint": "It sits in the top bar while a case is open."
+    },
+    {
+     "q": "Does the case save itself?",
+     "options": [
+      "No, only when you press Save",
+      "Yes, it autosaves as you work",
+      "Only when you close the program"
+     ],
+     "answer": 1,
+     "hint": "Look at the save status in the top bar."
+    }
+   ],
+   "learn_more": "feature.workspace"
+  },
+  {
+   "id": "gs.viewers",
+   "title": "The evidence list and viewers",
+   "minutes": 3,
+   "picture": "viewer",
+   "intro": "Every item opens in a viewer made for its type: tables, emails, phone extractions, images and documents. You always examine a working copy. The original stays sealed.",
+   "tryit": {
+    "type": "reveal",
+    "prompt": "Click each covered field of this email to reveal what the headers say.",
+    "fields": [
+     [
+      "From",
+      "orders@pebbleandpine.example.com"
+     ],
+     [
+      "To",
+      "customer@mail.example.com"
+     ],
+     [
+      "Date",
+      "Wed, 04 Feb 2026 09:15 +0000"
+     ],
+     [
+      "Reply-To",
+      "orders@pebbleandpine.example.com"
+     ]
+    ],
+    "after": "Headers say who sent an email, when, and where replies go. A Reply-To that differs from the sender is worth a closer look."
+   },
+   "sandbox": {
+    "task": "Log receipt of the order record (EV-002), then examine a working copy of it.",
+    "tab": "viewer",
+    "select": "EV-002",
+    "steps": [
+     {
+      "label": "Log receipt of EV-002",
+      "check": {
+       "kind": "received",
+       "ids": [
+        "EV-002"
+       ]
+      }
+     },
+     {
+      "label": "Examine a working copy of EV-002",
+      "check": {
+       "kind": "examined",
+       "ids": [
+        "EV-002"
+       ]
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "Why do you examine a working copy?",
+     "options": [
+      "It loads faster",
+      "So the original stays unchanged and can still be relied on",
+      "Copies have more detail"
+     ],
+     "answer": 1,
+     "hint": "Think about what would happen if the original changed."
+    },
+    {
+     "q": "Which viewer shows email headers?",
+     "options": [
+      "The email viewer",
+      "The map",
+      "The link chart"
+     ],
+     "answer": 0,
+     "hint": "Each type of item has its own viewer."
+    },
+    {
+     "q": "What does 'Not looked at' mean in the evidence list?",
+     "options": [
+      "The item is broken",
+      "You have not examined it yet",
+      "It is out of scope"
+     ],
+     "answer": 1,
+     "hint": "It changes once you examine the item."
+    }
+   ],
+   "learn_more": "feature.evidence_viewers"
+  },
+  {
+   "id": "gs.search",
+   "title": "Search and filters",
+   "minutes": 3,
+   "picture": "search",
+   "intro": "Search looks across every released item at once. Filters narrow the evidence list by type and status. Together they help you find the few items that matter among the noise.",
+   "tryit": {
+    "type": "find",
+    "prompt": "Find three items: tick every item that mentions Linnet Close.",
+    "items": [
+     [
+      "EV-002 Order record: 41 Linnet Close, Brackenfield",
+      true
+     ],
+     [
+      "EV-009 Staff rota, February",
+      false
+     ],
+     [
+      "EV-005 Courier tracking: Delivered, Linnet Close",
+      true
+     ],
+     [
+      "EV-010 Supplier invoice: oak blanks",
+      false
+     ],
+     [
+      "EV-004 Shipping label: 41 Linnet Close",
+      true
+     ],
+     [
+      "EV-003 Packing log, 2 February",
+      false
+     ]
+    ]
+   },
+   "sandbox": {
+    "task": "Open the Search tab and search for 'Linnet'.",
+    "tab": "viewer",
+    "steps": [
+     {
+      "label": "Open the Search tab",
+      "check": {
+       "kind": "tab",
+       "tab": "search"
+      }
+     },
+     {
+      "label": "Search for a word",
+      "check": {
+       "kind": "searched"
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "Search covers…",
+     "options": [
+      "Only the item you have open",
+      "Every released item in the case",
+      "The internet"
+     ],
+     "answer": 1,
+     "hint": "It searches the case, offline."
+    },
+    {
+     "q": "How do you see only the items you have not examined?",
+     "options": [
+      "Use the status filter",
+      "Restart the case",
+      "Ask for a hint"
+     ],
+     "answer": 0,
+     "hint": "The filters sit above the evidence list."
+    },
+    {
+     "q": "A case has plenty of irrelevant items. Why?",
+     "options": [
+      "It is a mistake",
+      "Real cases do too, and sorting signal from noise is a skill",
+      "To make the app slower"
+     ],
+     "answer": 1,
+     "hint": "The amount of noise rises with difficulty."
+    }
+   ],
+   "learn_more": "feature.search"
+  },
+  {
+   "id": "gs.notes",
+   "title": "Notes, findings and saving",
+   "minutes": 3,
+   "picture": "notes",
+   "intro": "Notes are your private working space. Findings are the statements you will stand behind, each labelled and backed by evidence. The case saves itself as you go.",
+   "tryit": {
+    "type": "sort",
+    "prompt": "Is each one a note or a finding?",
+    "buckets": [
+     "Note",
+     "Finding"
+    ],
+    "items": [
+     [
+      "Check the label photo later",
+      0
+     ],
+     [
+      "The label shows 41 Linnet Close (EV-004).",
+      1
+     ],
+     [
+      "Ask about the courier's clock?",
+      0
+     ],
+     [
+      "The parcel was collected at 09:30 true time (EV-005).",
+      1
+     ]
+    ]
+   },
+   "sandbox": {
+    "task": "Record one finding that cites at least one item.",
+    "tab": "viewer",
+    "steps": [
+     {
+      "label": "Add a finding with a citation",
+      "check": {
+       "kind": "finding",
+       "min": 1,
+       "cited": true
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "What makes a finding different from a note?",
+     "options": [
+      "Findings are longer",
+      "Findings are labelled and cite evidence",
+      "Notes are shown to the case lead"
+     ],
+     "answer": 1,
+     "hint": "Think about what you would stand behind in a report."
+    },
+    {
+     "q": "Can a finding be marked as fact with no evidence?",
+     "options": [
+      "Yes",
+      "No",
+      "Only in assessment mode"
+     ],
+     "answer": 1,
+     "hint": "The program will not let you."
+    },
+    {
+     "q": "What happens if the program closes unexpectedly?",
+     "options": [
+      "You lose everything",
+      "Your work up to the last autosave is kept",
+      "The case is deleted"
+     ],
+     "answer": 1,
+     "hint": "Saves are written as you work."
+    }
+   ],
+   "learn_more": "feature.findings"
+  }
+ ]
+}

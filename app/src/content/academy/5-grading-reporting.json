@@ -1,0 +1,229 @@
+{
+ "id": "grading-reporting",
+ "n": 5,
+ "title": "Grading and reporting",
+ "icon": "🖋️",
+ "badge": "Careful Writer",
+ "practice": "Grade three sources and write one cited finding.",
+ "lessons": [
+  {
+   "id": "reporting.grading",
+   "title": "Source and information grading",
+   "minutes": 3,
+   "picture": "grade",
+   "intro": "Grading says how far you trust a source (A to E) and its information (1 to 5), separately. A reliable source can still pass on something it heard second-hand.",
+   "tryit": {
+    "type": "grade",
+    "prompt": "Grade each item. Source: A always reliable to E untested. Information: 1 known to be true to 5 suspected false.",
+    "items": [
+     [
+      "A bank's own statement of transactions",
+      "A",
+      "1"
+     ],
+     [
+      "A neighbour's memory of a time",
+      "C",
+      "2"
+     ],
+     [
+      "Something a friend says someone else told them",
+      "C",
+      "3"
+     ]
+    ]
+   },
+   "sandbox": {
+    "task": "Grade three items in the evidence viewer.",
+    "tab": "viewer",
+    "steps": [
+     {
+      "label": "Grade three items",
+      "check": {
+       "kind": "graded",
+       "min": 3
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "Source and information grades are…",
+     "options": [
+      "The same thing",
+      "Separate judgements",
+      "Optional"
+     ],
+     "answer": 1,
+     "hint": "Who said it, and what was said."
+    },
+    {
+     "q": "A reliable source passes on a rumour. The information grade is…",
+     "options": [
+      "Always 1",
+      "Lower, because it is second-hand",
+      "A"
+     ],
+     "answer": 1,
+     "hint": "Reliable people can repeat unreliable things."
+    },
+    {
+     "q": "Grades help the reader…",
+     "options": [
+      "Weigh each piece of evidence",
+      "Find the map",
+      "Score you higher"
+     ],
+     "answer": 0,
+     "hint": "They show how far to trust it."
+    }
+   ],
+   "learn_more": "concept.grading"
+  },
+  {
+   "id": "reporting.corroboration",
+   "title": "Corroboration",
+   "minutes": 3,
+   "picture": "corroborate",
+   "intro": "A point is stronger when independent sources agree. Two copies of the same record are one source, not two. Look for different kinds of evidence pointing the same way.",
+   "tryit": {
+    "type": "choose",
+    "prompt": "Which pair corroborates where the parcel was left?",
+    "options": [
+     [
+      "Two copies of the same tracking export",
+      false,
+      "Copies of one record are one source."
+     ],
+     [
+      "The delivery photo and a resident's public post",
+      true,
+      "Right. Different sources, made independently, agree."
+     ],
+     [
+      "The driver's statement and the driver's tracking scan",
+      false,
+      "Both come from the driver, so they are not independent."
+     ]
+    ]
+   },
+   "check": [
+    {
+     "q": "Independent sources are…",
+     "options": [
+      "Made separately and do not rely on each other",
+      "Copies of one record",
+      "From the same person"
+     ],
+     "answer": 0,
+     "hint": "Think about where each came from."
+    },
+    {
+     "q": "Corroboration makes a finding…",
+     "options": [
+      "Weaker",
+      "Stronger",
+      "No different"
+     ],
+     "answer": 1,
+     "hint": "More independent support."
+    },
+    {
+     "q": "Facts in Investafiction usually need…",
+     "options": [
+      "One source",
+      "Support from independent sources",
+      "A photo"
+     ],
+     "answer": 1,
+     "hint": "Key findings often need two."
+    }
+   ],
+   "learn_more": "concept.corroboration"
+  },
+  {
+   "id": "reporting.report",
+   "title": "Writing a finding and building a cited report",
+   "minutes": 4,
+   "picture": "report",
+   "intro": "Good findings are short, specific and cited. A good report separates what is proved, what is likely and what is unknown, and says what should happen next.",
+   "tryit": {
+    "type": "choose",
+    "prompt": "Pick the best finding.",
+    "options": [
+     [
+      "The courier lost it.",
+      false,
+      "Too vague, no citation, and it overclaims."
+     ],
+     [
+      "The delivery photo and GPS show the parcel was left at number 14, not 41 (EV-006).",
+      true,
+      "Specific, cited and not overclaimed."
+     ],
+     [
+      "Everything points to number 14 so it is definitely there now.",
+      false,
+      "It overclaims: nobody has checked it is still there."
+     ]
+    ]
+   },
+   "sandbox": {
+    "task": "Write the report summary and record a cited inference.",
+    "tab": "report",
+    "steps": [
+     {
+      "label": "Record an inference that cites evidence",
+      "check": {
+       "kind": "finding",
+       "min": 1,
+       "type": "inference",
+       "cited": true
+      }
+     },
+     {
+      "label": "Write a summary of at least 15 words",
+      "check": {
+       "kind": "report_section",
+       "section": "summary",
+       "words": 15
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "A good report separates…",
+     "options": [
+      "Proved, likely and unknown",
+      "Long and short sentences",
+      "Old and new evidence"
+     ],
+     "answer": 0,
+     "hint": "Three columns."
+    },
+    {
+     "q": "'Definitely' in a conclusion that rests on inference is…",
+     "options": [
+      "Fine",
+      "Overclaiming",
+      "Required"
+     ],
+     "answer": 1,
+     "hint": "Match the wording to the evidence."
+    },
+    {
+     "q": "What belongs in gaps and limitations?",
+     "options": [
+      "What you could not prove or check",
+      "Your score",
+      "Nothing"
+     ],
+     "answer": 0,
+     "hint": "Being honest about limits makes a report stronger."
+    }
+   ],
+   "learn_more": "feature.report"
+  }
+ ]
+}

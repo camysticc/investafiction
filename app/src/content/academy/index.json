@@ -1,0 +1,29 @@
+{
+ "tracks": [
+  {
+   "id": "getting-started",
+   "file": "1-getting-started.json"
+  },
+  {
+   "id": "evidence-handling",
+   "file": "2-evidence-handling.json"
+  },
+  {
+   "id": "analysis-tools",
+   "file": "3-analysis-tools.json"
+  },
+  {
+   "id": "osint-basics",
+   "file": "4-osint-basics.json"
+  },
+  {
+   "id": "grading-reporting",
+   "file": "5-grading-reporting.json"
+  },
+  {
+   "id": "procedure-ethics",
+   "file": "6-procedure-ethics.json"
+  }
+ ],
+ "practice_case": "first-day"
+}

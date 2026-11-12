@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { get as setting } from "../lib/settings";
 import { useApp } from "../lib/store";
 import type { Finding } from "../lib/types";
 import { Cite, EvidencePicker, GradeControl } from "./common";
@@ -10,10 +11,10 @@ const TYPES = [
 ] as const;
 
 export function FindingForm({ initial, onDone, prefillEvidence }: { initial?: Finding; onDone: () => void; prefillEvidence?: string[] }) {
-  const { act } = useApp();
+  const { act, selected } = useApp();
   const [statement, setStatement] = useState(initial?.statement ?? "");
-  const [kind, setKind] = useState<string>(initial?.type ?? "fact");
-  const [evidence, setEvidence] = useState<string[]>(initial?.evidence ?? prefillEvidence ?? []);
+  const [kind, setKind] = useState<string>(initial?.type ?? setting("notes.default_finding_type"));
+  const [evidence, setEvidence] = useState<string[]>(initial?.evidence ?? prefillEvidence ?? (setting("notes.link_selected_evidence_to_new_findings") && selected ? [selected] : []));
   const save = async () => {
     const r = await act({ type: initial ? "update_finding" : "add_finding", id: initial?.id, statement, kind, evidence });
     if (r) onDone();

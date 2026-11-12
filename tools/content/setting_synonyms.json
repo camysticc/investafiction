@@ -1,0 +1,20 @@
+{
+ "appearance.layout_density": ["compact", "tighter", "cramped", "more room", "packed"],
+ "appearance.panel_arrangement": ["move the evidence list", "right side", "swap panels", "panel position", "notes at the bottom"],
+ "sound.interface_sounds": ["clicks", "click sounds", "button sounds", "mute clicks"],
+ "viewers.image_viewer_zoom": ["image size", "picture too small", "image opens small", "fit image"],
+ "viewers.open_items_in": ["two items side by side", "split view", "compare items", "tabs"],
+ "graph.layout": ["circle", "arrangement", "hierarchy", "grid layout"],
+ "graph.physics": ["moving", "stop moving", "keep still", "wobbly", "bouncing"],
+ "graph.edge_style": ["straight lines", "curved lines", "curves"],
+ "statements.layout": ["stacked", "columns", "one above another"],
+ "notes.default_finding_type": ["new findings start as", "default label", "start as fact"],
+ "library.view": ["list view", "grid view", "cases as a list"],
+ "library.show_completed_cases": ["finished cases", "completed cases", "hide finished", "submitted cases"],
+ "academy.contextual_help_icons": ["question marks", "little ? icons", "help icons", "hide question marks"],
+ "appearance.theme": ["dark mode", "light mode", "night mode"],
+ "appearance.text_size": ["font size", "bigger text", "smaller text"],
+ "accessibility.reduce_motion": ["animations", "less movement"],
+ "gameplay.case_clock": ["timer", "hide the clock"],
+ "integrity.action_logging": ["turn off logging", "stop logging"]
+}

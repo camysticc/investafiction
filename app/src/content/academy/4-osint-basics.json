@@ -1,0 +1,307 @@
+{
+ "id": "osint-basics",
+ "n": 4,
+ "title": "OSINT basics",
+ "icon": "🔍",
+ "badge": "Open Eyes",
+ "practice": "Capture a mock page and rule out a false match.",
+ "lessons": [
+  {
+   "id": "osint.public_private",
+   "title": "Public and private information",
+   "minutes": 3,
+   "picture": "lock",
+   "intro": "Open source research uses public information. Private material needs specific authority, and using a false identity to get it is deception. Check what your intake form allows.",
+   "tryit": {
+    "type": "sort",
+    "prompt": "Can you view it with public access only?",
+    "buckets": [
+     "Yes, public",
+     "No, needs authority"
+    ],
+    "items": [
+     [
+      "A public community board post",
+      0
+     ],
+     [
+      "A private profile's photos",
+      1
+     ],
+     [
+      "A business's public page",
+      0
+     ],
+     [
+      "Messages between two people",
+      1
+     ],
+     [
+      "A public news article",
+      0
+     ]
+    ]
+   },
+   "check": [
+    {
+     "q": "A profile is private. With public access only you…",
+     "options": [
+      "Use a fake account to follow it",
+      "Leave it and ask for authority if it is necessary",
+      "Guess the password"
+     ],
+     "answer": 1,
+     "hint": "Deception is a serious breach."
+    },
+    {
+     "q": "Where do you check what you may access?",
+     "options": [
+      "The intake form",
+      "The map",
+      "The replay"
+     ],
+     "answer": 0,
+     "hint": "It lists authorities and constraints."
+    },
+    {
+     "q": "Collecting about people with no link to the case is…",
+     "options": [
+      "Thorough",
+      "Out of scope and disproportionate",
+      "Required"
+     ],
+     "answer": 1,
+     "hint": "Collect only what you need."
+    }
+   ],
+   "learn_more": "concept.public_private"
+  },
+  {
+   "id": "osint.capture",
+   "title": "Capturing a page properly",
+   "minutes": 3,
+   "picture": "camera",
+   "intro": "Pages change and disappear. A proper capture records the address, the time and a hash, so you can show what you saw. A quick screenshot records none of that.",
+   "tryit": {
+    "type": "choose",
+    "prompt": "Which capture can you rely on in a report?",
+    "options": [
+     [
+      "A screenshot pasted into notes",
+      false,
+      "No address, time or hash. It cannot show what was on the page."
+     ],
+     [
+      "A full capture with address, time and hash",
+      true,
+      "Right. It can be checked later."
+     ],
+     [
+      "Memory of what the page said",
+      false,
+      "Memory is not evidence of what the page showed."
+     ]
+    ]
+   },
+   "sandbox": {
+    "task": "Search the web browser for 'Linnet Close parcel' and capture the post properly.",
+    "tab": "browser",
+    "steps": [
+     {
+      "label": "Capture PG-001 with Capture page",
+      "check": {
+       "kind": "captured",
+       "pages": [
+        "PG-001"
+       ]
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "A proper capture records…",
+     "options": [
+      "The address, time and a hash",
+      "Only the title",
+      "Your opinion"
+     ],
+     "answer": 0,
+     "hint": "Three things make it checkable."
+    },
+    {
+     "q": "A screenshot is…",
+     "options": [
+      "Just as good",
+      "Weaker: no capture time, address or hash",
+      "Better"
+     ],
+     "answer": 1,
+     "hint": "It is one of the traps."
+    },
+    {
+     "q": "You view a page but do not capture it, then rely on it. The problem?",
+     "options": [
+      "None",
+      "You cannot show what it said",
+      "It costs XP"
+     ],
+     "answer": 1,
+     "hint": "Pages change."
+    }
+   ],
+   "learn_more": "feature.browser"
+  },
+  {
+   "id": "osint.usernames",
+   "title": "Usernames and false matches",
+   "minutes": 3,
+   "picture": "user",
+   "intro": "The same name or handle can belong to different people or businesses. Before you rely on a match, check other details: location, dates, what they do.",
+   "tryit": {
+    "type": "choose",
+    "prompt": "You search 'Pebble and Pine' and find a garden designer in Saltmarsh, founded 2011. The shop you are looking at sells clocks online from Kestrel Bay.",
+    "options": [
+     [
+      "It is the same business",
+      false,
+      "Different town, different trade. It is a false match."
+     ],
+     [
+      "It is a different business with a similar name",
+      true,
+      "Right. Always rule out false matches."
+     ],
+     [
+      "It proves the shop is fake",
+      false,
+      "A similar name proves nothing about the shop."
+     ]
+    ]
+   },
+   "sandbox": {
+    "task": "Open the Saltmarsh business page (PG-002) in the web browser.",
+    "tab": "browser",
+    "steps": [
+     {
+      "label": "View PG-002",
+      "check": {
+       "kind": "page_viewed",
+       "pages": [
+        "PG-002"
+       ]
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "Two accounts share a handle. You should…",
+     "options": [
+      "Assume they are the same person",
+      "Compare other details before linking them",
+      "Report both"
+     ],
+     "answer": 1,
+     "hint": "Handles are not unique across sites."
+    },
+    {
+     "q": "Which detail helps rule out a false match?",
+     "options": [
+      "Location and dates",
+      "The font",
+      "The colour scheme"
+     ],
+     "answer": 0,
+     "hint": "Look for facts that differ."
+    },
+    {
+     "q": "Linking the wrong account to someone is…",
+     "options": [
+      "Harmless",
+      "A serious mistake that can mislead the whole enquiry",
+      "Expected"
+     ],
+     "answer": 1,
+     "hint": "Care protects people."
+    }
+   ],
+   "learn_more": "concept.false_matches"
+  },
+  {
+   "id": "osint.images",
+   "title": "Image clues and metadata",
+   "minutes": 3,
+   "picture": "image",
+   "intro": "Images hold clues: signs, door numbers, landmarks and sometimes metadata such as the time taken or a location. Many platforms strip metadata, so check what is really there.",
+   "tryit": {
+    "type": "reveal",
+    "prompt": "Reveal the metadata of the shop's label photo.",
+    "fields": [
+     [
+      "Camera",
+      "Shop tablet"
+     ],
+     [
+      "Taken",
+      "2026-02-02 16:11"
+     ],
+     [
+      "Note",
+      "The shop photographs every label before collection."
+     ]
+    ],
+    "after": "The photo was taken one minute after packing, which supports the packing log."
+   },
+   "sandbox": {
+    "task": "Examine the label photo (EV-004) and look at its metadata.",
+    "tab": "viewer",
+    "select": "EV-004",
+    "steps": [
+     {
+      "label": "Examine EV-004",
+      "check": {
+       "kind": "examined",
+       "ids": [
+        "EV-004"
+       ]
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "A photo on a social platform has no metadata. Why?",
+     "options": [
+      "It is fake",
+      "Many platforms strip it on upload",
+      "It is private"
+     ],
+     "answer": 1,
+     "hint": "Platforms often remove it."
+    },
+    {
+     "q": "A visible door number in a photo is…",
+     "options": [
+      "A useful clue",
+      "Irrelevant",
+      "Proof of a crime"
+     ],
+     "answer": 0,
+     "hint": "Details in the image matter."
+    },
+    {
+     "q": "Metadata says when a photo was taken. You should…",
+     "options": [
+      "Treat it as certain",
+      "Check it against other sources",
+      "Ignore it"
+     ],
+     "answer": 1,
+     "hint": "Device clocks can be wrong too."
+    }
+   ],
+   "learn_more": "feature.evidence_viewers"
+  }
+ ]
+}

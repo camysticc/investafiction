@@ -852,5 +852,92 @@ On Saturday 7 March, a little after ten in the morning, a customer bought bread,
     c.solution["next_steps"] = (f"Arrange an immediate, low-key welfare visit to Heronmere Lodges cabin 7; speak gently to {P3} first, as they are likely to know more; "
                                 f"review the risk grade once there is contact; speak to {P1} about his movements on Friday night and the unregistered number; "
                                 "keep the family informed without sharing the location until the person's wishes are known.")
+
+    # ------------------------------------------------------------------ statements (comparison tool)
+    m = first(MP)
+    A = c.statement("EV-002", W1, "Parent", "2026-03-10", [
+        (f"The last message I had from {m} was on Friday afternoon at about four.", {"time": "2026-03-06 16:00", "entities": ["ENT-MP"]}),
+        (f"{P2} told me {m} messaged on Friday at about quarter past eight saying they were going off grid for a bit.", {"time": "2026-03-06 20:15", "entities": ["ENT-P2", "ENT-MP"]}),
+        (f"It is not like {m} to go away without telling me.", {"entities": ["ENT-MP"]}),
+        (f"{m} split up with {P1} at Christmas, and there was an argument about money.", {"entities": ["ENT-MP", "ENT-P1"]}),
+        (f"{m}'s close friends are {P2} from work and {P3} from the rowing club.", {"entities": ["ENT-P2", "ENT-P3"]}),
+    ])
+    B = c.statement("EV-003", W3, "Neighbour", "2026-03-11", [
+        (f"At about half seven or just after, I saw {m} put a big holdall in the blue car and drive off.", {"time": "2026-03-06 19:35", "place": "LOC-HOME", "entities": ["ENT-MP", "ENT-V-MP"]}),
+        "They seemed in a hurry but not upset.",
+        ("Around the same time a white van I had never seen before was parked a couple of doors down.", {"time": "2026-03-06 19:35", "place": "LOC-HOME"}),
+    ])
+    Cm = c.statement("EV-008", W2, "Garden centre manager", "2026-03-11", [
+        (f"{m} worked on Friday 6 March until half five.", {"time": "2026-03-06 17:30", "place": "LOC-WORK", "entities": ["ENT-MP"]}),
+        (f"On Thursday {m} asked if they could take some holiday at short notice.", {"entities": ["ENT-MP"]}),
+        (f"{m} is reliable.", {"entities": ["ENT-MP"]}),
+    ])
+    D = c.statement("EV-017", W4, "Rowing club captain", "2026-03-11", [
+        (f"{m} trains on Mondays and Thursdays and missed Monday 9 March without telling anyone.", {"entities": ["ENT-MP"]}),
+        (f"Last week there was a heated row in the club group chat between {m} and {P4} about the stroke seat.", {"entities": ["ENT-MP", "ENT-P4"]}),
+        (f"{first(P4)} can be hot-headed, but I would be very surprised if it meant anything more.", {"entities": ["ENT-P4"]}),
+        (f"{m} is close to {P3}.", {"entities": ["ENT-MP", "ENT-P3"]}),
+    ])
+    E_ = c.statement("EV-032", P1, "Ex-partner", "2026-03-12", [
+        (f"{m} owes me about six hundred pounds for a holiday we never went on.", {"entities": ["ENT-P1", "ENT-MP"]}),
+        ("On Friday 6 March I was at home all evening watching the football. I did not go out.", {"time": "2026-03-06 19:00", "place": "LOC-P1-HOME", "entities": ["ENT-P1"]}),
+        (f"I have not seen {m} since January.", {"entities": ["ENT-P1", "ENT-MP"]}),
+        ("I only have one phone.", {"entities": ["ENT-P1", "ENT-PH-P1"]}),
+        ("I drive a white van for work.", {"entities": ["ENT-P1", "ENT-V-P1"]}),
+    ])
+    F_ = c.statement("EV-033", P3, "Friend", "2026-03-12", [
+        (f"The last time I saw {m} was at training on Thursday 5 March.", {"time": "2026-03-05 19:00", "place": "LOC-CLUB", "entities": ["ENT-P3", "ENT-MP"]}),
+        (f"They seemed tired and fed up about {first(P1)} and money.", {"entities": ["ENT-P1"]}),
+        (f"I don't know where {m} is.", {"entities": ["ENT-P3"]}),
+    ])
+    G_ = c.statement("EV-034", P4, "Rowing club member", "2026-03-12", [
+        ("I lost my temper in the group chat and apologised the same night.", {"entities": ["ENT-P4"]}),
+        (f"When the crew list went up on Thursday I congratulated {m}.", {"entities": ["ENT-P4", "ENT-MP"]}),
+        ("On Friday evening I was at my sister's birthday meal in town from seven until late.", {"time": "2026-03-06 19:00", "entities": ["ENT-P4"]}),
+    ])
+    H_ = c.statement("EV-035", P2, "Friend and colleague", "2026-03-12", [
+        (f"{m} messaged me on Friday at 20:14 saying they were going off grid.", {"time": "2026-03-06 20:14", "entities": ["ENT-P2", "ENT-MP"]}),
+        (f"On Saturday I posted a brunch photo tagging {m}, but I had scheduled it on Wednesday.", {"entities": ["ENT-P2"]}),
+        (f"{m} goes somewhere every Tuesday evening but would never say where.", {"entities": ["ENT-MP"]}),
+    ])
+    I_ = c.statement("EV-038", "Heronmere Farm Shop owner", "Shop owner", "2026-03-12", [
+        ("On Saturday 7 March, a little after ten, a customer bought bread, milk, eggs and firelighters and paid by card.", {"time": "2026-03-07 10:05", "place": "LOC-FARM"}),
+        ("They looked tired but were polite.", {}),
+        ("I think they've been in on Tuesday evenings a few times recently.", {"place": "LOC-FARM"}),
+    ])
+    c.check(f"{A}.2", "agrees", "The parent's second-hand account and the friend's own statement give the same message at about the same time.", other=f"{H_}.1")
+    c.check(f"{H_}.1", "supported", "The friend's phone extraction and the network records show the message at 20:14.", evidence=["EV-010", "EV-031"])
+    c.check(f"{A}.1", "supported", "The network records show contact with the parent's number at 16:01. It was a call, not a message: an ordinary slip.", evidence=["EV-031"])
+    c.check(f"{B}.1", "supported", "The doorbell camera, corrected for its fast clock, shows the departure at 19:40, and ANPR reads the car at 19:52.", evidence=["EV-011", "EV-022"])
+    c.check(f"{B}.3", "supported", "The courier delivery record explains the white van: deliveries at 19:33 and 19:41.", evidence=["EV-037"])
+    c.check(f"{Cm}.1", "supported", "The till log shows the last log-off at about 17:28 on Friday.", evidence=["EV-005", "EV-004"])
+    c.check(f"{D}.2", "supported", "The group chat export shows the argument and the apology the same evening.", evidence=["EV-018"])
+    c.check(f"{G_}.1", "supported", "The chat shows 'Sorry for the rant' at 20:50 on 3 March.", evidence=["EV-018"])
+    c.check(f"{A}.4", "agrees", "The ex-partner confirms the money dispute in his own words.", other=f"{E_}.1")
+    c.check(f"{D}.4", "agrees", "The parent and the club captain both name the same close friend.", other=f"{A}.5")
+    c.check(f"{E_}.2", "contradicted", "ANPR reads his van going north on Quarry Road at 22:10 and back at 23:20. His account does not match the data. That raises questions; it does not show what he did.", evidence=["EV-022", "EV-036"])
+    c.check(f"{E_}.4", "contradicted", "An unregistered number appears in his own marketplace listing and called the missing person.", evidence=["PG-006", "EV-041"])
+    c.check(f"{H_}.3", "agrees", "The farm shop owner independently remembers a customer on Tuesday evenings.", other=f"{I_}.3")
+    c.check(f"{H_}.3", "supported", "The location history shows Tuesday evening trips to Heronmere for six weeks.", evidence=["EV-026"])
+    c.check(f"{I_}.1", "supported", "The card payment at Heronmere Farm Shop is at 10:12 on Saturday.", evidence=["EV-024"])
+    c.trap("Mistaking a difference for a lie", "statements",
+           {"kind": "lie_claim", "keywords": [["lie", "lied", "lying", "liar", "untruthful", "dishonest", "false statement", "made up", "fabricat", "deliberately misled", "covering up", "covering for"]],
+            "contradicting": ["EV-022", "PG-006", "EV-041"]},
+           2, "minor",
+           "A short or careful statement, or a detail that differs from the records, is not proof that someone lied. Note the difference and what would test it. Only say someone gave a false account where evidence directly contradicts what they said.",
+           "Careful. What evidence shows this person knew the truth and said otherwise? A gap in a statement is a reason to ask, not a finding of dishonesty.")
+
+    # ------------------------------------------------------------------ skill areas and suggested route
+    for f in c.solution["findings"]:
+        f["skill"] = {"KF-04": "osint", "KF-05": "osint", "KF-06": "osint", "KF-07": "osint", "KF-13": "osint", "KF-17": "osint",
+                      "KF-18": "osint", "KF-22": "osint", "KF-21": "evidence", "KF-03": "reporting", "KF-15": "reporting",
+                      "KF-16": "reporting"}.get(f["id"], "analysis")
+    c.route("S1", "Fix the last contact and the departure time", "Use the friend's phone and the doorbell log, correcting the camera's fast clock, then grade the risk with reasons.")
+    c.route("S2", "Confirm which accounts are really theirs", "Rule out the same-named Bayboard user before reading anything into it, and capture every page you rely on.")
+    c.route("S2", "Check how posts were made", "The Sunday post was scheduled on Thursday, so it is not proof of activity on Sunday.")
+    c.route("S3", "Line up ANPR, cell sites and location history", "All three point north towards Heronmere on Friday evening.")
+    c.route("S4", "Compare the statements with the data", "Test each account against ANPR, the chat export and the courier record. The ex-partner's alibi fails; the white van has an ordinary explanation.")
+    c.route("S4", "Treat the close friend's short statement with care", "It leaves out an offer of a place to stay. That is a reason to ask, not proof of dishonesty.")
+    c.route("S5", "Hand over a prioritised location", "Recommend cabin 7 first, as an assessment with its reasons, not a certainty.")
     c.solution["story"] = __doc__.split("STORY BIBLE (private, for authors)")[1].strip()
     return c

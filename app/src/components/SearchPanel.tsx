@@ -16,7 +16,10 @@ export default function SearchPanel() {
   const [res, setRes] = useState<{ results: any[]; ms: number } | null>(null);
   const allTypes = [...new Set(game!.case.evidence.map((e) => e.type))];
   const tags = [...new Set(game!.case.evidence.flatMap((e) => e.tags))];
-  const go = () => run(async () => setRes(await call("search", { query: q, types, from, to, entity, tag, grade })));
+  const go = () => run(async () => {
+    setRes(await call("search", { query: q, types, from, to, entity, tag, grade }));
+    window.dispatchEvent(new CustomEvent("inv:searched"));
+  });
   return (
     <div className="search-panel">
       <h2>Search and filter</h2>

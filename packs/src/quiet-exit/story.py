@@ -768,5 +768,68 @@ The photos on the server are my family pictures. I put them there when my laptop
     c.solution["next_steps"] = (f"Seek the USB drive {SERIAL} and examine it; preserve the cloud share records; ask {EXT} through proper channels to preserve and return the data; "
                                 f"interview both engineers separately with disclosure planned; examine WS-ENG-04 fully; refer the shared password and the photos to the business; "
                                 "and set aside the privileged email and the personal phone image without examining them.")
+
+    # ------------------------------------------------------------------ statements (comparison tool)
+    A = c.statement("EV-028", P4, "IT manager", "2026-03-05", [
+        (f"svc-cadsync was set up by {P1} last summer to sync CAD files to the cloud.", {"entities": ["ENT-SVC", "ENT-P1"]}),
+        (f"Its password was the same as {P1}'s own password.", {"entities": ["ENT-SVC", "ENT-P1"]}),
+        (f"{P1} told me in January that they had given the password to {P2} so jobs could keep running.", {"entities": ["ENT-P1", "ENT-P2", "ENT-SVC"]}),
+        ("The 12 February patch rewrote the headers of every CAD file, so their modified times all changed to that night.", {"time": "2026-02-12 02:00"}),
+        ("I re-exported the WS-ENG-04 listing on 3 March because the first export had a write error. The first file should not be relied on.", {"time": "2026-03-03 23:10", "entities": ["ENT-WS04"]}),
+        ("I noticed the cloud alert on 2 March. It had gone to a shared mailbox nobody checks.", {}),
+    ])
+    B = c.statement("EV-046", W3, "Night security guard", "2026-03-06", [
+        ("On Tuesday 24 February at about half nine I saw one of the engineers in the corridor by the CAD room.", {"time": "2026-02-24 21:30"}),
+        (f"They were tall, with a beard. I think it was {P1}, the one who was leaving.", {"entities": ["ENT-P1"]}),
+        ("I only work nights here twice a week, so I don't know all the staff well.", {}),
+    ])
+    Cc = c.statement("EV-047", P3, "IT contractor", "2026-03-06", [
+        (f"I do monthly patching and account reviews under the admin account adm-{U3}, always booked in the change log.", {"entities": ["ENT-P3"]}),
+        ("On 18 February I was in the server room from about half nine to half ten at night.", {"time": "2026-02-18 21:30", "entities": ["ENT-P3"]}),
+        ("I don't use design files and I have never used svc-cadsync.", {"entities": ["ENT-P3", "ENT-SVC"]}),
+    ])
+    D = c.statement("EV-055", W4, "Lab technician", "2026-03-06", [
+        (f"Around nine on Tuesday 24 February I saw {P2} in the CAD room at desk 4.", {"time": "2026-02-24 21:00", "entities": ["ENT-P2", "ENT-WS04"]}),
+        ("I thought it was odd because they never work late.", {"entities": ["ENT-P2"]}),
+        ("I sent my partner a message about it at the time.", {"time": "2026-02-24 21:07", "entities": ["ENT-W4"]}),
+    ])
+    E_ = c.statement("EV-056", P5, "Head of design", "2026-03-06", [
+        ("I sign off every manufacturer link. I did not approve any share of KITTIWAKE.", {"entities": ["ENT-P5"]}),
+        ("The two links in February were for GANNET.", {}),
+        ("The photos on the server are my family pictures. I know that is against policy.", {"entities": ["ENT-P5"]}),
+    ])
+    c.check(f"{A}.1", "supported", "The password audit shows svc-cadsync set up on 30 June 2025 and sharing the leaver's password.", evidence=["EV-027"])
+    c.check(f"{A}.2", "supported", "The password audit shows the same password hash on both accounts.", evidence=["EV-027"])
+    c.check(f"{A}.4", "supported", "Change CHG-0412 records the patch and says it rewrites modified times.", evidence=["EV-020"])
+    c.check(f"{A}.5", "supported", "The acquisition notes and change CHG-0431 record the failed first export and the re-export.", evidence=["EV-003", "EV-020"])
+    c.check(f"{A}.6", "supported", "The cloud provider's alert sits unread in the shared mailbox.", evidence=["EV-032"])
+    c.check(f"{B}.2", "conflicts", f"The lab technician saw {P2} at desk 4 at the same time. The guard works two nights a week and both engineers have beards: an honest mistake is far more likely than a lie.", other=f"{D}.1")
+    c.check(f"{B}.2", "contradicted", f"The door log has no entry for {P1} that evening, while {P2}'s card opened the CAD room at 21:00.", evidence=["EV-039"])
+    c.check(f"{Cc}.1", "supported", "The change log books the contractor's admin review for 18 February.", evidence=["EV-020"])
+    c.check(f"{Cc}.2", "supported", "The contractor's card opened the server room at 21:25 and left at 22:30.", evidence=["EV-039"])
+    c.check(f"{D}.1", "supported", f"The door log shows {P2} in the CAD room from 21:00.", evidence=["EV-039", "EV-043"])
+    c.check(f"{D}.3", "supported", "The message to the partner at 21:07 is on the technician's phone.", evidence=["EV-054"])
+    c.check(f"{E_}.2", "supported", "The cloud log shows two GANNET release links approved by the head of design.", evidence=["EV-026"])
+    c.check(f"{E_}.3", "supported", "The projects share listing shows the personal photo folders.", evidence=["EV-024"])
+    c.trap("Mistaking a difference for a lie", "statements",
+           {"kind": "lie_claim", "keywords": [["lie", "lied", "lying", "liar", "untruthful", "dishonest", "false statement", "made up", "fabricat", "deliberately misled", "covering up", "covering for"]]},
+           2, "minor",
+           "When two witnesses disagree, the usual reasons are memory, lighting, distance and not knowing people well. Record the conflict and what resolves it, such as the door log. Saying someone lied needs evidence that they knew the truth.",
+           "Careful. Is there evidence this witness knew the truth and said otherwise, or is it more likely an honest mistake?")
+
+    # ------------------------------------------------------------------ skill areas and suggested route
+    for f in c.solution["findings"]:
+        f["skill"] = {"KF-01": "evidence", "KF-03": "evidence", "KF-05": "evidence", "KF-06": "evidence", "KF-16": "evidence",
+                      "KF-26": "evidence", "KF-32": "evidence", "KF-33": "osint", "KF-36": "osint", "KF-09": "osint",
+                      "KF-11": "reporting", "KF-22": "reporting", "KF-23": "reporting", "KF-24": "reporting",
+                      "KF-30": "procedure", "KF-34": "procedure"}.get(f["id"], "analysis")
+    c.route("S1", "Hash everything and report the failed export", "One listing fails its hash. Record and report it, do not repair it, and wait for the verified re-export.")
+    c.route("S2", "Follow the USB drive across devices", "Match the serial number on WS-ENG-07 and the laptop, and recover the deleted folder entries.")
+    c.route("S2", "Explain the 12 February times", "The patch changed every modified time. Read the change log before treating it as activity.")
+    c.route("S3", "Separate the account from the person", "svc-cadsync was used to make the link, but two people knew its password.")
+    c.route("S4", "Put people on site with the door log", "Correct the lobby camera's fast clock, then compare door, ANPR and camera times for both evenings.")
+    c.route("S4", "Line up the two witness accounts", "The guard and the technician disagree about who was there. The door log resolves it; nobody needs to have lied.")
+    c.route("S5", "Read the messages around 21:19", "The company phone message 'Link's live' ties the share link to a person and a time.")
+    c.route("S6", "Write two routes, two people, three columns", "Set out proved, likely and unknown for the USB route and the cloud route separately.")
     c.solution["story"] = __doc__.split("STORY BIBLE (private, for authors)")[1].strip()
     return c
