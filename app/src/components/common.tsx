@@ -1,11 +1,18 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { useApp } from "../lib/store";
 import { TYPE_ICONS, type EvidenceItem, type Grade } from "../lib/types";
 import { cls } from "../lib/util";
 
 export function Modal({ title, onClose, children, wide }: { title: string; onClose: () => void; children: React.ReactNode; wide?: boolean }) {
-  return (
-    <div className="modal-back" role="dialog" aria-modal="true" aria-label={title} onKeyDown={(e) => e.key === "Escape" && onClose()}>
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+  }, [onClose]);
+  // Drawn on the page root so it never inherits colours from the bar it was opened from.
+  return createPortal(
+    <div className="modal-back" role="dialog" aria-modal="true" aria-label={title}>
       <div className={cls("modal", wide && "modal-wide")}>
         <div className="modal-head">
           <h3>{title}</h3>
@@ -15,7 +22,8 @@ export function Modal({ title, onClose, children, wide }: { title: string; onClo
         </div>
         <div className="modal-body">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

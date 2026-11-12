@@ -4,6 +4,8 @@ import { useApp } from "../lib/store";
 import type { LibraryCase } from "../lib/types";
 import { fmtDuration, fmtTime } from "../lib/util";
 import { Modal } from "./common";
+import { openAcademy } from "../lib/ui";
+import { useProgress, totalXp, rankFor } from "../lib/progress";
 
 export default function Library() {
   const { setGame, run, toast, confirm } = useApp();
@@ -13,6 +15,7 @@ export default function Library() {
   const [busy, setBusy] = useState(false);
   const [mode, setMode] = useState<"training" | "assessment">("training");
   const fileRef = useRef<HTMLInputElement>(null);
+  const progress = useProgress();
 
   const load = () => run(async () => setCases((await call("library.list")).cases));
   useEffect(() => {
@@ -61,12 +64,21 @@ export default function Library() {
               Assessment
             </button>
           </div>
+          <button onClick={openAcademy} title="Practice on a made-up case, earn XP and badges">
+            🎓 Academy · {rankFor(totalXp(progress)).name}
+          </button>
           <button className="primary" disabled={busy} onClick={() => fileRef.current?.click()}>
             {busy ? "Checking pack…" : "Import case pack"}
           </button>
           <input ref={fileRef} type="file" accept=".invcase" hidden onChange={(e) => onFile(e.target.files?.[0])} />
         </div>
       </div>
+      {progress.academy !== "done" && (
+        <div className="banner academy-banner">
+          <span>🎓 <b>New here?</b> The Training Academy is a five minute, hands-on practice run. Earn XP and badges as you learn the desk.</span>
+          <button className="primary" onClick={openAcademy}>{progress.academy === "started" ? "Resume the Academy" : "Start the Academy"}</button>
+        </div>
+      )}
       <p className="mode-note muted">
         {mode === "training" ? "Training mode: three levels of hint (each costs a few marks) and a warning before any procedural mistake." : "Assessment mode: no hints or warnings. You see your feedback only after you submit."}
       </p>

@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Fixed: the case brief and other pop-up windows opened from the top bar showed pale, hard to read text. Pop-ups are now drawn at the page root and set their own text colour.
+- Added a Settings window (gear in the top bar, or press the comma key): light, dark or match-my-computer theme, six accent colours, four fonts, line spacing, spacing density, side panel width, text size, high contrast, reduced animation, colour-blind friendly colours, case clock toggle, sound, and reset.
+- Added the Training Academy: seven hands-on missions on a made-up mini case with XP, ranks and badges. Offered on first launch, skippable at any point, and replayable from Settings or the library.
+- Added a short guided tour of the real case desk the first time a case is opened. It waits for real clicks, gives a little XP and can be skipped.
+- Dark theme: paper documents, maps, link charts and simulated web pages stay light so they look like the real thing.
+
 ## 1.0.0
 
 First full build.

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { call } from "../lib/api";
 import { useApp } from "../lib/store";
+import { SettingsButton } from "./Settings";
+import { openSettings } from "../lib/ui";
 
 export const PRESETS = [
   { name: "Officer Smith", initials: "OS", colour: "#3a6ea5", line: "Steady and thorough." },
@@ -22,6 +24,7 @@ export default function Welcome() {
   const [pick, setPick] = useState<string | null>(null);
   return (
     <div className="welcome">
+      <SettingsButton className="welcome-gear" onOpen={openSettings} />
       <div className="welcome-inner">
         <div className="brand-big">
           <img src="/icon.svg" alt="" width={56} height={56} />

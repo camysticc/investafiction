@@ -5,6 +5,8 @@ import { fmtDuration, fmtTime } from "../lib/util";
 import { Avatar, PRESETS } from "./Welcome";
 import BriefView from "./BriefView";
 import { Modal } from "./common";
+import { SettingsButton } from "./Settings";
+import { openSettings } from "../lib/ui";
 
 export default function TopBar({ onLeave }: { onLeave: () => void }) {
   const { profile, setProfile, game, saving, lastSaved, act, run } = useApp();
@@ -45,11 +47,13 @@ export default function TopBar({ onLeave }: { onLeave: () => void }) {
             {saving ? "Saving…" : lastSaved ? `Saved ${lastSaved.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}` : "Autosave on"}
           </div>
           <button onClick={() => act({ type: "save" })}>Save</button>
-          <button onClick={() => setBrief(true)}>
+          <button data-tour="brief" onClick={() => setBrief(true)}>
             Brief{unread ? <span className="badge">{unread}</span> : null}
           </button>
         </div>
       )}
+      <div className="topbar-end">
+      <SettingsButton onOpen={openSettings} />
       <div className="profile" ref={ref}>
         <button className="profile-badge" aria-haspopup="menu" aria-expanded={menu} onClick={() => setMenu(!menu)}>
           <Avatar name={profile!.name} size={28} />
@@ -67,6 +71,9 @@ export default function TopBar({ onLeave }: { onLeave: () => void }) {
             <button role="menuitem" onClick={() => { setChanging(true); setMenu(false); }}>
               Change name
             </button>
+            <button role="menuitem" onClick={() => { openSettings(); setMenu(false); }}>
+              Settings…
+            </button>
             <div className="menu-row">
               <span>Text size</span>
               <button aria-label="Smaller text" onClick={() => setScale(Math.max(0.8, +(scale - 0.1).toFixed(1)))}>A−</button>
@@ -75,6 +82,7 @@ export default function TopBar({ onLeave }: { onLeave: () => void }) {
             </div>
           </div>
         )}
+      </div>
       </div>
       {changing && (
         <Modal title="Change your name" onClose={() => setChanging(false)}>
