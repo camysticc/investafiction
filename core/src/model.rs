@@ -394,6 +394,56 @@ pub struct KeyFinding {
     pub min_sources: usize,
     pub keywords: Keywords,
     pub explain: String,
+    /// osint, evidence, analysis, reporting or procedure. Used by the skills dashboard.
+    #[serde(default)]
+    pub skill: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct StatementCheck {
+    pub id: String,
+    pub claim: String,
+    #[serde(default)]
+    pub other_claim: Option<String>,
+    #[serde(default)]
+    pub evidence: Vec<String>,
+    /// conflicts (with other_claim), contradicted or supported (by evidence), agrees (with other_claim)
+    pub relation: String,
+    pub explain: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct RouteStep {
+    pub stage: String,
+    pub label: String,
+    pub note: String,
+}
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct Claim {
+    pub id: String,
+    pub text: String,
+    #[serde(default)]
+    pub time: Option<String>,
+    #[serde(default)]
+    pub place: Option<String>,
+    #[serde(default)]
+    pub entities: Vec<String>,
+}
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct Statement {
+    pub id: String,
+    pub evidence: String,
+    pub witness: String,
+    pub role: String,
+    pub date: String,
+    pub claims: Vec<Claim>,
+}
+
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct Statements {
+    pub statements: Vec<Statement>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -452,6 +502,10 @@ pub struct Solution {
     pub next_steps: String,
     #[serde(default)]
     pub story: String,
+    #[serde(default)]
+    pub statement_checks: Vec<StatementCheck>,
+    #[serde(default)]
+    pub route: Vec<RouteStep>,
 }
 
 /// Everything loaded from an installed case folder.
@@ -466,6 +520,7 @@ pub struct CaseData {
     pub evidence: Vec<EvidenceItem>,
     pub osint: Osint,
     pub map: Option<MapData>,
+    pub statements: Vec<Statement>,
     pub rules: Rules,
     pub solution: Solution,
     /// Hashes recorded when the pack was imported, by relative path.
@@ -484,6 +539,12 @@ impl CaseData {
     }
     pub fn stage_index(&self, id: &str) -> Option<usize> {
         self.stages.stages.iter().position(|s| s.id == id)
+    }
+    pub fn claim(&self, id: &str) -> Option<(&Statement, &Claim)> {
+        self.statements.iter().find_map(|s| s.claims.iter().find(|c| c.id == id).map(|c| (s, c)))
+    }
+    pub fn is_statement_doc(&self, evidence: &str) -> bool {
+        self.statements.iter().any(|s| s.evidence == evidence)
     }
     pub fn request_type(&self, id: &str) -> Option<&RequestType> {
         self.stages.request_types.iter().find(|r| r.id == id)

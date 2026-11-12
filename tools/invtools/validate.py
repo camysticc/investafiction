@@ -304,6 +304,43 @@ def check_cross_refs(data: dict, rels: dict, report: Report) -> None:
             if pid not in pages:
                 report.err(f"{trap['id']}: unknown page {pid}")
 
+    # Statements, their claims and the checks that mark them
+    claims = {}
+    locs = {l["id"] for l in (data.get("map/map.json") or {}).get("locations", [])}
+    for st in data.get("statements.json", {}).get("statements", []):
+        if st["evidence"] not in items:
+            report.err(f"{st['id']}: unknown evidence {st['evidence']}")
+        elif items[st["evidence"]].get("type") not in ("statement", "interview"):
+            report.warn(f"{st['id']}: {st['evidence']} is not a statement document")
+        for cl in st["claims"]:
+            if not cl["id"].startswith(st["id"] + "."):
+                report.err(f"{cl['id']}: claim id must start with {st['id']}.")
+            if cl["id"] in claims:
+                report.err(f"{cl['id']}: defined twice")
+            claims[cl["id"]] = st
+            if cl.get("place") and cl["place"] not in locs:
+                report.err(f"{cl['id']}: place {cl['place']} is not on the map")
+            for e in cl.get("entities", []):
+                if e not in entities:
+                    report.err(f"{cl['id']}: unknown entity {e}")
+    for chk in sol.get("statement_checks", []):
+        for c in [chk["claim"]] + ([chk["other_claim"]] if chk.get("other_claim") else []):
+            if c not in claims:
+                report.err(f"{chk['id']}: unknown claim {c}")
+        if chk["relation"] in ("conflicts", "agrees") and not chk.get("other_claim"):
+            report.err(f"{chk['id']}: needs a second claim")
+        if chk["relation"] in ("contradicted", "supported") and not chk.get("evidence"):
+            report.err(f"{chk['id']}: needs evidence")
+        for e in chk.get("evidence", []):
+            if e not in ev_or_page:
+                report.err(f"{chk['id']}: unknown evidence {e}")
+    for r in sol.get("route", []):
+        if r["stage"] not in stage_ids:
+            report.err(f"route step '{r['label']}': unknown stage {r['stage']}")
+    skills = [f.get("skill") for f in sol["findings"]]
+    if any(skills) and not all(skills):
+        report.warn("Some key findings have a skill area and some do not; untagged ones count as analysis")
+
 
 def validate_path(path: Path) -> Report:
     path = Path(path)

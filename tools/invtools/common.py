@@ -29,6 +29,7 @@ SCHEMA_FOR = {
     "map/map.json": "map.schema.json",
     "rules.json": "rules.schema.json",
     "solution.json": "solution.schema.json",
+    "statements.json": "statements.schema.json",
 }
 REQUIRED_FILES = ["manifest.json", "brief.md", "intake.json", "stages.json", "entities.json",
                   "evidence/evidence.json", "rules.json", "solution.json"]

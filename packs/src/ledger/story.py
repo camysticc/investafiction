@@ -967,5 +967,64 @@ The finance system is hosted by the vendor in the United States. Its reports use
         "Ask the bank for the identity document image and application IP records; check the mail forwarding service's customer records; "
         "secure WS-AP-03 for forensic examination before any interview; review whether the finance manager's password was written down; "
         "refer the refund payments separately; and recommend that the business switches off fast user switching and adds a second factor to approvals.")
+
+    # ------------------------------------------------------------------ statements (comparison tool)
+    S1 = c.statement("EV-007", W1, "Head of finance", "2026-03-03", [
+        (f"The finance team is {P2} (finance manager), {P1} (accounts payable supervisor) and {P4} (junior clerk).", {"entities": ["ENT-P2", "ENT-P1", "ENT-P4"]}),
+        "At the end of February the year-end cash reconciliation showed a gap of nearly eighty thousand pounds.",
+        (f"I assumed at first that {FAKE} was part of {REAL}.", {"entities": ["ENT-ORG2", "ENT-ORG3"]}),
+        (f"Supplier payments up to five thousand pounds are approved by {P2}; anything over needs a director to countersign.", {"entities": ["ENT-P2"]}),
+        (f"I believe the payments to {FAKE} started in the summer.", {"entities": ["ENT-ORG2"]}),
+        (f"{P2} is careful and has never given me cause for concern.", {"entities": ["ENT-P2"]}),
+        "I have not discussed this with anyone in the team.",
+    ])
+    S2 = c.statement("EV-038", W2, "Office manager", "2026-03-05", [
+        "I keep the staff rota and the leave calendar. Leave is booked through me.",
+        (f"{P2} took two weeks off in August, a week at the end of October and the Christmas fortnight.", {"entities": ["ENT-P2"]}),
+        (f"When {first(P2)} is on leave, nobody else can approve payments unless a director logs in.", {"entities": ["ENT-P2"]}),
+        (f"{P2} does not take a laptop home and handed the old one back to IT.", {"entities": ["ENT-P2"]}),
+        (f"{P3} covered night shifts, but only in the winter months.", {"entities": ["ENT-P3"]}),
+        (f"I have seen {first(P3)} using the warehouse terminal late at night to book in deliveries.", {"entities": ["ENT-P3", "ENT-DEV3"]}),
+        (f"{P1} is usually first in; I often see {first(P1)} at their desk before eight o'clock.", {"entities": ["ENT-P1"]}),
+        "Staff give a personal number for emergencies if they want to.",
+    ])
+    S3 = c.statement("EV-039", W3, "IT administrator", "2026-03-05", [
+        ("I took the exports from the finance system, email and domain controller on 2 March 2026 and handed them over on sealed media.", {"time": "2026-03-02 16:00"}),
+        "The finance PCs have fast user switching turned on, so a second person can log on without the first logging off.",
+        "An approval can be made from any company workstation as long as the user's own password is entered. There is no second factor.",
+        "I once found a password on a sticky note under a keyboard in the accounts office, but cannot remember whose desk it was.",
+        "The finance system's reports use the vendor's own time zone, and I did not change it when I exported the data.",
+        (f"{P2}'s old laptop, LT-FM-01, was returned in November 2024 and has not been used since.", {"entities": ["ENT-P2"]}),
+    ])
+    c.check(f"{S1}.3", "contradicted", f"The genuine supplier's credit control says it has no new division, and the supplier list shows different bank details. The head of finance's assumption was understandable but wrong.", evidence=["EV-028", "EV-006", "PG-002"])
+    c.check(f"{S1}.4", "supported", "The finance policy sets the same single approval limit and countersignature rule.", evidence=["EV-002"])
+    c.check(f"{S1}.5", "supported", "The first payment to the receiving business is on 8 July 2025, which is summer.", evidence=["EV-003", "EV-034"])
+    c.check(f"{S2}.2", "supported", "The leave calendar shows the same three periods of leave.", evidence=["EV-035"])
+    c.check(f"{S2}.3", "conflicts", "The office manager believes nobody else can approve during leave. The IT administrator explains that anyone at any workstation can approve with the user's password. This is a difference in knowledge, not a lie.", other=f"{S3}.3")
+    c.check(f"{S2}.3", "contradicted", "Six approvals under the finance manager's login were made during leave, so other people clearly could approve.", evidence=["EV-012", "EV-035"])
+    c.check(f"{S2}.4", "agrees", "Both witnesses say the finance manager's old laptop went back to IT.", other=f"{S3}.6")
+    c.check(f"{S2}.5", "contradicted", "The night deliveries log and the rota show nights in September as well as the winter months. It is a small slip of memory that does not change her account of the late logins.", evidence=["EV-042", "EV-035"])
+    c.check(f"{S2}.6", "supported", "The login log shows evening logons on the warehouse terminal during the night shift months.", evidence=["EV-036", "EV-042"])
+    c.check(f"{S3}.2", "supported", "The login log shows 'switch user logon' and 'switch user return' events on WS-AP-03 around each approval.", evidence=["EV-036"])
+    c.check(f"{S3}.5", "supported", "The approvals export's metadata names the vendor's Pacific time zone.", evidence=["EV-012"])
+    c.trap("Mistaking a difference for a lie", "statements",
+           {"kind": "lie_claim", "keywords": [["lie", "lied", "lying", "liar", "untruthful", "dishonest", "false statement", "made up", "fabricat", "deliberately misled", "covering up"]]},
+           2, "minor",
+           "Witnesses misremember dates and details all the time. A difference between a statement and the records, or between two statements, is something to note and explain, not proof that someone lied. Only say a person lied if evidence shows they knew the truth and said otherwise.",
+           "Careful. Does the evidence show this person knew the truth and chose to say otherwise, or could it be a gap in memory or knowledge?")
+
+    # ------------------------------------------------------------------ skill areas and suggested route
+    for f in c.solution["findings"]:
+        f["skill"] = {"KF-02": "osint", "KF-16": "osint", "KF-14": "evidence", "KF-04": "evidence",
+                      "KF-11": "reporting", "KF-12": "reporting"}.get(f["id"], "analysis")
+    c.route("S1", "Log receipt and hash everything first", "Before opening anything, log receipt of all items and run Hash all, so the chain of custody has no gaps.")
+    c.route("S1", "Read the policy, then the statements", "The approval limit in EV-002 explains why every payment sits just under five thousand pounds.")
+    c.route("S2", "Compare supplier bank details", "Put the supplier list beside the genuine supplier's own statement. The bank details differ.")
+    c.route("S2", "Check the export's time zone", "The approvals export is in Pacific time. Convert before building the timeline.")
+    c.route("S3", "Read invoice metadata and email headers", "The invoices were written on WS-AP-03, and the introduction email's Reply-To does not match its sender.")
+    c.route("S3", "Make one narrow bank request", "Ask only for the receiving account, covering the payment dates, with a clear reason.")
+    c.route("S4", "Test the login against the rota", "Six approvals happened during leave, all from WS-AP-03 with fast user switching.")
+    c.route("S4", "Compare the statements side by side", "The office manager's belief about approvals conflicts with the IT administrator's account. Note it, do not call it a lie.")
+    c.route("S5", "Label the conclusion as an inference", "Write who is most likely responsible, cite independent sources, and say what cannot be proved.")
     c.solution["story"] = __doc__.split("STORY BIBLE (private, for authors)")[1].strip()
     return c

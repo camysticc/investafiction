@@ -5,28 +5,102 @@
   "description": "Read only by the core. Released to the interface only after the report is submitted.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["findings", "links", "timeline", "herrings", "grades", "objective_checks", "stage_unlocks", "hints", "noise", "gaps", "next_steps"],
+  "required": [
+    "findings",
+    "links",
+    "timeline",
+    "herrings",
+    "grades",
+    "objective_checks",
+    "stage_unlocks",
+    "hints",
+    "noise",
+    "gaps",
+    "next_steps"
+  ],
   "$defs": {
     "keywords": {
       "type": "array",
-      "items": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1
+      }
     },
     "condition": {
       "type": "object",
-      "required": ["kind"],
+      "required": [
+        "kind"
+      ],
       "properties": {
-        "kind": { "enum": ["start", "all", "any", "received", "examined", "hashed", "finding", "findings_count", "request_granted", "authority", "timeline_count", "timeline_event", "link", "links_count", "captured", "graded", "objectives", "legality_done", "scope_acknowledged", "hash_mismatch_reported"] },
-        "of": { "type": "array", "items": { "$ref": "#/$defs/condition" } },
-        "ids": { "type": "array", "items": { "type": "string" } },
-        "all_released": { "type": "boolean" },
-        "min": { "type": "integer" },
-        "key": { "type": "string" },
-        "request": { "type": "string" },
-        "id": { "type": "string" },
-        "a": { "type": "string" },
-        "b": { "type": "string" },
-        "pages": { "type": "array", "items": { "type": "string" } },
-        "stage": { "type": "string" }
+        "kind": {
+          "enum": [
+            "start",
+            "all",
+            "any",
+            "received",
+            "examined",
+            "hashed",
+            "finding",
+            "findings_count",
+            "request_granted",
+            "authority",
+            "timeline_count",
+            "timeline_event",
+            "link",
+            "links_count",
+            "captured",
+            "graded",
+            "objectives",
+            "legality_done",
+            "scope_acknowledged",
+            "hash_mismatch_reported"
+          ]
+        },
+        "of": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "all_released": {
+          "type": "boolean"
+        },
+        "min": {
+          "type": "integer"
+        },
+        "key": {
+          "type": "string"
+        },
+        "request": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "a": {
+          "type": "string"
+        },
+        "b": {
+          "type": "string"
+        },
+        "pages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stage": {
+          "type": "string"
+        }
       }
     }
   },
@@ -36,17 +110,63 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "required", "statement", "type", "evidence_any", "min_sources", "keywords", "explain"],
+        "required": [
+          "id",
+          "required",
+          "statement",
+          "type",
+          "evidence_any",
+          "min_sources",
+          "keywords",
+          "explain"
+        ],
         "properties": {
-          "id": { "type": "string", "pattern": "^KF-[0-9]+$" },
-          "required": { "type": "boolean" },
-          "stage": { "type": "string" },
-          "statement": { "type": "string" },
-          "type": { "enum": ["fact", "inference", "assumption"] },
-          "evidence_any": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
-          "min_sources": { "type": "integer", "minimum": 1 },
-          "keywords": { "$ref": "#/$defs/keywords" },
-          "explain": { "type": "string" }
+          "id": {
+            "type": "string",
+            "pattern": "^KF-[0-9]+$"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "statement": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "fact",
+              "inference",
+              "assumption"
+            ]
+          },
+          "evidence_any": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "min_sources": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "keywords": {
+            "$ref": "#/$defs/keywords"
+          },
+          "explain": {
+            "type": "string"
+          },
+          "skill": {
+            "enum": [
+              "osint",
+              "evidence",
+              "analysis",
+              "reporting",
+              "procedure"
+            ]
+          }
         }
       }
     },
@@ -55,12 +175,28 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["a", "b", "evidence_any", "note"],
+        "required": [
+          "a",
+          "b",
+          "evidence_any",
+          "note"
+        ],
         "properties": {
-          "a": { "type": "string" },
-          "b": { "type": "string" },
-          "evidence_any": { "type": "array", "items": { "type": "string" } },
-          "note": { "type": "string" }
+          "a": {
+            "type": "string"
+          },
+          "b": {
+            "type": "string"
+          },
+          "evidence_any": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "note": {
+            "type": "string"
+          }
         }
       }
     },
@@ -69,14 +205,37 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "time", "label", "evidence_any", "tolerance_minutes"],
+        "required": [
+          "id",
+          "time",
+          "label",
+          "evidence_any",
+          "tolerance_minutes"
+        ],
         "properties": {
-          "id": { "type": "string", "pattern": "^TL-[0-9]+$" },
-          "time": { "type": "string", "format": "date-time" },
-          "label": { "type": "string" },
-          "evidence_any": { "type": "array", "items": { "type": "string" } },
-          "tolerance_minutes": { "type": "integer" },
-          "key": { "type": "boolean" }
+          "id": {
+            "type": "string",
+            "pattern": "^TL-[0-9]+$"
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "label": {
+            "type": "string"
+          },
+          "evidence_any": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tolerance_minutes": {
+            "type": "integer"
+          },
+          "key": {
+            "type": "boolean"
+          }
         }
       }
     },
@@ -85,13 +244,33 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "label", "evidence", "keywords", "explain"],
+        "required": [
+          "id",
+          "label",
+          "evidence",
+          "keywords",
+          "explain"
+        ],
         "properties": {
-          "id": { "type": "string", "pattern": "^RH-[0-9]+$" },
-          "label": { "type": "string" },
-          "evidence": { "type": "array", "items": { "type": "string" } },
-          "keywords": { "$ref": "#/$defs/keywords" },
-          "explain": { "type": "string" }
+          "id": {
+            "type": "string",
+            "pattern": "^RH-[0-9]+$"
+          },
+          "label": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "keywords": {
+            "$ref": "#/$defs/keywords"
+          },
+          "explain": {
+            "type": "string"
+          }
         }
       }
     },
@@ -100,34 +279,156 @@
       "additionalProperties": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["source", "info"],
+        "required": [
+          "source",
+          "info"
+        ],
         "properties": {
-          "source": { "enum": ["A", "B", "C", "D", "E"] },
-          "info": { "enum": ["1", "2", "3", "4", "5"] }
+          "source": {
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E"
+            ]
+          },
+          "info": {
+            "enum": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ]
+          }
         }
       }
     },
-    "objective_checks": { "type": "object", "additionalProperties": { "$ref": "#/$defs/condition" } },
-    "stage_unlocks": { "type": "object", "additionalProperties": { "$ref": "#/$defs/condition" } },
+    "objective_checks": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/condition"
+      }
+    },
+    "stage_unlocks": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/condition"
+      }
+    },
     "hints": {
       "type": "object",
-      "additionalProperties": { "type": "array", "items": { "type": "string" }, "minItems": 3, "maxItems": 3 }
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 3,
+        "maxItems": 3
+      }
     },
-    "noise": { "type": "array", "items": { "type": "string" } },
+    "noise": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "gaps": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["id", "label", "keywords"],
+        "required": [
+          "id",
+          "label",
+          "keywords"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "label": { "type": "string" },
-          "keywords": { "$ref": "#/$defs/keywords" }
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "keywords": {
+            "$ref": "#/$defs/keywords"
+          }
         }
       }
     },
-    "next_steps": { "type": "string" },
-    "story": { "type": "string" }
+    "next_steps": {
+      "type": "string"
+    },
+    "story": {
+      "type": "string"
+    },
+    "statement_checks": {
+      "type": "array",
+      "description": "Expected statement conflicts and evidence checks for the statement comparison tool.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "claim",
+          "relation",
+          "explain"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^SC-[0-9]+$"
+          },
+          "claim": {
+            "type": "string"
+          },
+          "other_claim": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "relation": {
+            "enum": [
+              "conflicts",
+              "contradicted",
+              "supported",
+              "agrees"
+            ]
+          },
+          "explain": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "route": {
+      "type": "array",
+      "description": "One good route through the case, shown in the replay after the debrief.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stage",
+          "label",
+          "note"
+        ],
+        "properties": {
+          "stage": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    }
   }
 }

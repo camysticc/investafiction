@@ -246,7 +246,7 @@ impl Engine {
     }
 
     // ---------------------------------------------------------------- attempts
-    pub fn new_attempt(&mut self, case_id: &str, mode: &str) -> R<Value> {
+    pub fn new_attempt(&mut self, case_id: &str, mode: &str, opts: &Value) -> R<Value> {
         if !safe_id(case_id) {
             return Err(bad("Unknown case."));
         }
@@ -294,10 +294,17 @@ impl Engine {
             submitted_at: String::new(),
             result: None,
             counter: 0,
+            claim_links: vec![],
+            pins: vec![],
+            score_settings: ScoreSettings {
+                hints_available: if mode == "training" { opts.get("hints_available").and_then(|h| h.as_u64()).unwrap_or(3).min(3) as u8 } else { 0 },
+                warnings: mode == "training" && opts.get("warnings").and_then(|w| w.as_bool()).unwrap_or(true),
+            },
         };
         let player = self.player_name();
         let mut s = Session { case, attempt, player };
-        s.log("library", "attempt_started", case_id, &format!("{mode} mode"));
+        let detail = format!("{mode} mode, hints {}, warnings {}", s.attempt.score_settings.hints_available, if s.attempt.score_settings.warnings { "on" } else { "off" });
+        s.log("library", "attempt_started", case_id, &detail);
         s.save(&self.data_dir)?;
         self.session = Some(s);
         Ok(json!({"attempt_id": id}))
@@ -449,6 +456,15 @@ impl Engine {
         s.attempt.submitted_at = now_iso();
         s.log("report", "submitted", "", &format!("score {}", result["total"]));
         s.save(&data_dir)?;
+        let traps: Vec<Value> = s.attempt.traps.iter().map(|t| json!({"trap": t.trap, "title": t.title, "category": t.category, "severity": t.severity})).collect();
+        let record = json!({
+            "attempt_id": s.attempt.id, "case_id": s.case.manifest.id, "case_title": s.case.manifest.title,
+            "difficulty": s.case.manifest.difficulty, "date": s.attempt.submitted_at, "mode": s.attempt.mode,
+            "total": result["total"], "band": result["band"], "categories": result["categories"], "skills": result["skills"],
+            "minutes": (s.attempt.active_seconds as f64 / 60.0).round(), "estimated_minutes": s.case.manifest.estimated_minutes,
+            "traps": traps, "hints_used": s.attempt.hints.len(), "score_settings": s.attempt.score_settings,
+        });
+        let _ = crate::records::history_add(&data_dir, record);
         Ok(json!({"result": result, "state": s.state_json(profile)}))
     }
 
@@ -504,13 +520,32 @@ impl Engine {
         Ok(json!({"markdown": crate::report::markdown(&s.case, &s.attempt, &s.player), "issues": s.report_issues()}))
     }
 
+    /// Replay of a submitted attempt. Works for the open attempt or any saved one.
+    pub fn replay(&mut self, case_id: &str, attempt_id: &str) -> R<Value> {
+        if let Some(s) = self.session.as_ref() {
+            if (attempt_id.is_empty() || s.attempt.id == attempt_id) && s.attempt.submitted {
+                return Ok(crate::replay::build(&s.case, &s.attempt));
+            }
+        }
+        if !safe_id(case_id) || !safe_id(attempt_id) {
+            return Err(bad("Unknown attempt."));
+        }
+        let case = pack::load_installed(&self.case_dir(case_id)).map_err(|e| ApiError::with("The case could not be opened.", e))?;
+        let raw: Value = read_json(&self.save_dir(case_id).join(format!("{attempt_id}.json"))).map_err(bad)?;
+        let attempt: Attempt = serde_json::from_value(migrate(raw).map_err(bad)?).map_err(|e| bad(format!("The save could not be read: {e}")))?;
+        if !attempt.submitted {
+            return Err(bad("A replay is available once the report has been submitted."));
+        }
+        Ok(crate::replay::build(&case, &attempt))
+    }
+
     pub fn reset(&mut self) -> R<Value> {
-        let (case_id, mode) = {
+        let (case_id, mode, opts) = {
             let s = self.sess()?;
-            (s.case.manifest.id.clone(), s.attempt.mode.clone())
+            (s.case.manifest.id.clone(), s.attempt.mode.clone(), json!({"hints_available": s.attempt.score_settings.hints_available, "warnings": s.attempt.score_settings.warnings}))
         };
         self.close()?;
-        self.new_attempt(&case_id, &mode)
+        self.new_attempt(&case_id, &mode, &opts)
     }
 }
 
@@ -677,7 +712,7 @@ impl Session {
 
     /// In training mode, return a warning once before a trap fires.
     fn gate(&mut self, key: &str, text: &str, confirm: bool) -> Option<Outcome> {
-        if self.training() && !confirm {
+        if self.training() && self.attempt.score_settings.warnings && !confirm {
             Some(Outcome::warn(text))
         } else {
             let _ = key;
@@ -1076,6 +1111,18 @@ impl Session {
             "persona" => self.persona(a, confirm),
             "capture" => self.capture(a, confirm),
             "hint" => self.hint(a),
+            "claim_link" => self.claim_link(a, confirm),
+            "claim_unlink" => {
+                let id = s_arg(a, "id").to_string();
+                let before = self.attempt.claim_links.len();
+                self.attempt.claim_links.retain(|l| l.id != id);
+                if before == self.attempt.claim_links.len() {
+                    return Err(bad("Unknown statement link."));
+                }
+                self.log("statements", "claim_unlinked", &id, "");
+                Ok(Outcome::default())
+            }
+            "claim_send" => self.claim_send(a),
             "report" => {
                 let r = &mut self.attempt.report;
                 for (k, slot) in [("summary", &mut r.summary), ("scope_method", &mut r.scope_method), ("gaps", &mut r.gaps), ("recommendations", &mut r.recommendations)] {
@@ -1190,6 +1237,16 @@ impl Session {
             if let Some(o) = self.gate(&t.id, &text, confirm) {
                 return Ok(o);
             }
+        }
+        let lies = self.lie_traps(&statement, &evidence);
+        if let Some(t) = lies.iter().find(|t| !self.has_trap(&t.id, "")) {
+            let text = if t.warning.is_empty() { format!("Careful. {}", t.lesson) } else { t.warning.clone() };
+            if let Some(o) = self.gate(&t.id, &text, confirm) {
+                return Ok(o);
+            }
+        }
+        for t in lies {
+            self.record_trap(&t, "", &statement);
         }
         let sensitive: Vec<String> = evidence.iter().filter(|e| self.case.item(e).map(|i| i.marking == "privileged" || i.marking == "restricted").unwrap_or(false)).cloned().collect();
         if !sensitive.is_empty() && self.training() && !confirm {
@@ -1618,6 +1675,107 @@ impl Session {
         json!(out)
     }
 
+    // ------------------------------------------------------------ statements
+    fn claim_released(&self, id: &str) -> bool {
+        self.case.claim(id).map(|(st, _)| self.is_released(&st.evidence)).unwrap_or(false)
+    }
+
+    fn claim_link(&mut self, a: &Value, confirm: bool) -> R<Outcome> {
+        let claim = s_arg(a, "claim").to_string();
+        let relation = s_arg(a, "relation").to_string();
+        if !self.claim_released(&claim) {
+            return Err(bad("That claim is not available yet."));
+        }
+        let with_claim = ["agrees", "conflicts", "adds_detail", "unverifiable"];
+        let with_evidence = ["supports", "contradicts"];
+        let (other, evidence) = if with_claim.contains(&relation.as_str()) {
+            let o = s_arg(a, "other_claim").to_string();
+            if relation == "unverifiable" && o.is_empty() {
+                (None, vec![])
+            } else {
+                if o == claim || !self.claim_released(&o) {
+                    return Err(bad("Choose a different claim to link to."));
+                }
+                (Some(o), vec![])
+            }
+        } else if with_evidence.contains(&relation.as_str()) {
+            let ev = dedupe(list_arg(a, "evidence"));
+            if ev.is_empty() {
+                return Err(bad("Choose the evidence that supports or contradicts this claim."));
+            }
+            for e in &ev {
+                if !self.citable(e) {
+                    return Err(bad(format!("{e} cannot be cited.")));
+                }
+            }
+            (None, ev)
+        } else {
+            return Err(bad("Unknown link type."));
+        };
+        let _ = confirm;
+        let id = self.attempt.next_id("CLK");
+        let note = s_arg(a, "note").trim().chars().take(400).collect::<String>();
+        let detail = format!("{relation} {}", other.clone().unwrap_or_else(|| evidence.join(", ")));
+        self.attempt.claim_links.push(ClaimLink { id: id.clone(), claim: claim.clone(), relation, other_claim: other, evidence, note, created: self.case_time() });
+        self.log("statements", "claim_linked", &claim, &detail);
+        Ok(Outcome { result: json!({"id": id}), ..Default::default() })
+    }
+
+    fn claim_send(&mut self, a: &Value) -> R<Outcome> {
+        let id = s_arg(a, "claim").to_string();
+        if !self.claim_released(&id) {
+            return Err(bad("That claim is not available yet."));
+        }
+        let (st, cl) = self.case.claim(&id).map(|(s, c)| (s.clone(), c.clone())).unwrap();
+        match s_arg(a, "to") {
+            "timeline" => {
+                let t = cl.time.clone().ok_or_else(|| bad("This claim has no time to send."))?;
+                if self.attempt.timeline.iter().any(|e| e.description.contains(&format!("[{}]", cl.id))) {
+                    return Err(bad("This claim is already on the timeline."));
+                }
+                let eid = self.attempt.next_id("E");
+                self.attempt.timeline.push(Event {
+                    id: eid.clone(),
+                    time: t,
+                    description: format!("{} says: {} [{}]", st.witness, cl.text, cl.id),
+                    evidence: vec![st.evidence.clone()],
+                    entities: cl.entities.clone(),
+                    confidence: "witness account (uncorroborated)".into(),
+                    clock_note: String::new(),
+                });
+                self.log("statements", "claim_to_timeline", &cl.id, &eid);
+                Ok(Outcome { notices: vec![format!("Added to the timeline as {eid}, marked as a witness account.")], result: json!({"id": eid}), ..Default::default() })
+            }
+            "map" => {
+                let loc = cl.place.clone().ok_or_else(|| bad("This claim has no place to send."))?;
+                if self.attempt.pins.iter().any(|p| p.claim == cl.id) {
+                    return Err(bad("This claim is already on the map."));
+                }
+                let pid = self.attempt.next_id("PIN");
+                self.attempt.pins.push(MapPin { id: pid.clone(), claim: cl.id.clone(), location: loc, label: format!("{}: {}", st.witness, cl.text), time: cl.time.clone(), source: st.evidence.clone() });
+                self.log("statements", "claim_to_map", &cl.id, &pid);
+                Ok(Outcome { notices: vec!["Added to the map as a witness account.".into()], result: json!({"id": pid}), ..Default::default() })
+            }
+            _ => Err(bad("Send to the timeline or the map.")),
+        }
+    }
+
+    /// Calling a witness a liar on the strength of a difference alone. Fires when
+    /// the wording says someone lied, the finding cites a statement or names a
+    /// witness, and none of the evidence that genuinely proves a falsehood is cited.
+    fn lie_traps(&self, statement: &str, evidence: &[String]) -> Vec<Trap> {
+        let low = statement.to_lowercase();
+        let about_witness = evidence.iter().any(|e| self.case.is_statement_doc(e))
+            || self.case.statements.iter().any(|st| {
+                let w = st.witness.to_lowercase();
+                low.contains(&w) || w.split_whitespace().last().map(|sur| sur.len() > 2 && low.contains(sur)).unwrap_or(false)
+            });
+        self.traps_of("lie_claim")
+            .into_iter()
+            .filter(|t| about_witness && keywords_match(statement, &t.trigger.keywords) && !evidence.iter().any(|e| t.trigger.contradicting.contains(e)))
+            .collect()
+    }
+
     fn hint(&mut self, a: &Value) -> R<Outcome> {
         if !self.training() {
             return Err(bad("Hints are switched off in assessment mode."));
@@ -1628,8 +1786,12 @@ impl Session {
             return Err(bad("That objective is not open."));
         }
         let used = self.attempt.hints.iter().filter(|h| h.objective == ob).count();
-        if used >= 3 {
-            return Err(bad("All three hints for this objective have been used."));
+        let allowed = self.attempt.score_settings.hints_available as usize;
+        if allowed == 0 {
+            return Err(bad("Hints were switched off when this attempt started."));
+        }
+        if used >= allowed {
+            return Err(bad(if allowed == 3 { "All three hints for this objective have been used.".to_string() } else { format!("This attempt allows {allowed} hint level{} per objective.", if allowed == 1 { "" } else { "s" }) }));
         }
         let text = self.case.solution.hints.get(&ob).and_then(|h| h.get(used)).cloned().unwrap_or_else(|| "No hint is available for this objective.".into());
         let cost = HINT_COST[used];
@@ -1650,6 +1812,11 @@ impl Session {
         for t in self.traps_of("sensitive_cited") {
             if let Some(f) = in_report.iter().find(|f| f.evidence.iter().any(|e| t.trigger.ids.contains(e))) {
                 self.record_trap(&t, "", &format!("{} cited in the report", f.id));
+            }
+        }
+        for f in &in_report {
+            for t in self.lie_traps(&f.statement, &f.evidence) {
+                self.record_trap(&t, "", &f.statement.clone());
             }
         }
         for t in self.traps_of("confirmation_bias") {
@@ -1858,6 +2025,17 @@ impl Session {
                 }));
             }
         }
+        let locs: BTreeMap<&str, &MapLocation> = map.locations.iter().map(|l| (l.id.as_str(), l)).collect();
+        for p in &self.attempt.pins {
+            if let Some(l) = locs.get(p.location.as_str()) {
+                out.push(json!({"evidence": p.source, "time": p.time.clone().unwrap_or_default(), "x": l.x, "y": l.y, "label": l.label, "entity": null, "description": p.label, "offset": 0, "witness": true, "pin": p.id}));
+            }
+        }
+        for p in &self.attempt.pins {
+            if let Some(l) = locs.get(p.location.as_str()) {
+                out.push(json!({"evidence": p.source, "time": p.time.clone().unwrap_or_default(), "x": l.x, "y": l.y, "label": l.label, "entity": null, "description": p.label, "offset": 0, "witness": true, "pin": p.id}));
+            }
+        }
         json!(out)
     }
 
@@ -1934,6 +2112,7 @@ impl Session {
         let mut manifest = serde_json::to_value(&self.case.manifest).unwrap();
         manifest.as_object_mut().unwrap().remove("files");
         let show_traps = self.training() || a.submitted;
+        let statements: Vec<&Statement> = self.case.statements.iter().filter(|st| released.contains(&st.evidence)).collect();
         let hint_cost: f64 = a.hints.iter().map(|h| h.cost).sum();
         json!({
             "profile": profile,
@@ -1941,7 +2120,7 @@ impl Session {
                 "manifest": manifest, "brief": self.case.brief, "intake": self.case.intake, "stages": stages,
                 "request_types": request_types, "entities": entities, "map": map,
                 "osint": {"enabled": !self.case.osint.pages.is_empty(), "sites": self.case.osint.sites, "pages": pages.iter().filter_map(|p| self.case.page(p)).map(|p| json!({"id": p.id, "url": p.url, "title": p.title, "site": p.site})).collect::<Vec<_>>()},
-                "evidence": evidence,
+                "evidence": evidence, "statements": statements,
             },
             "attempt": {
                 "id": a.id, "mode": a.mode, "started": a.started, "updated": a.updated, "active_seconds": a.active_seconds,
@@ -1953,6 +2132,7 @@ impl Session {
                 "custody": a.custody, "integrity_reports": a.integrity_reports,
                 "traps": if show_traps { json!(a.traps) } else { json!([]) },
                 "submitted": a.submitted, "result": a.result, "report_issues": self.report_issues(),
+                "claim_links": a.claim_links, "pins": a.pins, "score_settings": a.score_settings,
             },
         })
     }

@@ -14,6 +14,11 @@ pub fn dispatch(engine: &mut Engine, cmd: &str, args: &Value) -> R<Value> {
         "app.info" => Ok(json!({"version": env!("CARGO_PKG_VERSION"), "data_dir": engine.data_dir.display().to_string(), "schema_major": crate::pack::SUPPORTED_MAJOR, "presets": crate::engine::PRESET_NAMES})),
         "profile.get" => Ok(json!({"profile": engine.profile()})),
         "profile.set" => engine.set_profile(s(args, "name"), args.get("text_scale").and_then(|x| x.as_f64())).map(|p| json!({"profile": p})),
+        "store.get" => crate::records::store_get(&engine.data_dir, s(args, "name")).map_err(ApiError::new),
+        "store.set" => crate::records::store_set(&engine.data_dir, s(args, "name"), args.get("data").unwrap_or(&Value::Null)).map_err(ApiError::new),
+        "history.get" => Ok(json!({"attempts": crate::records::history(&engine.data_dir)})),
+        "history.reset" => crate::records::history_reset(&engine.data_dir).map(|_| json!({"reset": true})).map_err(|e| ApiError::new(e.to_string())),
+        "replay" => engine.replay(s(args, "case_id"), s(args, "attempt_id")),
         "library.list" => Ok(json!({"cases": engine.library()})),
         "pack.inspect" => {
             let data = base64::engine::general_purpose::STANDARD.decode(s(args, "data_b64")).map_err(|_| ApiError::new("The file could not be read."))?;
@@ -25,7 +30,7 @@ pub fn dispatch(engine: &mut Engine, cmd: &str, args: &Value) -> R<Value> {
             Ok(json!({}))
         }
         "pack.remove" => engine.remove_case(s(args, "case_id")),
-        "attempt.new" => engine.new_attempt(s(args, "case_id"), s(args, "mode")),
+        "attempt.new" => engine.new_attempt(s(args, "case_id"), s(args, "mode"), args),
         "attempt.open" => engine.open_attempt(s(args, "case_id"), s(args, "attempt_id")),
         "attempt.delete" => engine.delete_attempt(s(args, "case_id"), s(args, "attempt_id")),
         "attempt.close" => engine.close(),

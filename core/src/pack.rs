@@ -39,6 +39,7 @@ const SCHEMAS: &[(&str, &str)] = &[
     ("map/map.json", include_str!("../../schemas/map.schema.json")),
     ("rules.json", include_str!("../../schemas/rules.schema.json")),
     ("solution.json", include_str!("../../schemas/solution.schema.json")),
+    ("statements.json", include_str!("../../schemas/statements.schema.json")),
 ];
 
 #[derive(Debug, Clone, Serialize)]
@@ -283,6 +284,10 @@ pub fn verify_dir(root: &Path) -> Result<(CaseData, Vec<String>), Vec<String>> {
             Some(v) => Some(serde_json::from_value(v.clone()).map_err(|e| vec![e.to_string()])?),
             None => None,
         },
+        statements: match parsed.get("statements.json") {
+            Some(v) => serde_json::from_value::<Statements>(v.clone()).map_err(|e| vec![e.to_string()])?.statements,
+            None => vec![],
+        },
         rules: serde_json::from_value(take("rules.json")).map_err(|e| vec![e.to_string()])?,
         solution: serde_json::from_value(take("solution.json")).map_err(|e| vec![e.to_string()])?,
         import_hashes: listed.clone(),
@@ -386,6 +391,62 @@ fn cross_refs(c: &CaseData, files: &BTreeMap<String, PathBuf>, errors: &mut Vec<
     for s in c.stages.stages.iter().skip(1) {
         if !c.solution.stage_unlocks.contains_key(&s.id) {
             errors.push(format!("Stage {} has no unlock condition.", s.id));
+        }
+    }
+    // Statements and the checks that mark them
+    let mut claim_ids = BTreeSet::new();
+    for st in &c.statements {
+        if !items.contains(st.evidence.as_str()) {
+            errors.push(format!("Statement {} points to unknown evidence {}.", st.id, st.evidence));
+        }
+        for cl in &st.claims {
+            if !cl.id.starts_with(&format!("{}.", st.id)) {
+                errors.push(format!("Claim {} must start with its statement id {}.", cl.id, st.id));
+            }
+            if !claim_ids.insert(cl.id.as_str()) {
+                errors.push(format!("Claim {} is defined twice.", cl.id));
+            }
+            if let Some(pl) = &cl.place {
+                if !c.map.as_ref().map(|m| m.locations.iter().any(|l| &l.id == pl)).unwrap_or(false) {
+                    errors.push(format!("Claim {} names a place that is not on the map: {pl}.", cl.id));
+                }
+            }
+            if let Some(t) = &cl.time {
+                if crate::util::parse_time(t).is_none() {
+                    errors.push(format!("Claim {} has a time that cannot be read.", cl.id));
+                }
+            }
+            for e in &cl.entities {
+                if !ents.contains(e.as_str()) {
+                    errors.push(format!("Claim {} names an unknown entity {e}.", cl.id));
+                }
+            }
+        }
+    }
+    for chk in &c.solution.statement_checks {
+        if !claim_ids.contains(chk.claim.as_str()) {
+            errors.push(format!("Statement check {} names unknown claim {}.", chk.id, chk.claim));
+        }
+        if let Some(o) = &chk.other_claim {
+            if !claim_ids.contains(o.as_str()) {
+                errors.push(format!("Statement check {} names unknown claim {o}.", chk.id));
+            }
+        }
+        if matches!(chk.relation.as_str(), "conflicts" | "agrees") && chk.other_claim.is_none() {
+            errors.push(format!("Statement check {} needs a second claim.", chk.id));
+        }
+        if matches!(chk.relation.as_str(), "contradicted" | "supported") && chk.evidence.is_empty() {
+            errors.push(format!("Statement check {} needs evidence.", chk.id));
+        }
+        for e in &chk.evidence {
+            if !cite_ok(e) {
+                errors.push(format!("Statement check {} cites unknown evidence {e}.", chk.id));
+            }
+        }
+    }
+    for r in &c.solution.route {
+        if !stage_ids.contains(&r.stage.as_str()) {
+            errors.push(format!("Suggested route step '{}' names unknown stage {}.", r.label, r.stage));
         }
     }
     for p in &c.osint.pages {

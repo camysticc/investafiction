@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::{BTreeMap, BTreeSet};
 
-pub const SAVE_VERSION: u32 = 2;
+pub const SAVE_VERSION: u32 = 3;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct CustodyEntry {
@@ -196,6 +196,55 @@ fn yes() -> bool {
     true
 }
 
+/// A link the player made in the statement comparison tool.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct ClaimLink {
+    pub id: String,
+    pub claim: String,
+    /// agrees, conflicts, adds_detail or unverifiable (with another claim), supports or contradicts (with evidence)
+    pub relation: String,
+    #[serde(default)]
+    pub other_claim: Option<String>,
+    #[serde(default)]
+    pub evidence: Vec<String>,
+    #[serde(default)]
+    pub note: String,
+    pub created: String,
+}
+
+/// A place sent to the map from a witness claim.
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct MapPin {
+    pub id: String,
+    pub claim: String,
+    pub location: String,
+    pub label: String,
+    #[serde(default)]
+    pub time: Option<String>,
+    pub source: String,
+}
+
+/// Settings chosen when the attempt started that change the score.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ScoreSettings {
+    /// How many hint levels are available (0 to 3).
+    #[serde(default = "three")]
+    pub hints_available: u8,
+    /// Procedural warnings before mistakes (training mode only).
+    #[serde(default = "yes")]
+    pub warnings: bool,
+}
+
+fn three() -> u8 {
+    3
+}
+
+impl Default for ScoreSettings {
+    fn default() -> Self {
+        ScoreSettings { hints_available: 3, warnings: true }
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Attempt {
     pub save_version: u32,
@@ -271,6 +320,12 @@ pub struct Attempt {
     pub result: Option<Value>,
     #[serde(default)]
     pub counter: u64,
+    #[serde(default)]
+    pub claim_links: Vec<ClaimLink>,
+    #[serde(default)]
+    pub pins: Vec<MapPin>,
+    #[serde(default)]
+    pub score_settings: ScoreSettings,
 }
 
 impl Attempt {
@@ -301,6 +356,8 @@ pub fn migrate(mut v: Value) -> Result<Value, String> {
                     obj.insert("counter".into(), Value::from(count as u64 + 100));
                 }
             }
+            // Version 2 had no statement links, map pins or score settings. Defaults fill them in.
+            2 => {}
             _ => {}
         }
         ver += 1;
