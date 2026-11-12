@@ -1,12 +1,12 @@
 import { useMemo, useRef, useState } from "react";
 import { useApp } from "../lib/store";
 import type { TimelineEvent } from "../lib/types";
-import { cls, fmtTime, parseTime, svgToPngBase64 } from "../lib/util";
+import { cls, fmtTime, isoTime, parseTime, svgToPngBase64 } from "../lib/util";
 import { Cite, EvidencePicker, Modal } from "./common";
 
 export function EventForm({ initial, onDone, isNew }: { initial: TimelineEvent; onDone: () => void; isNew?: boolean }) {
   const { act, game } = useApp();
-  const [time, setTime] = useState(fmtTime(initial.time));
+  const [time, setTime] = useState(isoTime(initial.time));
   const [description, setDescription] = useState(initial.description);
   const [evidence, setEvidence] = useState<string[]>(initial.evidence);
   const [entities, setEntities] = useState<string[]>(initial.entities);
@@ -16,7 +16,7 @@ export function EventForm({ initial, onDone, isNew }: { initial: TimelineEvent; 
   const applyOffset = (mins: number) => {
     const d = parseTime(time);
     if (!d) return;
-    setTime(fmtTime(new Date(d.getTime() - mins * 60000)));
+    setTime(isoTime(new Date(d.getTime() - mins * 60000)));
     setClockNote(`Corrected by ${-mins} minutes for the source clock`);
   };
   const save = async () => {

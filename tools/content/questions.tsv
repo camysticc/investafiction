@@ -1,0 +1,334 @@
+# question	expected article id(s, separated by |)
+how do I get a case into the program	gs.import
+the import button says my pack is rejected	ts.import_rejected
+my invcase file won't load	ts.import_rejected|gs.import
+what am I supposed to do first in a case	gs.first_case
+im new and confused where to begin	gs.first_case|feature.academy
+is there a tutorial	feature.academy|gs.first_case
+how do I earn xp	feature.academy
+what are the ranks in the academy	feature.academy|feature.profile
+where do I see my badges	feature.profile
+how do i change my avatar	feature.profile|setting.profile.avatar
+can I rename myself	gs.first_launch
+i want to be detective jones instead	gs.first_launch|setting.profile.chosen_name
+does the game save automatically	gs.where_saved
+where are save files kept	gs.where_saved|privacy.data_stored
+how to resume my case	feature.saves
+continue an attempt I started yesterday	feature.saves
+whats the difference between the two modes	gs.modes
+turn hints off	gs.modes|setting.gameplay.hints_available|ts.hint_unavailable
+why is there no hint button	ts.hint_unavailable
+how much does a hint cost	feature.hints
+how do i get help on an objective	feature.hints
+how do i open the next stage	feature.objectives
+stage 2 is locked	feature.objectives
+what does the brief button do	feature.brief
+what is in scope for this case	feature.brief
+where is the intake form	feature.brief
+how do i read an email's headers	feature.email_viewer
+how can I tell if an email is fake	feature.email_viewer
+reply to address different from sender	feature.email_viewer
+how do I look at phone messages	feature.phone_viewer
+see texts from the phone extraction	feature.phone_viewer
+when was this photo taken	feature.image_viewer
+photo metadata	feature.image_viewer
+sort a table by a column	feature.table_viewer
+add a row from a spreadsheet to the timeline	feature.table_viewer|howto.add_timeline_event
+how do I search all the evidence	feature.search
+find a phone number across every item	feature.search
+filter the evidence list to unopened items	feature.evidence_list
+what does not looked at mean	feature.evidence_list
+what does the red Gap label mean	feature.evidence_list|feature.evidence_log
+log receipt of everything	howto.log_and_hash
+what does hash all do	howto.log_and_hash|feature.integrity
+what's a hash	concept.hashes|feature.integrity
+a file failed the hash check	feature.integrity|howto.report_integrity
+hash mismatch what now	feature.integrity|howto.report_integrity
+report a problem with a file	howto.report_integrity
+why does opening the original ask for a reason	howto.examine_original
+original versus working copy	howto.examine_original|feature.evidence_viewers
+what is chain of custody	concept.chain_of_custody|feature.evidence_log
+where is the list of everything I did	feature.evidence_log
+action log	feature.evidence_log
+how do I add an event	howto.add_timeline_event
+timeline won't accept my time	howto.add_timeline_event
+what time format does the timeline use	howto.add_timeline_event
+the camera clock is fast how do I fix the time	howto.correct_clock
+convert pacific time to utc	howto.correct_clock|concept.clock_offsets
+why do device times disagree	concept.clock_offsets
+export the timeline to csv	howto.export_timeline
+save my timeline as a picture	howto.export_timeline
+how do i build a timline	feature.timeline|howto.add_timeline_event
+timelines	feature.timeline
+how to link two people together	howto.build_link_chart|feature.link_chart
+what does a dashed line on the chart mean	feature.link_chart
+network diagram of suspects	feature.link_chart
+export link chart as png	howto.export_link_chart
+what do the circles on the map mean	feature.map|concept.cell_sites
+how accurate is a phone mast location	concept.cell_sites
+there is no map in my case	feature.map
+use the time slider	feature.map
+how do I compare two witness statements	howto.compare_statements|feature.statements
+mark that two claims conflict	feature.statements|howto.compare_statements
+the witnesses say different things	concept.witness_accounts|howto.compare_statements
+is the witness lying	concept.witness_accounts
+what does unverified mean on a claim	feature.statements
+send a witness time to the timeline	howto.send_claim
+put a witness location on the map	howto.send_claim
+why did I lose marks for saying someone lied	concept.witness_accounts|feature.statements
+how do I capture a webpage	howto.capture_page|feature.browser
+screenshot or capture	howto.capture_page|feature.browser
+cant capture a private profile	howto.capture_page|concept.public_private
+can I use a fake account to see a private profile	concept.public_private
+is it ok to look at someones social media	concept.public_private
+same username on two sites	concept.false_matches
+a company with a similar name	concept.false_matches
+how to cite a website in a finding	howto.capture_page|feature.browser
+how do I write a finding	howto.record_finding|feature.findings
+my finding won't save	howto.record_finding
+fact needs evidence error	howto.record_finding
+difference between fact and inference	concept.fact_inference_assumption
+what counts as an assumption	concept.fact_inference_assumption
+where do I keep rough notes	feature.notes
+are my notes marked	feature.notes
+how do I grade a source	howto.grade_source|feature.grading
+what does A1 mean	concept.grading|feature.grading
+what grade should a witness get	howto.grade_source
+how do I ask a bank for records	howto.make_request|feature.requests
+my request got refused	ts.request_refused|howto.make_request
+what should a justification say	howto.make_request
+why was my request too broad	howto.make_request|ts.request_refused
+what does proportionate mean	concept.necessity_proportionality
+what is the legality statement	feature.legality
+i can't sign the legality statement	ts.legality_short|feature.legality
+how do I write a good report	howto.write_report
+what goes in gaps and limitations	howto.write_report
+export my report as a pdf	howto.export_report
+how do I hand in my report	howto.submit
+submit button doesn't work	ts.submit_blocked
+how is the score calculated	scoring.how_marked
+what is a merit	scoring.bands
+what score is a pass	scoring.bands
+why is my score capped	scoring.how_marked|feature.traps
+what are traps	feature.traps|concept.procedural_traps
+why did I get a warning	feature.traps
+what is a serious breach	feature.traps|scoring.how_marked
+where are the answers	feature.debrief
+what does the debrief show	feature.debrief
+how do I watch a replay of my attempt	howto.replay_attempt|feature.replay
+where did I go wrong in my case	feature.replay
+what is the suggested route	feature.replay
+replay not available	howto.replay_attempt
+where is my progress	feature.dashboard
+what is the skills radar	feature.dashboard
+what should I practise next	feature.dashboard
+my scores over time	feature.dashboard
+reset my dashboard history	howto.reset_progress|setting.replay.reset_progress_history
+start the academy again	howto.reset_progress
+play a case again	howto.retry_case
+remove a case from the library	howto.remove_case
+delete everything	howto.delete_data
+how do I move my progress to a new pc	howto.move_computer
+backup my saves	howto.backup_saves
+copy my settings to another computer	howto.export_settings
+dark mode	howto.change_theme|setting.appearance.theme
+how do I make it light	howto.change_theme
+the text is too small	howto.bigger_text
+zoom in	howto.bigger_text|setting.appearance.interface_zoom
+where are the settings	feature.settings
+search the settings	feature.settings
+what are presets	feature.settings
+what does affects score mean	scoring.settings_affect|feature.settings
+why is a setting locked	feature.settings
+keyboard shortcuts	feature.shortcuts|keyboard.shortcuts
+change a hotkey	feature.shortcuts|setting.shortcuts.rebind_actions
+print the shortcut list	keyboard.shortcuts|setting.shortcuts.show_shortcut_sheet
+how does the help work	feature.help_centre
+click on something to see what it is	feature.what_is_this
+what does this button do	feature.what_is_this
+what is the bar at the bottom	feature.status_bar
+hide the timer	feature.case_clock|setting.gameplay.case_clock
+what is the case clock	feature.case_clock
+how do I get to the academy	feature.left_menu|feature.academy
+what is the left menu	feature.left_menu
+what is on the workspace screen	feature.workspace
+where are the tools	feature.workspace
+does it send my data anywhere	privacy.no_collection
+is it online	privacy.no_collection
+what data does it keep	privacy.data_stored
+can I sell a case I make	about.licence
+is this open source	about.licence
+is this official police training	about.disclaimers
+what version am I on	about.version
+how do I make my own case	author.overview
+what is in a case pack	author.pack_format
+how do I check my case pack	author.validator
+rules for fake data in cases	author.synthetic_data
+add witness statements to my case	author.statements
+share my case	author.sharing
+how do I install it	gs.install
+cargo is not recognised	gs.install
+npm run tauri dev	gs.install
+what is investafiction	gs.welcome
+what are digital evidence principles	concept.digital_evidence_principles
+what is the national intelligence model	concept.intelligence_process
+what is corroboration	concept.corroboration
+two copies of the same record	concept.corroboration
+what is a red herring	concept.red_herrings|glossary.red_herring
+too much irrelevant evidence	concept.red_herrings|feature.search
+the save could not be read	ts.case_wont_open
+case could not be opened	ts.case_wont_open
+no case is open	ts.no_case_open
+this attempt has been submitted	ts.attempt_submitted
+that item has not been released	ts.not_released
+import has expired	ts.import_expired
+unknown command error	ts.internal
+my settings reset to default	ts.settings_reset
+the file could not be read	ts.files
+choose one of the three preset names	ts.profile
+what is the practice case	feature.academy
+first day practice case	feature.academy|glossary.first_day
+make tables show more rows	setting.viewers.rows_per_page
+stop wrapping long lines	setting.viewers.wrap_long_text
+show line numbers in tables	setting.viewers.show_row_numbers
+show full email headers	setting.viewers.email_header_view|feature.email_viewer
+messages as a list not bubbles	setting.viewers.message_thread_style
+change the date format	setting.general.date_format
+use 12 hour clock	setting.general.time_format
+show money as GBP	setting.general.currency_display
+open my last case when it starts	setting.general.open_last_case_automatically
+start on the academy	setting.general.default_start_screen
+stop it asking before closing	setting.general.confirm_before_closing
+week starts on sunday	setting.general.week_starts_on
+show my rank on the badge	setting.profile.show_academy_rank_on_badge
+hide my name on the report	setting.profile.name_on_report_sign_off
+only show my avatar in the badge	setting.profile.badge_style
+change the accent colour	setting.appearance.accent_colour
+dyslexia friendly font	setting.appearance.font
+more space between lines	setting.appearance.line_spacing
+make everything more compact	setting.appearance.layout_density
+square corners	setting.appearance.corner_style
+move the evidence list to the right	setting.appearance.panel_arrangement
+turn off tooltips	setting.appearance.tooltips
+hide the status bar	setting.appearance.show_status_bar|feature.status_bar
+less animation	setting.accessibility.reduce_motion
+colour blind mode	setting.accessibility.colour_blind_safe_palette
+thicker focus outline	setting.accessibility.focus_outline_thickness
+bigger buttons	setting.accessibility.large_click_targets
+underline all links	setting.accessibility.underline_links
+thicker lines on graphs	setting.accessibility.strengthen_graph_and_timeline_lines
+reading ruler	setting.accessibility.reading_ruler
+screen reader charts	setting.accessibility.screen_reader_descriptions_for_charts
+stop flashing effects	setting.accessibility.avoid_flashing_effects
+show shortcut keys on buttons	setting.accessibility.show_shortcut_hints_on_buttons
+high contrast documents	setting.accessibility.high_contrast_evidence_viewers
+turn the volume down	setting.sound.master_volume
+mute button clicks	setting.sound.interface_sounds
+no chime when a stage unlocks	setting.sound.stage_unlock_chime
+turn off academy sounds	setting.sound.academy_reward_sounds
+mute when I switch windows	setting.sound.mute_when_the_window_is_not_in_focus
+change the sound style	setting.sound.sound_pack
+default to assessment mode	setting.gameplay.mode|gs.modes
+switch off procedural warnings	setting.gameplay.procedural_warnings
+only show required objectives	setting.gameplay.show_stage_objectives
+hide stretch objectives	setting.gameplay.show_stretch_objectives
+pause the clock when I'm away	setting.gameplay.pause_the_clock_when_idle
+stop highlighting new evidence	setting.gameplay.highlight_new_evidence
+case lead messages as pop ups	setting.gameplay.message_from_the_case_lead
+stop confirming when I submit	setting.gameplay.confirm_before_submitting_a_report
+show all debrief answers at once	setting.gameplay.spoiler_protection_in_the_debrief
+short debrief	setting.gameplay.debrief_detail
+stop me retrying a case	setting.gameplay.allow_retry_after_submission
+image opens too small	setting.viewers.image_viewer_zoom
+hide image metadata	setting.viewers.image_metadata_panel
+hex view of a file	setting.viewers.hex_preview_for_files
+compare two items side by side	setting.viewers.open_items_in
+fade examined items	setting.viewers.mark_examined_items
+warnings about clock offsets	setting.viewers.show_clock_offset_warnings
+timeline newest first	setting.timeline.sort_order
+group timeline by person	setting.timeline.group_by
+colour timeline by confidence	setting.timeline.colour_by_confidence
+highlight conflicting times	setting.timeline.highlight_conflicts
+gap markers on timeline	setting.timeline.show_gap_markers
+snap events to 15 minutes	setting.timeline.snap_to_grid
+link chart in a circle	setting.graph.layout
+stop the chart moving	setting.graph.physics
+labels only on hover	setting.graph.labels
+straight lines on link chart	setting.graph.edge_style
+turn off suggested links	setting.graph.suggested_links
+mini map on chart	setting.graph.mini_map
+distances in kilometres	setting.map.distance_units
+hide camera ranges	setting.map.show_camera_ranges
+hide cell coverage circles	setting.map.show_cell_coverage_circles
+slow down the time slider	setting.map.time_slider_speed
+show statements stacked	setting.statements.layout
+compare four statements	setting.statements.compare_up_to
+hide claim numbers	setting.statements.show_claim_numbers
+case sensitive search	setting.search.case_sensitive
+whole word search	setting.search.match_whole_words
+search metadata too	setting.search.include_metadata_in_search
+fuzzy search	setting.search.fuzzy_matching
+don't remember my searches	setting.search.search_history_length|setting.academy.help_search_history
+search highlight colour	setting.search.result_highlight_colour
+hide web addresses in the browser	setting.osint.show_page_addresses
+stop capture reminders	setting.osint.capture_reminder
+can I turn off capture hashing	setting.osint.hash_captures_automatically
+warn me before private profiles	setting.osint.warn_before_opening_a_private_profile
+turn off the action log	setting.integrity.action_logging
+show full hashes	setting.integrity.hash_display
+continuity gap warnings	setting.integrity.warn_about_continuity_gaps
+footnotes instead of inline citations	setting.report.citation_style
+letter paper size	setting.report.page_size
+spell check in the report	setting.report.spell_check
+word count	setting.report.show_word_count
+export markdown by default	setting.report.default_export
+replay speed	setting.replay.replay_speed
+bars instead of radar chart	setting.replay.dashboard_chart_style
+best scores only from assessment	setting.replay.best_scores_count_assessment_mode_only|scoring.settings_affect
+new findings start as fact	setting.notes.default_finding_type
+findings as cards	setting.notes.findings_board_layout
+bigger note text	setting.notes.note_font_size
+how often does it autosave	setting.saves.autosave_interval
+how many backups are kept	setting.saves.backup_copies_kept
+how much space does it use	setting.saves.show_storage_used
+clear the cache	setting.saves.clear_caches
+sort cases by difficulty	setting.library.sort_by
+show cases as a list	setting.library.view
+hide finished cases	setting.library.show_completed_cases
+stop academy reminders	setting.academy.academy_reminders
+fewer tips	setting.academy.tips_frequency
+hide the little question marks	setting.academy.contextual_help_icons
+open help full screen	setting.academy.open_help_in
+reset academy	setting.academy.reset_academy_progress|howto.reset_progress
+mouse free shortcuts	setting.shortcuts.shortcut_preset
+reset all shortcuts	setting.shortcuts.reset_all_shortcuts
+how long do notifications stay	setting.notifications.notification_duration
+warnings as a dialog	setting.notifications.procedural_warning_style
+blur images	setting.privacy.blur_images_until_opened
+does it collect usage data	setting.privacy.usage_data_collection|privacy.no_collection
+case author mode	setting.advanced.case_author_mode
+show internal ids	setting.advanced.show_internal_ids_on_items
+where is the data folder	setting.advanced.open_data_folder|privacy.data_stored
+export diagnostics for a bug	setting.advanced.export_diagnostics
+reset all settings	setting.advanced.reset_all_settings
+what is ANPR	glossary.anpr
+what does osint mean	glossary.osint
+what is a cell site	glossary.cell_site|concept.cell_sites
+what is metadata	glossary.metadata
+what does UTC mean	glossary.utc
+what is a working copy	glossary.working_copy
+what is a service account	glossary.service_account
+what is a look-alike domain	glossary.look_alike_domain
+what is privileged material	glossary.privileged_material
+what is a persona	glossary.persona
+what is CDR	glossary.cdr
+what is fast user switching	glossary.fast_user_switching
+what is a pattern of life	glossary.pattern_of_life
+what is collateral intrusion	glossary.collateral_intrusion|concept.necessity_proportionality
+what is confirmation bias	glossary.confirmation_bias
+what is a continuity gap	glossary.continuity_gap|feature.evidence_list
+what does overclaiming mean	glossary.overclaiming
+what is a stretch objective	glossary.stretch_objective|feature.objectives
+what is a source group	glossary.source_group
+what is synthetic data	glossary.synthetic_data|author.synthetic_data
+what is kestrel bay	glossary.kestrel_bay

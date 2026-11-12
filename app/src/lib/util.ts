@@ -1,3 +1,5 @@
+import { fmtClock, fmtDateParts } from "./settings";
+
 export function parseCsv(text: string): string[][] {
   const rows: string[][] = [];
   let row: string[] = [];
@@ -40,7 +42,17 @@ export function parseTime(s: string): Date | null {
   return isNaN(d.getTime()) ? null : d;
 }
 
+/** Format a time for display, following the date and time format settings. */
 export function fmtTime(s: string | Date | null | undefined, withSeconds = false): string {
+  const d = typeof s === "string" ? parseTime(s) : s;
+  if (!d) return typeof s === "string" ? s : "";
+  const clock = fmtClock(d);
+  const secs = withSeconds ? ":" + String(d.getUTCSeconds()).padStart(2, "0") : "";
+  return `${fmtDateParts(d)} ${secs && !clock.includes("m") ? clock + secs : clock}`;
+}
+
+/** Machine-style time for forms and exports: YYYY-MM-DD HH:MM. */
+export function isoTime(s: string | Date | null | undefined, withSeconds = false): string {
   const d = typeof s === "string" ? parseTime(s) : s;
   if (!d) return typeof s === "string" ? s : "";
   const iso = d.toISOString();
@@ -54,7 +66,7 @@ export function fmtDuration(secs: number): string {
 }
 
 export function inputTime(s: string): string {
-  return fmtTime(s);
+  return isoTime(s);
 }
 
 export function cls(...xs: (string | false | null | undefined)[]): string {

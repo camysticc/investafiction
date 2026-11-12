@@ -12,10 +12,13 @@ import ReportView from "./ReportView";
 import Debrief from "./Debrief";
 import SidePanel from "./SidePanel";
 import SearchPanel from "./SearchPanel";
+import Statements from "./Statements";
+import ToolPrompt from "../academy/ToolPrompt";
 
 const TABS = [
   ["viewer", "Evidence viewer"],
   ["search", "Search"],
+  ["statements", "Statements"],
   ["timeline", "Timeline"],
   ["links", "Link chart"],
   ["map", "Map"],
@@ -51,9 +54,11 @@ export default function Workspace() {
             </button>
           ))}
         </nav>
+        <ToolPrompt />
         <div className="tab-body">
           {tab === "viewer" && <EvidenceViewer />}
           {tab === "search" && <SearchPanel />}
+          {tab === "statements" && <Statements />}
           {tab === "timeline" && <Timeline />}
           {tab === "links" && <LinkGraph />}
           {tab === "map" && <MapView />}

@@ -1,8 +1,10 @@
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { ApiError, call, offerDownload } from "./api";
 import type { GameState, Profile } from "./types";
+import { get as setting, playSound } from "./settings";
+import { openHelp } from "./nav";
 
-type Toast = { id: number; text: string; kind: "info" | "error" | "good" };
+type Toast = { id: number; text: string; kind: "info" | "error" | "good"; help?: string | null };
 type Confirm = { text: string; title?: string; okLabel?: string; resolve: (ok: boolean) => void } | null;
 
 type Ctx = {
@@ -12,7 +14,7 @@ type Ctx = {
   setGame: (g: GameState | null) => void;
   saving: boolean;
   lastSaved: Date | null;
-  toast: (text: string, kind?: Toast["kind"]) => void;
+  toast: (text: string, kind?: Toast["kind"], help?: string | null) => void;
   confirm: (text: string, title?: string, okLabel?: string) => Promise<boolean>;
   /** Apply an action. Training-mode warnings are shown and confirmed here. */
   act: (args: Record<string, unknown>) => Promise<any | null>;
@@ -48,10 +50,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [browserTarget, setBrowserTarget] = useState<string | null>(null);
   const n = useRef(0);
 
-  const toast = useCallback((text: string, kind: Toast["kind"] = "info") => {
+  const toast = useCallback((text: string, kind: Toast["kind"] = "info", help: string | null = null) => {
     const id = ++n.current;
-    setToasts((t) => [...t.slice(-4), { id, text, kind }]);
-    setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), kind === "error" ? 9000 : 5500);
+    setToasts((t) => [...t.slice(-4), { id, text, kind, help }]);
+    const d = setting<string>("notifications.notification_duration");
+    const ms = d === "3_seconds" ? 3000 : d === "10_seconds" ? 10000 : d === "until_closed" ? 0 : 5500;
+    if (ms) setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), kind === "error" ? Math.max(ms, 9000) : ms);
+    if (text.includes("is open.")) playSound("chime");
   }, []);
 
   const confirm = useCallback((text: string, title?: string, okLabel?: string) => new Promise<boolean>((resolve) => setConfirm({ text, title, okLabel, resolve })), []);
@@ -63,8 +68,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const showError = useCallback(
     (e: unknown) => {
-      if (e instanceof ApiError) toast(e.details.length ? `${e.message} ${e.details.slice(0, 3).join(" ")}` : e.message, "error");
-      else toast(String(e), "error");
+      const msg = e instanceof ApiError ? (e.details.length ? `${e.message} ${e.details.slice(0, 3).join(" ")}` : e.message) : String(e);
+      import("../help/search").then((H) => H.warmUp().then(() => {
+        const a = H.articleForError(msg) ?? (e instanceof ApiError ? H.articleForError(e.details.join(" ")) : null);
+        toast(msg, "error", a?.id ?? null);
+      })).catch(() => toast(msg, "error"));
     },
     [toast],
   );
@@ -87,6 +95,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setSaving(true);
         let r = await call(cmd, args);
         if (r?.warning) {
+          playSound("warning");
           const ok = await confirm(r.warning, "Training mode warning", "Continue anyway");
           if (!ok) return null;
           r = await call(cmd, { ...args, confirm: true });
@@ -149,7 +158,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!game || game.attempt.submitted) return;
     const h = setInterval(async () => {
-      if (document.visibilityState !== "visible" || Date.now() - lastInput.current > 3 * 60_000) return;
+      const idle = setting<string>("gameplay.pause_the_clock_when_idle");
+      const limit = idle === "off" ? Infinity : idle === "after_2_minutes" ? 2 * 60_000 : 5 * 60_000;
+      if (document.visibilityState !== "visible" || Date.now() - lastInput.current > limit) return;
       try {
         const r = await call("act", { type: "tick", seconds: 30 });
         setGameRaw(r.state);
@@ -169,7 +180,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       <div className="toasts" role="status" aria-live="polite">
         {toasts.map((t) => (
           <div key={t.id} className={`toast toast-${t.kind}`}>
-            {t.text}
+            <span>{t.text}</span>
+            {t.help && <button className="small toast-help" onClick={() => openHelp(t.help!)}>Help</button>}
+            <button className="toast-x" aria-label="Dismiss" onClick={() => setToasts((x) => x.filter((y) => y.id !== t.id))}>✕</button>
           </div>
         ))}
       </div>

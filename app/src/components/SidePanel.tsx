@@ -2,16 +2,31 @@ import { useEffect, useState } from "react";
 import { useApp } from "../lib/store";
 import { fmtTime } from "../lib/util";
 import Findings from "./Findings";
+import { useSetting } from "../lib/settings";
 
 export default function SidePanel() {
-  const [tab, setTab] = useState<"objectives" | "findings" | "notes" | "log">("objectives");
+  const [tab, setTabRaw] = useState<"objectives" | "findings" | "notes" | "log">("objectives");
   const { game } = useApp();
+  const showCount = useSetting<boolean>("gameplay.show_running_findings_count");
+  const setTab = (t: typeof tab) => {
+    setTabRaw(t);
+    window.dispatchEvent(new CustomEvent("inv:side", { detail: t }));
+  };
+  useEffect(() => {
+    const h = (e: Event) => {
+      const id = (e as CustomEvent).detail as string;
+      const m: Record<string, typeof tab> = { "side.objectives": "objectives", "side.findings": "findings", "side.notes": "notes", "side.log": "log", "case.hint": "objectives", "case.new_finding": "findings" };
+      if (m[id]) setTab(m[id]);
+    };
+    window.addEventListener("inv:cmd", h);
+    return () => window.removeEventListener("inv:cmd", h);
+  }, []);
   return (
     <div className="side">
       <nav className="side-tabs" role="tablist">
         {(["objectives", "findings", "notes", "log"] as const).map((t) => (
           <button key={t} role="tab" aria-selected={tab === t} className={tab === t ? "on" : ""} onClick={() => setTab(t)}>
-            {t === "objectives" ? "Objectives" : t === "findings" ? `Findings (${game!.attempt.findings.length})` : t === "notes" ? "Notes" : "Action log"}
+            {t === "objectives" ? "Objectives" : t === "findings" ? (showCount ? `Findings (${game!.attempt.findings.length})` : "Findings") : t === "notes" ? "Notes" : "Action log"}
           </button>
         ))}
       </nav>
@@ -29,6 +44,11 @@ function Objectives() {
   const { game, act, toast } = useApp();
   const a = game!.attempt;
   const training = a.mode === "training";
+  const showObj = useSetting<string>("gameplay.show_stage_objectives");
+  const showStretch = useSetting<boolean>("gameplay.show_stretch_objectives");
+  const hintDot = useSetting<boolean>("notifications.hint_available_indicator");
+  const allowed = a.score_settings?.hints_available ?? 3;
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
   const shownHints: Record<string, string[]> = {};
   for (const h of a.hints) (shownHints[h.objective] ??= []).push(h.text);
   const traps = a.traps;
@@ -39,11 +59,12 @@ function Objectives() {
           <h3>
             <span className="stage-n">{i + 1}</span> {s.title}
             <span className="muted small"> · about {s.target_minutes} min</span>
+            {s.open && showObj === "collapsed" && <button className="ghost small" onClick={() => setCollapsed({ ...collapsed, [s.id]: !collapsed[s.id] })}>{collapsed[s.id] ? "Hide" : "Show"}</button>}
           </h3>
           {!s.open && <p className="muted small">{s.unlock_text || "Locked"}</p>}
-          {s.open && (
+          {s.open && (showObj !== "collapsed" || collapsed[s.id]) && (
             <ul>
-              {s.objectives!.map((o) => (
+              {s.objectives!.filter((o) => (showObj !== "required_only" || o.required) && (showStretch || o.required)).map((o) => (
                 <li key={o.id} className={o.done ? "done" : ""}>
                   <span className="tick" aria-label={o.done ? "Complete" : "Not complete"}>{o.done ? "✓" : "○"}</span>
                   <div>
@@ -51,15 +72,16 @@ function Objectives() {
                     {(shownHints[o.id] ?? []).map((h, k) => (
                       <div key={k} className="hint"><b>Hint {k + 1}.</b> {h}</div>
                     ))}
-                    {training && !o.done && (shownHints[o.id]?.length ?? 0) < 3 && (
+                    {training && !o.done && (shownHints[o.id]?.length ?? 0) < allowed && (
                       <button
                         className="ghost small"
                         onClick={async () => {
                           const r = await act({ type: "hint", objective: o.id });
-                          if (r?.result) toast(`Hint used: minus ${r.result.cost} marks.`);
+                          if (r?.result) toast(r.result.cost ? `Hint used: minus ${r.result.cost} marks.` : "Hint shown. Hints are free on this training case.");
                         }}
                       >
-                        {["Nudge", "Pointer", "Direct pointer"][shownHints[o.id]?.length ?? 0]} hint (−{[0.5, 1, 1.5][shownHints[o.id]?.length ?? 0]})
+                        {hintDot && <span className="hint-dot" aria-hidden="true" />}
+                        {["Nudge", "Pointer", "Direct pointer"][shownHints[o.id]?.length ?? 0]} hint {game!.case.manifest.difficulty === "Training" ? "(free)" : `(−${[0.5, 1, 1.5][shownHints[o.id]?.length ?? 0]})`}
                       </button>
                     )}
                   </div>
@@ -95,7 +117,7 @@ function Notes() {
   return (
     <div className="notes">
       <p className="muted small">Your working notes. They are saved with the attempt but are not marked.</p>
-      <textarea aria-label="Notes" value={text} onChange={(e) => setText(e.target.value)} placeholder="Lines of enquiry, questions, things to check…" />
+      <textarea aria-label="Notes" className="notes-text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Lines of enquiry, questions, things to check…" />
     </div>
   );
 }

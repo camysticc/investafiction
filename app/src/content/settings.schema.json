@@ -1,0 +1,3880 @@
+{
+ "version": 1,
+ "categories": [
+  {
+   "id": "general",
+   "label": "General",
+   "description": "Language, dates, times and what opens first."
+  },
+  {
+   "id": "profile",
+   "label": "Profile",
+   "description": "Your chosen name, avatar and badge."
+  },
+  {
+   "id": "appearance",
+   "label": "Appearance",
+   "description": "Theme, colours, text and layout."
+  },
+  {
+   "id": "accessibility",
+   "label": "Accessibility",
+   "description": "Motion, contrast, colour and focus."
+  },
+  {
+   "id": "sound",
+   "label": "Sound",
+   "description": "Volume and which sounds play."
+  },
+  {
+   "id": "gameplay",
+   "label": "Gameplay and mode",
+   "description": "Mode, hints, warnings, objectives and the case clock."
+  },
+  {
+   "id": "viewers",
+   "label": "Evidence viewers",
+   "description": "Tables, emails, messages, images and files."
+  },
+  {
+   "id": "timeline",
+   "label": "Timeline",
+   "description": "Zoom, grouping and how events are shown."
+  },
+  {
+   "id": "graph",
+   "label": "Link analysis graph",
+   "description": "Layout, labels and suggested links."
+  },
+  {
+   "id": "map",
+   "label": "Map",
+   "description": "Base map, units and the time slider."
+  },
+  {
+   "id": "statements",
+   "label": "Statement comparison",
+   "description": "Comparing witness statements side by side."
+  },
+  {
+   "id": "search",
+   "label": "Search and filter",
+   "description": "How searching across evidence works."
+  },
+  {
+   "id": "osint",
+   "label": "OSINT module",
+   "description": "The mock web browser and page captures."
+  },
+  {
+   "id": "integrity",
+   "label": "Evidence log and integrity",
+   "description": "Logging, hashes and chain of custody."
+  },
+  {
+   "id": "report",
+   "label": "Report builder",
+   "description": "Templates, citations and exports."
+  },
+  {
+   "id": "replay",
+   "label": "Replay and dashboard",
+   "description": "The investigation replay and the skills dashboard."
+  },
+  {
+   "id": "notes",
+   "label": "Notes and findings",
+   "description": "Findings board and working notes."
+  },
+  {
+   "id": "saves",
+   "label": "Saves and data",
+   "description": "Autosave, backups and your data."
+  },
+  {
+   "id": "library",
+   "label": "Case library",
+   "description": "How cases are listed and checked."
+  },
+  {
+   "id": "academy",
+   "label": "Academy and help",
+   "description": "The Academy, tips and the help centre."
+  },
+  {
+   "id": "shortcuts",
+   "label": "Keyboard shortcuts",
+   "description": "Shortcut presets and rebinding."
+  },
+  {
+   "id": "notifications",
+   "label": "Notifications",
+   "description": "Banners, notices and how long they stay."
+  },
+  {
+   "id": "privacy",
+   "label": "Privacy and safety",
+   "description": "Content notices and data collection."
+  },
+  {
+   "id": "advanced",
+   "label": "Advanced",
+   "description": "Case author tools, diagnostics and resets."
+  }
+ ],
+ "settings": [
+  {
+   "id": "general.language",
+   "category": "general",
+   "label": "Language",
+   "description": "The language of the program. Version 1 is in English (UK) only.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "english_in_version_1",
+     "label": "English (UK) in version 1"
+    }
+   ],
+   "default": "english_in_version_1"
+  },
+  {
+   "id": "general.default_start_screen",
+   "category": "general",
+   "label": "Default start screen",
+   "description": "Which screen opens when the program starts: the case library, the case you worked on last, or the Academy.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "case_library",
+     "label": "Case library"
+    },
+    {
+     "value": "last_case",
+     "label": "Last case"
+    },
+    {
+     "value": "academy",
+     "label": "Academy"
+    }
+   ],
+   "default": "case_library"
+  },
+  {
+   "id": "general.open_last_case_automatically",
+   "category": "general",
+   "label": "Open last case automatically",
+   "description": "Reopens your most recent unfinished attempt as soon as the program opens.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "general.date_format",
+   "category": "general",
+   "label": "Date format",
+   "description": "How dates are written across the program, such as 03/02/2026 or 2026-02-03.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "dd_mm_yyyy",
+     "label": "DD/MM/YYYY"
+    },
+    {
+     "value": "yyyy_mm_dd",
+     "label": "YYYY-MM-DD"
+    },
+    {
+     "value": "d_mon_yyyy",
+     "label": "D Mon YYYY"
+    }
+   ],
+   "default": "dd_mm_yyyy"
+  },
+  {
+   "id": "general.time_format",
+   "category": "general",
+   "label": "Time format",
+   "description": "Shows times on a 24 hour clock (18:42) or a 12 hour clock (6:42 pm).",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "24_hour",
+     "label": "24 hour"
+    },
+    {
+     "value": "12_hour",
+     "label": "12 hour"
+    }
+   ],
+   "default": "24_hour"
+  },
+  {
+   "id": "general.time_shown_in_evidence",
+   "category": "general",
+   "label": "Time shown in evidence",
+   "description": "Whether evidence times appear as recorded by the device, corrected for a known clock offset, or both side by side.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "as_recorded",
+     "label": "As recorded"
+    },
+    {
+     "value": "corrected_for_clock_offset",
+     "label": "Corrected for clock offset"
+    },
+    {
+     "value": "both",
+     "label": "Both"
+    }
+   ],
+   "default": "both"
+  },
+  {
+   "id": "general.week_starts_on",
+   "category": "general",
+   "label": "Week starts on",
+   "description": "The first day of the week in calendars, rotas and the timeline's day view.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "monday",
+     "label": "Monday"
+    },
+    {
+     "value": "sunday",
+     "label": "Sunday"
+    }
+   ],
+   "default": "monday"
+  },
+  {
+   "id": "general.number_format",
+   "category": "general",
+   "label": "Number format",
+   "description": "How large numbers and decimals are written, for example 1,234.56 or 1 234,56.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "comma_point",
+     "label": "1,234.56"
+    },
+    {
+     "value": "space_comma",
+     "label": "1 234,56"
+    }
+   ],
+   "default": "comma_point"
+  },
+  {
+   "id": "general.currency_display",
+   "category": "general",
+   "label": "Currency display",
+   "description": "Shows money with a symbol (£180.00) or a code (GBP 180.00).",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "symbol",
+     "label": "Symbol"
+    },
+    {
+     "value": "code",
+     "label": "Code"
+    }
+   ],
+   "default": "symbol"
+  },
+  {
+   "id": "general.confirm_before_closing",
+   "category": "general",
+   "label": "Confirm before closing",
+   "description": "Asks before the program closes, so you do not lose your place by accident.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "profile.chosen_name",
+   "category": "profile",
+   "label": "Chosen name",
+   "description": "The name you picked on first launch. It appears on your profile badge and report sign-off. It is for show only.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "profile_name",
+   "options": [
+    {
+     "value": "Officer Smith",
+     "label": "Officer Smith"
+    },
+    {
+     "value": "Detective Jones",
+     "label": "Detective Jones"
+    },
+    {
+     "value": "Sergeant Nolan",
+     "label": "Sergeant Nolan"
+    }
+   ],
+   "default": null
+  },
+  {
+   "id": "profile.avatar",
+   "category": "profile",
+   "label": "Avatar",
+   "description": "The small picture on your profile badge. Academy ranks and badges unlock extra frames.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "icon1",
+     "label": "Icon 1"
+    },
+    {
+     "value": "icon2",
+     "label": "Icon 2"
+    },
+    {
+     "value": "icon3",
+     "label": "Icon 3"
+    },
+    {
+     "value": "icon4",
+     "label": "Icon 4"
+    },
+    {
+     "value": "icon5",
+     "label": "Icon 5"
+    },
+    {
+     "value": "icon6",
+     "label": "Icon 6"
+    },
+    {
+     "value": "icon7",
+     "label": "Icon 7"
+    },
+    {
+     "value": "icon8",
+     "label": "Icon 8"
+    },
+    {
+     "value": "icon9",
+     "label": "Icon 9"
+    },
+    {
+     "value": "icon10",
+     "label": "Icon 10"
+    },
+    {
+     "value": "icon11",
+     "label": "Icon 11"
+    },
+    {
+     "value": "icon12",
+     "label": "Icon 12"
+    }
+   ],
+   "default": "icon1"
+  },
+  {
+   "id": "profile.badge_style",
+   "category": "profile",
+   "label": "Badge style",
+   "description": "What the profile badge at the top shows: your name and avatar, just the name, or just the avatar.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "name_and_avatar",
+     "label": "Name and avatar"
+    },
+    {
+     "value": "name_only",
+     "label": "Name only"
+    },
+    {
+     "value": "avatar_only",
+     "label": "Avatar only"
+    }
+   ],
+   "default": "name_and_avatar"
+  },
+  {
+   "id": "profile.show_academy_rank_on_badge",
+   "category": "profile",
+   "label": "Show Academy rank on badge",
+   "description": "Adds your Academy rank, such as Junior Analyst, under your name on the badge.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "profile.name_on_report_sign_off",
+   "category": "profile",
+   "label": "Name on report sign-off",
+   "description": "Puts your chosen name on the sign-off line of exported reports. It never changes the marks.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "profile.reset_profile",
+   "category": "profile",
+   "label": "Reset profile",
+   "description": "Clears your chosen name so the name choice appears again. Saves, settings and Academy progress are kept.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "button",
+   "action": "reset_profile",
+   "confirm": false,
+   "note": "Button. Returns to the name choice"
+  },
+  {
+   "id": "appearance.theme",
+   "category": "appearance",
+   "label": "Theme",
+   "description": "The colour scheme: Light, Dark, High contrast, or Match my computer to follow your system setting.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "light",
+     "label": "Light"
+    },
+    {
+     "value": "dark",
+     "label": "Dark"
+    },
+    {
+     "value": "high_contrast",
+     "label": "High contrast"
+    },
+    {
+     "value": "match_my_computer",
+     "label": "Match my computer"
+    }
+   ],
+   "default": "dark"
+  },
+  {
+   "id": "appearance.accent_colour",
+   "category": "appearance",
+   "label": "Accent colour",
+   "description": "The colour of buttons, links and highlights.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "blue",
+     "label": "Blue"
+    },
+    {
+     "value": "teal",
+     "label": "Teal"
+    },
+    {
+     "value": "green",
+     "label": "Green"
+    },
+    {
+     "value": "purple",
+     "label": "Purple"
+    },
+    {
+     "value": "rose",
+     "label": "Rose"
+    },
+    {
+     "value": "amber",
+     "label": "Amber"
+    },
+    {
+     "value": "slate",
+     "label": "Slate"
+    },
+    {
+     "value": "crimson",
+     "label": "Crimson"
+    }
+   ],
+   "default": "blue"
+  },
+  {
+   "id": "appearance.text_size",
+   "category": "appearance",
+   "label": "Text size",
+   "description": "Makes all text in the program smaller or larger.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "small",
+     "label": "Small"
+    },
+    {
+     "value": "medium",
+     "label": "Medium"
+    },
+    {
+     "value": "large",
+     "label": "Large"
+    },
+    {
+     "value": "extra_large",
+     "label": "Extra large"
+    },
+    {
+     "value": "huge",
+     "label": "Huge"
+    }
+   ],
+   "default": "medium"
+  },
+  {
+   "id": "appearance.font",
+   "category": "appearance",
+   "label": "Font",
+   "description": "The typeface. Dyslexia friendly uses a clearer, more spaced font. Monospace for data tables lines up columns of figures.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "standard",
+     "label": "Standard"
+    },
+    {
+     "value": "dyslexia_friendly",
+     "label": "Dyslexia friendly"
+    },
+    {
+     "value": "monospace_for_data_tables",
+     "label": "Monospace for data tables"
+    }
+   ],
+   "default": "standard"
+  },
+  {
+   "id": "appearance.line_spacing",
+   "category": "appearance",
+   "label": "Line spacing",
+   "description": "The space between lines of text. Relaxed can make long documents easier to read.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "tight",
+     "label": "Tight"
+    },
+    {
+     "value": "normal",
+     "label": "Normal"
+    },
+    {
+     "value": "relaxed",
+     "label": "Relaxed"
+    }
+   ],
+   "default": "normal"
+  },
+  {
+   "id": "appearance.layout_density",
+   "category": "appearance",
+   "label": "Layout density",
+   "description": "How tightly lists, buttons and panels are packed. Compact shows more at once; Spacious is easier to click.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "compact",
+     "label": "Compact"
+    },
+    {
+     "value": "comfortable",
+     "label": "Comfortable"
+    },
+    {
+     "value": "spacious",
+     "label": "Spacious"
+    }
+   ],
+   "default": "comfortable"
+  },
+  {
+   "id": "appearance.corner_style",
+   "category": "appearance",
+   "label": "Corner style",
+   "description": "Square or rounded corners on panels, cards and buttons.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "sharp",
+     "label": "Sharp"
+    },
+    {
+     "value": "rounded",
+     "label": "Rounded"
+    }
+   ],
+   "default": "rounded"
+  },
+  {
+   "id": "appearance.icon_style",
+   "category": "appearance",
+   "label": "Icon style",
+   "description": "Outline or filled icons in menus and buttons.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "outline",
+     "label": "Outline"
+    },
+    {
+     "value": "filled",
+     "label": "Filled"
+    }
+   ],
+   "default": "outline"
+  },
+  {
+   "id": "appearance.panel_arrangement",
+   "category": "appearance",
+   "label": "Panel arrangement",
+   "description": "Where the evidence list sits in the workspace: on the left, on the right, or with notes along the bottom.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "evidence_left",
+     "label": "Evidence left"
+    },
+    {
+     "value": "evidence_right",
+     "label": "Evidence right"
+    },
+    {
+     "value": "notes_along_the_bottom",
+     "label": "Notes along the bottom"
+    }
+   ],
+   "default": "evidence_left"
+  },
+  {
+   "id": "appearance.remember_panel_sizes",
+   "category": "appearance",
+   "label": "Remember panel sizes",
+   "description": "Keeps panel widths as you left them the next time you open a case.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "appearance.interface_zoom",
+   "category": "appearance",
+   "label": "Interface zoom",
+   "description": "Scales the whole interface, from 75% to 200%.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "range",
+   "min": 75,
+   "max": 200,
+   "step": 5,
+   "unit": "%",
+   "default": 100
+  },
+  {
+   "id": "appearance.tooltips",
+   "category": "appearance",
+   "label": "Tooltips",
+   "description": "Whether small explanations appear when you hover over buttons, and how quickly.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "off",
+     "label": "Off"
+    },
+    {
+     "value": "short_delay",
+     "label": "Short delay"
+    },
+    {
+     "value": "long_delay",
+     "label": "Long delay"
+    }
+   ],
+   "default": "short_delay"
+  },
+  {
+   "id": "appearance.show_status_bar",
+   "category": "appearance",
+   "label": "Show status bar",
+   "description": "Shows a thin bar at the bottom with save status, the stage and the number of items.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "accessibility.reduce_motion",
+   "category": "accessibility",
+   "label": "Reduce motion",
+   "description": "Shortens or removes animations, including Academy effects and screen transitions.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "accessibility.reduce_transparency",
+   "category": "accessibility",
+   "label": "Reduce transparency",
+   "description": "Replaces see-through backgrounds with solid colours.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "accessibility.high_contrast_evidence_viewers",
+   "category": "accessibility",
+   "label": "High contrast evidence viewers",
+   "description": "Uses stronger contrast inside documents, tables and emails, even when the rest of the theme is normal.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "accessibility.colour_blind_safe_palette",
+   "category": "accessibility",
+   "label": "Colour blind safe palette",
+   "description": "Swaps colours that are hard to tell apart for a palette suited to your type of colour vision. Labels always show as text too.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "none",
+     "label": "None"
+    },
+    {
+     "value": "red_and_green",
+     "label": "Red and green"
+    },
+    {
+     "value": "blue_and_yellow",
+     "label": "Blue and yellow"
+    },
+    {
+     "value": "monochrome",
+     "label": "Monochrome"
+    }
+   ],
+   "default": "none"
+  },
+  {
+   "id": "accessibility.focus_outline_thickness",
+   "category": "accessibility",
+   "label": "Focus outline thickness",
+   "description": "How thick the outline is around whatever the keyboard is focused on.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "thin",
+     "label": "Thin"
+    },
+    {
+     "value": "normal",
+     "label": "Normal"
+    },
+    {
+     "value": "thick",
+     "label": "Thick"
+    }
+   ],
+   "default": "normal"
+  },
+  {
+   "id": "accessibility.large_click_targets",
+   "category": "accessibility",
+   "label": "Large click targets",
+   "description": "Makes buttons and list rows bigger and easier to hit.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "accessibility.underline_links",
+   "category": "accessibility",
+   "label": "Underline links",
+   "description": "Underlines every link, not only on hover.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "accessibility.strengthen_graph_and_timeline_lines",
+   "category": "accessibility",
+   "label": "Strengthen graph and timeline lines",
+   "description": "Draws thicker lines and borders in the link chart, timeline and map.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "accessibility.reading_ruler",
+   "category": "accessibility",
+   "label": "Reading ruler",
+   "description": "Shows a soft band that follows your pointer, to help keep your place in long text.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "accessibility.screen_reader_descriptions_for_charts",
+   "category": "accessibility",
+   "label": "Screen reader descriptions for charts",
+   "description": "Adds text descriptions of charts, graphs and the map for screen readers.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "accessibility.announce_saves_and_stage_changes",
+   "category": "accessibility",
+   "label": "Announce saves and stage changes",
+   "description": "Tells screen readers when the case saves or a new stage opens.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "accessibility.avoid_flashing_effects",
+   "category": "accessibility",
+   "label": "Avoid flashing effects",
+   "description": "Removes flashes and fast blinking anywhere in the program.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "accessibility.show_shortcut_hints_on_buttons",
+   "category": "accessibility",
+   "label": "Show shortcut hints on buttons",
+   "description": "Shows each button's keyboard shortcut on the button itself.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "sound.master_volume",
+   "category": "sound",
+   "label": "Master volume",
+   "description": "The overall volume of every sound the program makes.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "range",
+   "min": 0,
+   "max": 100,
+   "step": 5,
+   "unit": "",
+   "default": 60
+  },
+  {
+   "id": "sound.interface_sounds",
+   "category": "sound",
+   "label": "Interface sounds",
+   "description": "Small clicks and tones when you use buttons and menus.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "sound.stage_unlock_chime",
+   "category": "sound",
+   "label": "Stage unlock chime",
+   "description": "Plays a chime when a new stage of a case opens.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "sound.warning_sound",
+   "category": "sound",
+   "label": "Warning sound",
+   "description": "Plays a tone when a training mode warning appears.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "sound.academy_reward_sounds",
+   "category": "sound",
+   "label": "Academy reward sounds",
+   "description": "Plays sounds when you earn XP, ranks and badges in the Academy.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "sound.mute_when_the_window_is_not_in_focus",
+   "category": "sound",
+   "label": "Mute when the window is not in focus",
+   "description": "Silences sounds while you are using another program.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "sound.sound_pack",
+   "category": "sound",
+   "label": "Sound pack",
+   "description": "The style of sounds: Quiet, Classic or Minimal.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "quiet",
+     "label": "Quiet"
+    },
+    {
+     "value": "classic",
+     "label": "Classic"
+    },
+    {
+     "value": "minimal",
+     "label": "Minimal"
+    }
+   ],
+   "default": "quiet"
+  },
+  {
+   "id": "gameplay.mode",
+   "category": "gameplay",
+   "label": "Mode",
+   "description": "Training gives hints and warnings before mistakes. Assessment gives neither and is the fairer test. This affects the score.",
+   "affects_score": true,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "training",
+     "label": "Training"
+    },
+    {
+     "value": "assessment",
+     "label": "Assessment"
+    }
+   ],
+   "default": "training"
+  },
+  {
+   "id": "gameplay.hints_available",
+   "category": "gameplay",
+   "label": "Hints available",
+   "description": "How many hint levels you can ask for on each objective. Each hint costs a few marks. This affects the score.",
+   "affects_score": true,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "none",
+     "label": "None"
+    },
+    {
+     "value": "level_1_only",
+     "label": "Level 1 only"
+    },
+    {
+     "value": "levels_1_and_2",
+     "label": "Levels 1 and 2"
+    },
+    {
+     "value": "all_three",
+     "label": "All three"
+    }
+   ],
+   "default": "all_three"
+  },
+  {
+   "id": "gameplay.procedural_warnings",
+   "category": "gameplay",
+   "label": "Procedural warnings",
+   "description": "In training mode, warns you once before a procedural mistake such as opening material outside your scope. This affects the score.",
+   "affects_score": true,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true,
+   "note": "On in training mode. Assessment mode never shows warnings."
+  },
+  {
+   "id": "gameplay.show_stage_objectives",
+   "category": "gameplay",
+   "label": "Show stage objectives",
+   "description": "Shows every objective, only the required ones, or keeps the list collapsed.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "full_list",
+     "label": "Full list"
+    },
+    {
+     "value": "required_only",
+     "label": "Required only"
+    },
+    {
+     "value": "collapsed",
+     "label": "Collapsed"
+    }
+   ],
+   "default": "full_list"
+  },
+  {
+   "id": "gameplay.show_stretch_objectives",
+   "category": "gameplay",
+   "label": "Show stretch objectives",
+   "description": "Shows the optional stretch objectives that earn extra credit.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "gameplay.case_clock",
+   "category": "gameplay",
+   "label": "Case clock",
+   "description": "Shows time worked on the case, time left against the case estimate, or hides the clock.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "elapsed_time",
+     "label": "Elapsed time"
+    },
+    {
+     "value": "time_left_against_the_estimate",
+     "label": "Time left against the estimate"
+    },
+    {
+     "value": "hidden",
+     "label": "Hidden"
+    }
+   ],
+   "default": "elapsed_time"
+  },
+  {
+   "id": "gameplay.pause_the_clock_when_idle",
+   "category": "gameplay",
+   "label": "Pause the clock when idle",
+   "description": "Stops counting time when you have not touched the program for a while.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "off",
+     "label": "Off"
+    },
+    {
+     "value": "after_2_minutes",
+     "label": "After 2 minutes"
+    },
+    {
+     "value": "after_5_minutes",
+     "label": "After 5 minutes"
+    }
+   ],
+   "default": "after_5_minutes"
+  },
+  {
+   "id": "gameplay.highlight_new_evidence",
+   "category": "gameplay",
+   "label": "Highlight new evidence",
+   "description": "Marks items that arrived in the latest stage so they stand out in the list.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "gameplay.message_from_the_case_lead",
+   "category": "gameplay",
+   "label": "Message from the case lead",
+   "description": "Shows case lead messages as a pop-up, in the brief panel, or both.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "pop_up",
+     "label": "Pop-up"
+    },
+    {
+     "value": "panel",
+     "label": "Panel"
+    },
+    {
+     "value": "both",
+     "label": "Both"
+    }
+   ],
+   "default": "both"
+  },
+  {
+   "id": "gameplay.confirm_before_submitting_a_report",
+   "category": "gameplay",
+   "label": "Confirm before submitting a report",
+   "description": "Asks for confirmation before you submit, because submitting ends the attempt.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "gameplay.show_running_findings_count",
+   "category": "gameplay",
+   "label": "Show running findings count",
+   "description": "Shows how many findings you have recorded on the Findings tab.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "gameplay.debrief_detail",
+   "category": "gameplay",
+   "label": "Debrief detail",
+   "description": "Shows a short summary of your result, or the full debrief with every finding and event.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "summary",
+     "label": "Summary"
+    },
+    {
+     "value": "full",
+     "label": "Full"
+    }
+   ],
+   "default": "full"
+  },
+  {
+   "id": "gameplay.spoiler_protection_in_the_debrief",
+   "category": "gameplay",
+   "label": "Spoiler protection in the debrief",
+   "description": "Reveals the answers one key finding at a time, or all at once.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "reveal_one_finding_at_a_time",
+     "label": "Reveal one finding at a time"
+    },
+    {
+     "value": "show_all",
+     "label": "Show all"
+    }
+   ],
+   "default": "reveal_one_finding_at_a_time"
+  },
+  {
+   "id": "gameplay.allow_retry_after_submission",
+   "category": "gameplay",
+   "label": "Allow retry after submission",
+   "description": "Lets you start a new attempt at a case you have already submitted.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "viewers.rows_per_page",
+   "category": "viewers",
+   "label": "Rows per page",
+   "description": "How many rows a table shows before it splits into pages.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "25",
+     "label": "25"
+    },
+    {
+     "value": "50",
+     "label": "50"
+    },
+    {
+     "value": "100",
+     "label": "100"
+    },
+    {
+     "value": "250",
+     "label": "250"
+    }
+   ],
+   "default": "50"
+  },
+  {
+   "id": "viewers.show_row_numbers",
+   "category": "viewers",
+   "label": "Show row numbers",
+   "description": "Shows a number at the start of every table row.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "viewers.highlight_search_matches",
+   "category": "viewers",
+   "label": "Highlight search matches",
+   "description": "Highlights search words inside documents and tables.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "viewers.wrap_long_text",
+   "category": "viewers",
+   "label": "Wrap long text",
+   "description": "Wraps long lines onto the next line instead of scrolling sideways.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "viewers.default_view_for_data_files",
+   "category": "viewers",
+   "label": "Default view for data files",
+   "description": "Opens data files such as CSV as a table or as raw text.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "table",
+     "label": "Table"
+    },
+    {
+     "value": "raw_text",
+     "label": "Raw text"
+    }
+   ],
+   "default": "table"
+  },
+  {
+   "id": "viewers.email_header_view",
+   "category": "viewers",
+   "label": "Email header view",
+   "description": "Shows the main email headers, every header, or both.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "summary",
+     "label": "Summary"
+    },
+    {
+     "value": "full",
+     "label": "Full"
+    },
+    {
+     "value": "both",
+     "label": "Both"
+    }
+   ],
+   "default": "summary"
+  },
+  {
+   "id": "viewers.message_thread_style",
+   "category": "viewers",
+   "label": "Message thread style",
+   "description": "Shows phone messages as chat bubbles or as a plain list.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "bubbles",
+     "label": "Bubbles"
+    },
+    {
+     "value": "list",
+     "label": "List"
+    }
+   ],
+   "default": "bubbles"
+  },
+  {
+   "id": "viewers.image_viewer_zoom",
+   "category": "viewers",
+   "label": "Image viewer zoom",
+   "description": "How images open: fitted to the window, at actual size, or filling the space.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "fit",
+     "label": "Fit"
+    },
+    {
+     "value": "100",
+     "label": "100%"
+    },
+    {
+     "value": "fill",
+     "label": "Fill"
+    }
+   ],
+   "default": "fit"
+  },
+  {
+   "id": "viewers.image_metadata_panel",
+   "category": "viewers",
+   "label": "Image metadata panel",
+   "description": "Shows an image's metadata beside it all the time, or only when you ask.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "always",
+     "label": "Always"
+    },
+    {
+     "value": "on_request",
+     "label": "On request"
+    }
+   ],
+   "default": "always"
+  },
+  {
+   "id": "viewers.hex_preview_for_files",
+   "category": "viewers",
+   "label": "Hex preview for files",
+   "description": "Shows a byte-by-byte view of files, never, on request, or always.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "off",
+     "label": "Off"
+    },
+    {
+     "value": "on_request",
+     "label": "On request"
+    },
+    {
+     "value": "always",
+     "label": "Always"
+    }
+   ],
+   "default": "on_request"
+  },
+  {
+   "id": "viewers.open_items_in",
+   "category": "viewers",
+   "label": "Open items in",
+   "description": "Opens evidence in tabs, or in a split view so you can compare two items.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "tabs",
+     "label": "Tabs"
+    },
+    {
+     "value": "split_view",
+     "label": "Split view"
+    }
+   ],
+   "default": "tabs"
+  },
+  {
+   "id": "viewers.remember_scroll_position",
+   "category": "viewers",
+   "label": "Remember scroll position",
+   "description": "Returns to where you were when you reopen an item.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "viewers.show_clock_offset_warnings",
+   "category": "viewers",
+   "label": "Show clock offset warnings",
+   "description": "Warns you when an item's clock is known to be fast, slow or in another time zone.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "viewers.mark_examined_items",
+   "category": "viewers",
+   "label": "Mark examined items",
+   "description": "Shows items you have examined with a tick, a faded row, or both.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "tick",
+     "label": "Tick"
+    },
+    {
+     "value": "fade",
+     "label": "Fade"
+    },
+    {
+     "value": "both",
+     "label": "Both"
+    }
+   ],
+   "default": "tick"
+  },
+  {
+   "id": "timeline.default_zoom",
+   "category": "timeline",
+   "label": "Default zoom",
+   "description": "How far in the timeline starts: a day, an hour, a minute, or everything at once.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "day",
+     "label": "Day"
+    },
+    {
+     "value": "hour",
+     "label": "Hour"
+    },
+    {
+     "value": "minute",
+     "label": "Minute"
+    },
+    {
+     "value": "fit_all",
+     "label": "Fit all"
+    }
+   ],
+   "default": "fit_all"
+  },
+  {
+   "id": "timeline.group_by",
+   "category": "timeline",
+   "label": "Group by",
+   "description": "Groups timeline events by person or thing, by source, or by type of evidence.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "none",
+     "label": "None"
+    },
+    {
+     "value": "entity",
+     "label": "Entity"
+    },
+    {
+     "value": "source",
+     "label": "Source"
+    },
+    {
+     "value": "evidence_type",
+     "label": "Evidence type"
+    }
+   ],
+   "default": "none"
+  },
+  {
+   "id": "timeline.show_source_icons",
+   "category": "timeline",
+   "label": "Show source icons",
+   "description": "Shows a small icon for the kind of evidence behind each event.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "timeline.highlight_conflicts",
+   "category": "timeline",
+   "label": "Highlight conflicts",
+   "description": "Highlights events from different sources that disagree about the time.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "timeline.colour_by_confidence",
+   "category": "timeline",
+   "label": "Colour by confidence",
+   "description": "Colours events by how confident you are in them.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "timeline.show_gap_markers",
+   "category": "timeline",
+   "label": "Show gap markers",
+   "description": "Marks long gaps in the timeline where nothing is recorded.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "timeline.sort_order",
+   "category": "timeline",
+   "label": "Sort order",
+   "description": "Lists events oldest first or newest first.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "oldest_first",
+     "label": "Oldest first"
+    },
+    {
+     "value": "newest_first",
+     "label": "Newest first"
+    }
+   ],
+   "default": "oldest_first"
+  },
+  {
+   "id": "timeline.snap_to_grid",
+   "category": "timeline",
+   "label": "Snap to grid",
+   "description": "Rounds events you add by hand to the nearest 5 minutes, 15 minutes or hour.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "off",
+     "label": "Off"
+    },
+    {
+     "value": "5_minutes",
+     "label": "5 minutes"
+    },
+    {
+     "value": "15_minutes",
+     "label": "15 minutes"
+    },
+    {
+     "value": "1_hour",
+     "label": "1 hour"
+    }
+   ],
+   "default": "off"
+  },
+  {
+   "id": "timeline.export_image_size",
+   "category": "timeline",
+   "label": "Export image size",
+   "description": "The size of the picture made when you export the timeline as an image.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "small",
+     "label": "Small"
+    },
+    {
+     "value": "medium",
+     "label": "Medium"
+    },
+    {
+     "value": "large",
+     "label": "Large"
+    }
+   ],
+   "default": "medium"
+  },
+  {
+   "id": "graph.layout",
+   "category": "graph",
+   "label": "Layout",
+   "description": "How the link chart arranges people and things: spread naturally, in a circle, as a hierarchy, or on a grid.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "force_directed",
+     "label": "Force directed"
+    },
+    {
+     "value": "circle",
+     "label": "Circle"
+    },
+    {
+     "value": "hierarchy",
+     "label": "Hierarchy"
+    },
+    {
+     "value": "grid",
+     "label": "Grid"
+    }
+   ],
+   "default": "force_directed"
+  },
+  {
+   "id": "graph.node_size",
+   "category": "graph",
+   "label": "Node size",
+   "description": "The size of each person or thing on the link chart.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "small",
+     "label": "Small"
+    },
+    {
+     "value": "medium",
+     "label": "Medium"
+    },
+    {
+     "value": "large",
+     "label": "Large"
+    }
+   ],
+   "default": "medium"
+  },
+  {
+   "id": "graph.labels",
+   "category": "graph",
+   "label": "Labels",
+   "description": "When names appear on the link chart: always, on hover, or only for selected items.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "always",
+     "label": "Always"
+    },
+    {
+     "value": "on_hover",
+     "label": "On hover"
+    },
+    {
+     "value": "selected_only",
+     "label": "Selected only"
+    }
+   ],
+   "default": "always"
+  },
+  {
+   "id": "graph.edge_style",
+   "category": "graph",
+   "label": "Edge style",
+   "description": "Draws links as straight lines or curves.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "straight",
+     "label": "Straight"
+    },
+    {
+     "value": "curved",
+     "label": "Curved"
+    }
+   ],
+   "default": "curved"
+  },
+  {
+   "id": "graph.dashed_lines_for_links_without_evidence",
+   "category": "graph",
+   "label": "Dashed lines for links without evidence",
+   "description": "Draws links with no cited evidence as dashed lines so they stand out.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "graph.show_link_strength",
+   "category": "graph",
+   "label": "Show link strength",
+   "description": "Makes links thicker the more evidence supports them.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "graph.suggested_links",
+   "category": "graph",
+   "label": "Suggested links",
+   "description": "Whether the chart hints at connections the evidence might support.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "off",
+     "label": "Off"
+    },
+    {
+     "value": "show_hints",
+     "label": "Show hints"
+    },
+    {
+     "value": "show_and_highlight",
+     "label": "Show and highlight"
+    }
+   ],
+   "default": "show_hints"
+  },
+  {
+   "id": "graph.cluster_colouring",
+   "category": "graph",
+   "label": "Cluster colouring",
+   "description": "Colours groups of closely linked items the same.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "graph.physics",
+   "category": "graph",
+   "label": "Physics",
+   "description": "Lets the chart move and settle by itself. Turn off to keep items where you put them.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "graph.simplify_the_view_above",
+   "category": "graph",
+   "label": "Simplify the view above",
+   "description": "Hides labels and detail when the chart has more than this many items.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "50",
+     "label": "50"
+    },
+    {
+     "value": "100",
+     "label": "100"
+    },
+    {
+     "value": "200_nodes",
+     "label": "200 nodes"
+    }
+   ],
+   "default": "100"
+  },
+  {
+   "id": "graph.mini_map",
+   "category": "graph",
+   "label": "Mini map",
+   "description": "Shows a small overview of the whole chart in a corner.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "map.base_map",
+   "category": "map",
+   "label": "Base map",
+   "description": "The background of the map: plain, with place labels, or with a grid.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "plain",
+     "label": "Plain"
+    },
+    {
+     "value": "labelled",
+     "label": "Labelled"
+    },
+    {
+     "value": "grid",
+     "label": "Grid"
+    }
+   ],
+   "default": "labelled"
+  },
+  {
+   "id": "map.distance_units",
+   "category": "map",
+   "label": "Distance units",
+   "description": "Shows distances in miles or kilometres.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "miles",
+     "label": "Miles"
+    },
+    {
+     "value": "kilometres",
+     "label": "Kilometres"
+    }
+   ],
+   "default": "miles"
+  },
+  {
+   "id": "map.show_camera_ranges",
+   "category": "map",
+   "label": "Show camera ranges",
+   "description": "Draws the area each camera covers.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "map.show_cell_coverage_circles",
+   "category": "map",
+   "label": "Show cell coverage circles",
+   "description": "Draws the rough area a phone mast covers. A phone could be anywhere inside it.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "map.time_slider_speed",
+   "category": "map",
+   "label": "Time slider speed",
+   "description": "How fast points move when you play the time slider.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "slow",
+     "label": "Slow"
+    },
+    {
+     "value": "normal",
+     "label": "Normal"
+    },
+    {
+     "value": "fast",
+     "label": "Fast"
+    }
+   ],
+   "default": "normal"
+  },
+  {
+   "id": "map.trail_length",
+   "category": "map",
+   "label": "Trail length",
+   "description": "How much of a person's or thing's past movement stays on the map.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "short",
+     "label": "Short"
+    },
+    {
+     "value": "medium",
+     "label": "Medium"
+    },
+    {
+     "value": "long",
+     "label": "Long"
+    },
+    {
+     "value": "full",
+     "label": "Full"
+    }
+   ],
+   "default": "medium"
+  },
+  {
+   "id": "map.cluster_nearby_points",
+   "category": "map",
+   "label": "Cluster nearby points",
+   "description": "Groups points that are close together into one marker until you zoom in.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "map.show_scale_bar",
+   "category": "map",
+   "label": "Show scale bar",
+   "description": "Shows a scale bar so you can judge distances.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "statements.layout",
+   "category": "statements",
+   "label": "Layout",
+   "description": "Shows statements next to each other or one above another.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "side_by_side",
+     "label": "Side by side"
+    },
+    {
+     "value": "stacked",
+     "label": "Stacked"
+    }
+   ],
+   "default": "side_by_side"
+  },
+  {
+   "id": "statements.compare_up_to",
+   "category": "statements",
+   "label": "Compare up to",
+   "description": "How many statements can be open side by side at once.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "2",
+     "label": "2"
+    },
+    {
+     "value": "3",
+     "label": "3"
+    },
+    {
+     "value": "4_statements",
+     "label": "4 statements"
+    }
+   ],
+   "default": "3"
+  },
+  {
+   "id": "statements.highlight_colours",
+   "category": "statements",
+   "label": "Highlight colours",
+   "description": "The colours for agreeing and conflicting claims. Colour blind safe uses blue and orange.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "standard",
+     "label": "Standard"
+    },
+    {
+     "value": "colour_blind_safe",
+     "label": "Colour blind safe"
+    }
+   ],
+   "default": "standard"
+  },
+  {
+   "id": "statements.show_claim_numbers",
+   "category": "statements",
+   "label": "Show claim numbers",
+   "description": "Shows each claim's number, such as ST-2.3, beside it.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "statements.offer_to_send_times_and_places_to_the_timeline_and_map",
+   "category": "statements",
+   "label": "Offer to send times and places to the timeline and map",
+   "description": "Shows buttons to send a claim's time to the timeline or its place to the map.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "statements.show_running_count_of_conflicts_found",
+   "category": "statements",
+   "label": "Show running count of conflicts found",
+   "description": "Shows how many conflicts you have marked so far.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "search.search_mode",
+   "category": "search",
+   "label": "Search mode",
+   "description": "Simple search takes plain words. Advanced adds filters for type, date, source and status.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "simple",
+     "label": "Simple"
+    },
+    {
+     "value": "advanced",
+     "label": "Advanced"
+    }
+   ],
+   "default": "simple"
+  },
+  {
+   "id": "search.case_sensitive",
+   "category": "search",
+   "label": "Case sensitive",
+   "description": "Treats capital and small letters as different when searching.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "search.match_whole_words",
+   "category": "search",
+   "label": "Match whole words",
+   "description": "Only finds whole words, so 'van' does not match 'advance'.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "search.include_metadata_in_search",
+   "category": "search",
+   "label": "Include metadata in search",
+   "description": "Also searches item metadata such as authors, devices and headers.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "search.fuzzy_matching",
+   "category": "search",
+   "label": "Fuzzy matching",
+   "description": "Finds near matches and small spelling mistakes.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "search.search_history_length",
+   "category": "search",
+   "label": "Search history length",
+   "description": "How many recent searches are remembered. Choose 0 to keep none.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "0",
+     "label": "0"
+    },
+    {
+     "value": "10",
+     "label": "10"
+    },
+    {
+     "value": "50",
+     "label": "50"
+    }
+   ],
+   "default": "10"
+  },
+  {
+   "id": "search.remember_filters_between_sessions",
+   "category": "search",
+   "label": "Remember filters between sessions",
+   "description": "Keeps your evidence list filters the next time you open the case.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "search.result_highlight_colour",
+   "category": "search",
+   "label": "Result highlight colour",
+   "description": "The colour used to highlight search matches.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "yellow",
+     "label": "Yellow"
+    },
+    {
+     "value": "green",
+     "label": "Green"
+    },
+    {
+     "value": "blue",
+     "label": "Blue"
+    },
+    {
+     "value": "orange",
+     "label": "Orange"
+    }
+   ],
+   "default": "yellow"
+  },
+  {
+   "id": "osint.mock_browser_start_page",
+   "category": "osint",
+   "label": "Mock browser start page",
+   "description": "What the simulated web browser shows when you open it.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "search_page",
+     "label": "Search page"
+    },
+    {
+     "value": "last_page",
+     "label": "Last page"
+    },
+    {
+     "value": "blank",
+     "label": "Blank"
+    }
+   ],
+   "default": "search_page"
+  },
+  {
+   "id": "osint.show_page_addresses",
+   "category": "osint",
+   "label": "Show page addresses",
+   "description": "Shows each page's web address in the address bar.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "osint.capture_reminder",
+   "category": "osint",
+   "label": "Capture reminder",
+   "description": "Reminds you to capture a page properly before you rely on it.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "osint.hash_captures_automatically",
+   "category": "osint",
+   "label": "Hash captures automatically",
+   "description": "Every capture is hashed so it can be shown to be unchanged. This is always on.",
+   "affects_score": false,
+   "locked": true,
+   "essential": true,
+   "type": "locked",
+   "value": "On",
+   "note": "Always on (locked)",
+   "locked_reason": "Captures are always hashed so they can be shown to be unchanged. Marking and the evidence trail depend on it."
+  },
+  {
+   "id": "osint.show_privacy_badge_on_profiles",
+   "category": "osint",
+   "label": "Show privacy badge on profiles",
+   "description": "Marks profiles as public or private so you know what your authority covers.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "osint.warn_before_opening_a_private_profile",
+   "category": "osint",
+   "label": "Warn before opening a private profile",
+   "description": "Asks before opening a profile that is private.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "osint.clue_overlays_on_images",
+   "category": "osint",
+   "label": "Clue overlays on images",
+   "description": "Lets you ask for highlights on parts of an image that might help locate it.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "off",
+     "label": "Off"
+    },
+    {
+     "value": "on_request",
+     "label": "On request"
+    }
+   ],
+   "default": "on_request"
+  },
+  {
+   "id": "osint.archive_date_style",
+   "category": "osint",
+   "label": "Archive date style",
+   "description": "How dates on archived page copies are written.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "same_as_general",
+     "label": "Same as general"
+    },
+    {
+     "value": "long_form",
+     "label": "Long form"
+    }
+   ],
+   "default": "same_as_general"
+  },
+  {
+   "id": "integrity.action_logging",
+   "category": "integrity",
+   "label": "Action logging",
+   "description": "Every action you take is logged with the time. This is always on, because marking and the replay depend on it.",
+   "affects_score": false,
+   "locked": true,
+   "essential": true,
+   "type": "locked",
+   "value": "On",
+   "note": "Always on (locked)",
+   "locked_reason": "Every action is always logged. The debrief, the replay and the marking are built from this log."
+  },
+  {
+   "id": "integrity.log_detail",
+   "category": "integrity",
+   "label": "Log detail",
+   "description": "How much detail the action log shows. Detailed includes every view and search.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "standard",
+     "label": "Standard"
+    },
+    {
+     "value": "detailed",
+     "label": "Detailed"
+    }
+   ],
+   "default": "standard"
+  },
+  {
+   "id": "integrity.hash_display",
+   "category": "integrity",
+   "label": "Hash display",
+   "description": "Shows hashes in full or shortened to the first characters.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "full",
+     "label": "Full"
+    },
+    {
+     "value": "shortened",
+     "label": "Shortened"
+    }
+   ],
+   "default": "shortened"
+  },
+  {
+   "id": "integrity.verify_hash_when_opening_an_original",
+   "category": "integrity",
+   "label": "Verify hash when opening an original",
+   "description": "Checks an original item's hash each time you open it, only the first time, or never (training mode only).",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "always",
+     "label": "Always"
+    },
+    {
+     "value": "first_time_only",
+     "label": "First time only"
+    },
+    {
+     "value": "never",
+     "label": "Never (training mode only)"
+    }
+   ],
+   "default": "always"
+  },
+  {
+   "id": "integrity.warn_about_continuity_gaps",
+   "category": "integrity",
+   "label": "Warn about continuity gaps",
+   "description": "Warns if you examine an item before logging its receipt.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "integrity.ask_for_a_reason_when_opening_originals",
+   "category": "integrity",
+   "label": "Ask for a reason when opening originals",
+   "description": "Asks why you need an original rather than a working copy, always or only in training mode.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "always",
+     "label": "Always"
+    },
+    {
+     "value": "training_mode_only",
+     "label": "Training mode only"
+    }
+   ],
+   "default": "always"
+  },
+  {
+   "id": "integrity.show_custody_timeline_on_items",
+   "category": "integrity",
+   "label": "Show custody timeline on items",
+   "description": "Shows each item's chain of custody as a timeline in the viewer.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "report.template",
+   "category": "report",
+   "label": "Template",
+   "description": "The layout of your report: Standard, a Short form, or Detailed.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "standard",
+     "label": "Standard"
+    },
+    {
+     "value": "short_form",
+     "label": "Short form"
+    },
+    {
+     "value": "detailed",
+     "label": "Detailed"
+    }
+   ],
+   "default": "standard"
+  },
+  {
+   "id": "report.citation_style",
+   "category": "report",
+   "label": "Citation style",
+   "description": "Cites evidence inline, such as (EV-012), or as footnotes.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "inline_ids",
+     "label": "Inline IDs"
+    },
+    {
+     "value": "footnotes",
+     "label": "Footnotes"
+    }
+   ],
+   "default": "inline_ids"
+  },
+  {
+   "id": "report.check_citations_automatically",
+   "category": "report",
+   "label": "Check citations automatically",
+   "description": "Checks that every finding in the report cites evidence before you submit.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "report.page_size",
+   "category": "report",
+   "label": "Page size",
+   "description": "Paper size for PDF exports: A4 or Letter.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "a4",
+     "label": "A4"
+    },
+    {
+     "value": "letter",
+     "label": "Letter"
+    }
+   ],
+   "default": "a4"
+  },
+  {
+   "id": "report.export_font",
+   "category": "report",
+   "label": "Export font",
+   "description": "The typeface used in exported reports.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "serif",
+     "label": "Serif"
+    },
+    {
+     "value": "sans_serif",
+     "label": "Sans serif"
+    }
+   ],
+   "default": "sans_serif"
+  },
+  {
+   "id": "report.include_evidence_list_appendix",
+   "category": "report",
+   "label": "Include evidence list appendix",
+   "description": "Adds a list of the evidence you relied on at the end of the report.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "report.include_link_chart_image",
+   "category": "report",
+   "label": "Include link chart image",
+   "description": "Adds a picture of your link chart to the report.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "report.include_timeline_image",
+   "category": "report",
+   "label": "Include timeline image",
+   "description": "Adds a picture of your timeline to the report.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "report.default_export",
+   "category": "report",
+   "label": "Default export",
+   "description": "Which format the Export button makes first: PDF or Markdown.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "pdf",
+     "label": "PDF"
+    },
+    {
+     "value": "markdown",
+     "label": "Markdown"
+    }
+   ],
+   "default": "pdf"
+  },
+  {
+   "id": "report.spell_check",
+   "category": "report",
+   "label": "Spell check",
+   "description": "Underlines spelling mistakes while you write the report.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "report.show_word_count",
+   "category": "report",
+   "label": "Show word count",
+   "description": "Shows how many words each report section has.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "report.draft_autosave_interval",
+   "category": "report",
+   "label": "Draft autosave interval",
+   "description": "How often your report draft saves while you type.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "30_seconds",
+     "label": "30 seconds"
+    },
+    {
+     "value": "1_minute",
+     "label": "1 minute"
+    },
+    {
+     "value": "5_minutes",
+     "label": "5 minutes"
+    }
+   ],
+   "default": "1_minute"
+  },
+  {
+   "id": "replay.replay_speed",
+   "category": "replay",
+   "label": "Replay speed",
+   "description": "How fast the investigation replay plays through your attempt.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "slow",
+     "label": "Slow"
+    },
+    {
+     "value": "normal",
+     "label": "Normal"
+    },
+    {
+     "value": "fast",
+     "label": "Fast"
+    }
+   ],
+   "default": "normal"
+  },
+  {
+   "id": "replay.replay_detail",
+   "category": "replay",
+   "label": "Replay detail",
+   "description": "Shows only the key moments, or every action you took.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "key_moments_only",
+     "label": "Key moments only"
+    },
+    {
+     "value": "every_action",
+     "label": "Every action"
+    }
+   ],
+   "default": "key_moments_only"
+  },
+  {
+   "id": "replay.show_mistakes_on_the_replay",
+   "category": "replay",
+   "label": "Show mistakes on the replay",
+   "description": "Marks traps and procedural mistakes on the replay track.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "replay.show_suggested_route",
+   "category": "replay",
+   "label": "Show suggested route",
+   "description": "Shows the case author's suggested route beside yours once the debrief is done.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "replay.start_replay_automatically",
+   "category": "replay",
+   "label": "Start replay automatically",
+   "description": "Starts playing the replay as soon as you open it.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "replay.dashboard_range",
+   "category": "replay",
+   "label": "Dashboard range",
+   "description": "How many recent attempts the skills dashboard uses.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "last_5_attempts",
+     "label": "Last 5 attempts"
+    },
+    {
+     "value": "last_10",
+     "label": "Last 10"
+    },
+    {
+     "value": "all",
+     "label": "All"
+    }
+   ],
+   "default": "last_10"
+  },
+  {
+   "id": "replay.dashboard_chart_style",
+   "category": "replay",
+   "label": "Dashboard chart style",
+   "description": "Shows your five skill areas as a radar chart or as bars.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "radar",
+     "label": "Radar"
+    },
+    {
+     "value": "bars",
+     "label": "Bars"
+    }
+   ],
+   "default": "radar"
+  },
+  {
+   "id": "replay.best_scores_count_assessment_mode_only",
+   "category": "replay",
+   "label": "Best scores count assessment mode only",
+   "description": "Only counts assessment attempts for best scores, so training hints do not inflate them.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "replay.show_suggested_next_steps",
+   "category": "replay",
+   "label": "Show suggested next steps",
+   "description": "Shows plain suggestions on what to practise next, with links to lessons.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "replay.reset_progress_history",
+   "category": "replay",
+   "label": "Reset progress history",
+   "description": "Clears the history behind the skills dashboard. Case saves are not touched.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "button",
+   "action": "reset_progress_history",
+   "confirm": true,
+   "note": "Button with confirmation"
+  },
+  {
+   "id": "notes.default_finding_type",
+   "category": "notes",
+   "label": "Default finding type",
+   "description": "The label a new finding starts with. Assumption is the safest default until you have evidence.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "fact",
+     "label": "Fact"
+    },
+    {
+     "value": "inference",
+     "label": "Inference"
+    },
+    {
+     "value": "assumption",
+     "label": "Assumption"
+    }
+   ],
+   "default": "assumption"
+  },
+  {
+   "id": "notes.show_grade_fields_on_findings",
+   "category": "notes",
+   "label": "Show grade fields on findings",
+   "description": "Shows the source and information grade fields on every finding, or only when evidence is linked.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "always",
+     "label": "Always"
+    },
+    {
+     "value": "when_evidence_is_linked",
+     "label": "When evidence is linked"
+    }
+   ],
+   "default": "always"
+  },
+  {
+   "id": "notes.link_selected_evidence_to_new_findings",
+   "category": "notes",
+   "label": "Link selected evidence to new findings",
+   "description": "Adds the item you are looking at as a citation when you start a new finding.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "notes.note_font_size",
+   "category": "notes",
+   "label": "Note font size",
+   "description": "The text size in the notes panel.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "small",
+     "label": "Small"
+    },
+    {
+     "value": "medium",
+     "label": "Medium"
+    },
+    {
+     "value": "large",
+     "label": "Large"
+    }
+   ],
+   "default": "medium"
+  },
+  {
+   "id": "notes.markdown_preview_in_notes",
+   "category": "notes",
+   "label": "Markdown preview in notes",
+   "description": "Shows formatted text, such as bold and lists, in your notes.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "notes.findings_board_layout",
+   "category": "notes",
+   "label": "Findings board layout",
+   "description": "Shows findings as a list, as cards, or grouped by stage.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "list",
+     "label": "List"
+    },
+    {
+     "value": "cards",
+     "label": "Cards"
+    },
+    {
+     "value": "grouped_by_stage",
+     "label": "Grouped by stage"
+    }
+   ],
+   "default": "grouped_by_stage"
+  },
+  {
+   "id": "saves.autosave_interval",
+   "category": "saves",
+   "label": "Autosave interval",
+   "description": "How often the case saves while you work.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "1",
+     "label": "1"
+    },
+    {
+     "value": "2",
+     "label": "2"
+    },
+    {
+     "value": "5",
+     "label": "5"
+    },
+    {
+     "value": "10_minutes",
+     "label": "10 minutes"
+    }
+   ],
+   "default": "2"
+  },
+  {
+   "id": "saves.autosave_after_key_actions",
+   "category": "saves",
+   "label": "Autosave after key actions",
+   "description": "Also saves straight after important actions such as a request or a finding.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "saves.backup_copies_kept",
+   "category": "saves",
+   "label": "Backup copies kept",
+   "description": "How many older copies of each save are kept, in case you need to go back.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "range",
+   "min": 1,
+   "max": 20,
+   "step": 1,
+   "unit": "",
+   "default": 5
+  },
+  {
+   "id": "saves.backup_folder",
+   "category": "saves",
+   "label": "Backup folder",
+   "description": "Where backup copies are kept: the program's folder or a folder you choose.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "app_folder",
+     "label": "App folder"
+    },
+    {
+     "value": "custom_folder",
+     "label": "Custom folder"
+    }
+   ],
+   "default": "app_folder"
+  },
+  {
+   "id": "saves.save_when_closing",
+   "category": "saves",
+   "label": "Save when closing",
+   "description": "Saves automatically when you close a case, or asks first.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "ask",
+     "label": "Ask"
+    },
+    {
+     "value": "always",
+     "label": "Always"
+    }
+   ],
+   "default": "always"
+  },
+  {
+   "id": "saves.export_all_saves",
+   "category": "saves",
+   "label": "Export all saves",
+   "description": "Makes one file containing all your saves, to move to another computer.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "button",
+   "action": "export_all_saves",
+   "confirm": false,
+   "note": "Button"
+  },
+  {
+   "id": "saves.import_saves",
+   "category": "saves",
+   "label": "Import saves",
+   "description": "Brings in saves exported from another computer.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "button",
+   "action": "import_saves",
+   "confirm": false,
+   "note": "Button"
+  },
+  {
+   "id": "saves.show_storage_used",
+   "category": "saves",
+   "label": "Show storage used",
+   "description": "Shows how much space your cases, saves and settings take up.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "button",
+   "action": "show_storage_used",
+   "confirm": false,
+   "note": "Button"
+  },
+  {
+   "id": "saves.clear_caches",
+   "category": "saves",
+   "label": "Clear caches",
+   "description": "Removes temporary files the program can rebuild. Saves are not touched.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "button",
+   "action": "clear_caches",
+   "confirm": false,
+   "note": "Button"
+  },
+  {
+   "id": "saves.delete_all_data",
+   "category": "saves",
+   "label": "Delete all data",
+   "description": "Removes every case, save, setting and Academy record from this computer. Asks twice.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "button",
+   "action": "delete_all_data",
+   "confirm": true,
+   "note": "Button with two confirmations"
+  },
+  {
+   "id": "library.sort_by",
+   "category": "library",
+   "label": "Sort by",
+   "description": "The order cases appear in the library.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "title",
+     "label": "Title"
+    },
+    {
+     "value": "difficulty",
+     "label": "Difficulty"
+    },
+    {
+     "value": "time",
+     "label": "Time"
+    },
+    {
+     "value": "recently_played",
+     "label": "Recently played"
+    }
+   ],
+   "default": "recently_played"
+  },
+  {
+   "id": "library.view",
+   "category": "library",
+   "label": "View",
+   "description": "Shows cases as cards in a grid or as a list.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "grid",
+     "label": "Grid"
+    },
+    {
+     "value": "list",
+     "label": "List"
+    }
+   ],
+   "default": "grid"
+  },
+  {
+   "id": "library.show_difficulty_badges",
+   "category": "library",
+   "label": "Show difficulty badges",
+   "description": "Shows each case's difficulty, such as Beginner or Hard.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "library.show_time_estimates",
+   "category": "library",
+   "label": "Show time estimates",
+   "description": "Shows how long each case is expected to take.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "library.show_completed_cases",
+   "category": "library",
+   "label": "Show completed cases",
+   "description": "Keeps cases you have submitted in the library list.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "library.confirm_before_removing_a_case",
+   "category": "library",
+   "label": "Confirm before removing a case",
+   "description": "Asks before a case and its saves are removed.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "library.verify_case_packs",
+   "category": "library",
+   "label": "Verify case packs",
+   "description": "Checks every case pack's hashes each time it opens, or only when the files have changed.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "always",
+     "label": "Always"
+    },
+    {
+     "value": "only_when_changed",
+     "label": "Only when changed"
+    }
+   ],
+   "default": "only_when_changed"
+  },
+  {
+   "id": "academy.academy_reminders",
+   "category": "academy",
+   "label": "Academy reminders",
+   "description": "Offers the matching lesson the first time you open a tool you have not learned yet.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "academy.tips_frequency",
+   "category": "academy",
+   "label": "Tips frequency",
+   "description": "How often short tips appear while you work.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "often",
+     "label": "Often"
+    },
+    {
+     "value": "sometimes",
+     "label": "Sometimes"
+    },
+    {
+     "value": "never",
+     "label": "Never"
+    }
+   ],
+   "default": "sometimes"
+  },
+  {
+   "id": "academy.contextual_help_icons",
+   "category": "academy",
+   "label": "Contextual help icons",
+   "description": "Shows small ? icons next to features that open the matching help article.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true,
+   "labels": [
+    "Show",
+    "Hide"
+   ]
+  },
+  {
+   "id": "academy.what_is_this_mode",
+   "category": "academy",
+   "label": "'What is this?' mode",
+   "description": "Allows the 'What is this?' mode, where you click any part of the screen for a short explanation.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "academy.open_help_in",
+   "category": "academy",
+   "label": "Open help in",
+   "description": "Opens the help centre in a side panel or in its own full window.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "side_panel",
+     "label": "Side panel"
+    },
+    {
+     "value": "separate_window",
+     "label": "Separate window"
+    }
+   ],
+   "default": "side_panel"
+  },
+  {
+   "id": "academy.help_search_history",
+   "category": "academy",
+   "label": "Help search history",
+   "description": "How many recent help searches are remembered on this computer. Choose 0 to keep none.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "0",
+     "label": "0"
+    },
+    {
+     "value": "10",
+     "label": "10"
+    },
+    {
+     "value": "50",
+     "label": "50"
+    }
+   ],
+   "default": "10"
+  },
+  {
+   "id": "academy.show_academy_rewards_on_profile",
+   "category": "academy",
+   "label": "Show Academy rewards on profile",
+   "description": "Shows avatar frames and badge borders you have unlocked in the Academy.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "academy.reset_academy_progress",
+   "category": "academy",
+   "label": "Reset Academy progress",
+   "description": "Clears your Academy XP, ranks and badges. Case saves are not touched.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "button",
+   "action": "reset_academy_progress",
+   "confirm": true,
+   "note": "Button with confirmation"
+  },
+  {
+   "id": "shortcuts.shortcut_preset",
+   "category": "shortcuts",
+   "label": "Shortcut preset",
+   "description": "A ready-made set of keyboard shortcuts: Default, Compact, or Mouse free for working without a mouse.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "default",
+     "label": "Default"
+    },
+    {
+     "value": "compact",
+     "label": "Compact"
+    },
+    {
+     "value": "mouse_free",
+     "label": "Mouse free"
+    }
+   ],
+   "default": "default"
+  },
+  {
+   "id": "shortcuts.rebind_actions",
+   "category": "shortcuts",
+   "label": "Rebind actions",
+   "description": "Change the key for any of about 40 actions.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "shortcuts",
+   "default": "default"
+  },
+  {
+   "id": "shortcuts.show_shortcut_sheet",
+   "category": "shortcuts",
+   "label": "Show shortcut sheet",
+   "description": "Shows every shortcut on one sheet you can print.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "button",
+   "action": "show_shortcut_sheet",
+   "confirm": false,
+   "note": "Button"
+  },
+  {
+   "id": "shortcuts.reset_all_shortcuts",
+   "category": "shortcuts",
+   "label": "Reset all shortcuts",
+   "description": "Puts every shortcut back to the default.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "button",
+   "action": "reset_all_shortcuts",
+   "confirm": true,
+   "note": "Button with confirmation"
+  },
+  {
+   "id": "notifications.stage_unlock_banner",
+   "category": "notifications",
+   "label": "Stage unlock banner",
+   "description": "Shows a banner when a new stage opens.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "notifications.autosave_notice",
+   "category": "notifications",
+   "label": "Autosave notice",
+   "description": "How saving is shown: a small icon, a pop-up, or not at all.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "subtle_icon",
+     "label": "Subtle icon"
+    },
+    {
+     "value": "pop_up",
+     "label": "Pop-up"
+    },
+    {
+     "value": "off",
+     "label": "Off"
+    }
+   ],
+   "default": "subtle_icon"
+  },
+  {
+   "id": "notifications.hint_available_indicator",
+   "category": "notifications",
+   "label": "Hint available indicator",
+   "description": "Shows a small marker on objectives where a hint is available.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "notifications.procedural_warning_style",
+   "category": "notifications",
+   "label": "Procedural warning style",
+   "description": "Shows training warnings as a dialog that must be answered or as a banner.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "dialog",
+     "label": "Dialog"
+    },
+    {
+     "value": "banner",
+     "label": "Banner"
+    }
+   ],
+   "default": "banner"
+  },
+  {
+   "id": "notifications.notification_duration",
+   "category": "notifications",
+   "label": "Notification duration",
+   "description": "How long pop-up notices stay on screen.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "choice",
+   "options": [
+    {
+     "value": "3_seconds",
+     "label": "3 seconds"
+    },
+    {
+     "value": "5_seconds",
+     "label": "5 seconds"
+    },
+    {
+     "value": "10_seconds",
+     "label": "10 seconds"
+    },
+    {
+     "value": "until_closed",
+     "label": "Until closed"
+    }
+   ],
+   "default": "5_seconds"
+  },
+  {
+   "id": "privacy.content_notice_at_case_start",
+   "category": "privacy",
+   "label": "Content notice at case start",
+   "description": "Shows a short note about the case's themes before you start.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "privacy.sensitive_content_warnings",
+   "category": "privacy",
+   "label": "Sensitive content warnings",
+   "description": "Shows a warning before items marked as sensitive.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true,
+   "labels": [
+    "Show",
+    "Hide"
+   ]
+  },
+  {
+   "id": "privacy.blur_images_until_opened",
+   "category": "privacy",
+   "label": "Blur images until opened",
+   "description": "Blurs images in previews until you choose to open them.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "privacy.hide_graphic_details",
+   "category": "privacy",
+   "label": "Hide graphic details",
+   "description": "Hides graphic descriptions where a case offers a gentler version.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "privacy.usage_data_collection",
+   "category": "privacy",
+   "label": "Usage data collection",
+   "description": "Investafiction never sends anything off your computer. This cannot be changed because there is nothing to send.",
+   "affects_score": false,
+   "locked": true,
+   "essential": false,
+   "type": "locked",
+   "value": "None",
+   "note": "None. The program sends nothing (locked)",
+   "locked_reason": "Investafiction never sends anything off your computer. There is nothing to switch on."
+  },
+  {
+   "id": "privacy.warn_before_opening_packs_from_other_authors",
+   "category": "privacy",
+   "label": "Warn before opening packs from other authors",
+   "description": "Asks before importing a case pack that was not made by the starter pack authors.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "id": "advanced.case_author_mode",
+   "category": "advanced",
+   "label": "Case author mode",
+   "description": "For case authors: loads unpacked case folders and shows extra checks while you build a case.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "off",
+     "label": "Off"
+    },
+    {
+     "value": "on",
+     "label": "On (loads unpacked case folders and shows extra checks)"
+    }
+   ],
+   "default": "off"
+  },
+  {
+   "id": "advanced.show_internal_ids_on_items",
+   "category": "advanced",
+   "label": "Show internal IDs on items",
+   "description": "Shows internal ids such as ENT-P1 next to names.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "advanced.developer_tools",
+   "category": "advanced",
+   "label": "Developer tools",
+   "description": "Enables the browser developer tools inside the program window.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "advanced.log_level",
+   "category": "advanced",
+   "label": "Log level",
+   "description": "How much the program writes to its own technical log.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "choice",
+   "options": [
+    {
+     "value": "errors_only",
+     "label": "Errors only"
+    },
+    {
+     "value": "normal",
+     "label": "Normal"
+    },
+    {
+     "value": "verbose",
+     "label": "Verbose"
+    }
+   ],
+   "default": "errors_only"
+  },
+  {
+   "id": "advanced.experimental_features",
+   "category": "advanced",
+   "label": "Experimental features",
+   "description": "Turns on features that are still being tested and may change.",
+   "affects_score": false,
+   "locked": false,
+   "essential": true,
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "id": "advanced.open_data_folder",
+   "category": "advanced",
+   "label": "Open data folder",
+   "description": "Shows where your cases, saves and settings are kept on this computer.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "button",
+   "action": "open_data_folder",
+   "confirm": false,
+   "note": "Button"
+  },
+  {
+   "id": "advanced.export_diagnostics",
+   "category": "advanced",
+   "label": "Export diagnostics",
+   "description": "Makes a local file with technical details for a bug report. It contains no case answers or personal data.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "button",
+   "action": "export_diagnostics",
+   "confirm": false,
+   "note": "Button. Makes a local file with no case answers or personal data"
+  },
+  {
+   "id": "advanced.reset_all_settings",
+   "category": "advanced",
+   "label": "Reset all settings",
+   "description": "Puts every setting back to its default. Saves and Academy progress are not touched.",
+   "affects_score": false,
+   "locked": false,
+   "essential": false,
+   "type": "button",
+   "action": "reset_all_settings",
+   "confirm": true,
+   "note": "Button with confirmation"
+  }
+ ],
+ "presets": [
+  {
+   "id": "recommended",
+   "label": "Recommended",
+   "description": "The defaults. A good balance for most people.",
+   "values": {}
+  },
+  {
+   "id": "minimal",
+   "label": "Minimal",
+   "description": "Fewer panels, prompts and pop-ups.",
+   "values": {
+    "appearance.show_status_bar": false,
+    "appearance.tooltips": "long_delay",
+    "gameplay.show_stage_objectives": "required_only",
+    "gameplay.show_stretch_objectives": false,
+    "gameplay.message_from_the_case_lead": "panel",
+    "academy.tips_frequency": "never",
+    "academy.academy_reminders": false,
+    "academy.contextual_help_icons": false,
+    "notifications.autosave_notice": "off",
+    "notifications.stage_unlock_banner": false,
+    "sound.interface_sounds": false,
+    "graph.mini_map": false,
+    "osint.capture_reminder": false
+   }
+  },
+  {
+   "id": "accessibility",
+   "label": "Accessibility first",
+   "description": "Larger text, stronger contrast, less motion and bigger targets.",
+   "values": {
+    "appearance.text_size": "large",
+    "appearance.font": "dyslexia_friendly",
+    "appearance.line_spacing": "relaxed",
+    "appearance.layout_density": "spacious",
+    "accessibility.reduce_motion": true,
+    "accessibility.reduce_transparency": true,
+    "accessibility.high_contrast_evidence_viewers": true,
+    "accessibility.focus_outline_thickness": "thick",
+    "accessibility.large_click_targets": true,
+    "accessibility.underline_links": true,
+    "accessibility.strengthen_graph_and_timeline_lines": true,
+    "accessibility.announce_saves_and_stage_changes": true,
+    "accessibility.show_shortcut_hints_on_buttons": true,
+    "notifications.notification_duration": "until_closed"
+   }
+  },
+  {
+   "id": "assessment",
+   "label": "Assessment style",
+   "description": "Hints and warnings off, as in a real test. New attempts start in assessment mode.",
+   "values": {
+    "gameplay.mode": "assessment",
+    "gameplay.hints_available": "none",
+    "gameplay.procedural_warnings": false,
+    "notifications.hint_available_indicator": false,
+    "academy.tips_frequency": "never",
+    "academy.academy_reminders": false
+   }
+  }
+ ]
+}

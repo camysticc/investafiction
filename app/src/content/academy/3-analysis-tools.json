@@ -1,0 +1,377 @@
+{
+ "id": "analysis-tools",
+ "n": 3,
+ "title": "Analysis tools",
+ "icon": "🕸️",
+ "badge": "Time Keeper",
+ "practice": "Build a short timeline and a small link chart.",
+ "lessons": [
+  {
+   "id": "analysis.timeline",
+   "title": "Building a timeline",
+   "minutes": 3,
+   "picture": "timeline",
+   "intro": "A timeline puts events from different sources in order. Every entry should cite the item it came from, so anyone can check it.",
+   "tryit": {
+    "type": "order",
+    "prompt": "Put these events in time order, earliest first.",
+    "items": [
+     "16:10 Monday: parcel packed",
+     "09:30 Tuesday: collected by courier",
+     "15:37 Tuesday: marked delivered",
+     "18:47 Tuesday: post about a parcel at number 14"
+    ]
+   },
+   "sandbox": {
+    "task": "Add three events to the timeline, each citing its item.",
+    "tab": "timeline",
+    "steps": [
+     {
+      "label": "Add three timeline events",
+      "check": {
+       "kind": "timeline",
+       "min": 3
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "Every timeline entry should…",
+     "options": [
+      "Be in capital letters",
+      "Cite the evidence it came from",
+      "Have a photo"
+     ],
+     "answer": 1,
+     "hint": "Someone must be able to check it."
+    },
+    {
+     "q": "A quick way to add an event from a table is…",
+     "options": [
+      "Typing it all by hand",
+      "The timeline button on the row",
+      "Asking for a hint"
+     ],
+     "answer": 1,
+     "hint": "Look for the clock icon on rows."
+    },
+    {
+     "q": "Timelines help you…",
+     "options": [
+      "See order, gaps and conflicts",
+      "Change evidence",
+      "Skip stages"
+     ],
+     "answer": 0,
+     "hint": "Order matters."
+    }
+   ],
+   "learn_more": "feature.timeline"
+  },
+  {
+   "id": "analysis.clocks",
+   "title": "Clock offsets",
+   "minutes": 3,
+   "picture": "clock",
+   "intro": "Device clocks drift and systems use different time zones. Before you compare times, correct for any known offset. The item's clock note tells you about it.",
+   "tryit": {
+    "type": "numeric",
+    "prompt": "The courier's handheld runs 5 minutes fast. It shows 15:42. What is the true time?",
+    "answer": "15:37",
+    "explain": "Fast means ahead, so subtract: 15:42 minus 5 minutes is 15:37."
+   },
+   "sandbox": {
+    "task": "Add the delivery to the timeline at its corrected time (15:37 on 3 February).",
+    "tab": "timeline",
+    "badge_on_done": null,
+    "steps": [
+     {
+      "label": "Add the delivery at 15:37 true time, citing EV-005",
+      "check": {
+       "kind": "timeline_at",
+       "time": "2026-02-03 15:37",
+       "tolerance": 2,
+       "evidence": "EV-005"
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "A camera clock runs 7 minutes fast and shows 21:07. True time?",
+     "options": [
+      "21:14",
+      "21:00",
+      "21:07"
+     ],
+     "answer": 1,
+     "hint": "Fast means ahead, so subtract."
+    },
+    {
+     "q": "Where do you find a known offset?",
+     "options": [
+      "The item's clock note and metadata",
+      "The case lead",
+      "The weather"
+     ],
+     "answer": 0,
+     "hint": "Look in the viewer's header."
+    },
+    {
+     "q": "Why correct before comparing?",
+     "options": [
+      "Uncorrected times can put events in the wrong order",
+      "It looks neater",
+      "It is required by law"
+     ],
+     "answer": 0,
+     "hint": "A few minutes can change the story."
+    }
+   ],
+   "learn_more": "concept.clock_offsets"
+  },
+  {
+   "id": "analysis.links",
+   "title": "Link analysis",
+   "minutes": 3,
+   "picture": "links",
+   "intro": "The link chart shows how people, accounts, phones, places and things connect. A link without evidence is only a guess, so it is drawn dashed until you cite something.",
+   "tryit": {
+    "type": "pairs",
+    "prompt": "Match each connection to the evidence that shows it.",
+    "pairs": [
+     [
+      "Parcel → 41 Linnet Close (addressed)",
+      "Shipping label EV-004"
+     ],
+     [
+      "Parcel → 14 Linnet Close (left there)",
+      "Delivery photo EV-006"
+     ],
+     [
+      "Driver → parcel (delivered it)",
+      "Tracking export EV-005"
+     ]
+    ]
+   },
+   "sandbox": {
+    "task": "Draw a link between the parcel and an address, citing evidence.",
+    "tab": "links",
+    "badge_on_done": "Link Maker",
+    "steps": [
+     {
+      "label": "Add a link with at least one citation",
+      "check": {
+       "kind": "link",
+       "min": 1,
+       "cited": true
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "A dashed link means…",
+     "options": [
+      "It has no evidence cited yet",
+      "It is very strong",
+      "It is out of scope"
+     ],
+     "answer": 0,
+     "hint": "Links need evidence."
+    },
+    {
+     "q": "Suggested links are…",
+     "options": [
+      "Proof",
+      "Hints the evidence might support",
+      "Required"
+     ],
+     "answer": 1,
+     "hint": "You still decide and cite."
+    },
+    {
+     "q": "The chart helps you…",
+     "options": [
+      "See connections and gaps at a glance",
+      "Change the evidence",
+      "Skip the timeline"
+     ],
+     "answer": 0,
+     "hint": "It is a picture of relationships."
+    }
+   ],
+   "learn_more": "feature.link_chart"
+  },
+  {
+   "id": "analysis.map",
+   "title": "The map and location data",
+   "minutes": 3,
+   "picture": "map",
+   "intro": "The map shows where things happened: phone masts, cameras, addresses and points from location data. A phone mast covers an area, so a phone could be anywhere inside its circle.",
+   "tryit": {
+    "type": "choose",
+    "prompt": "A phone connected through a mast with a 900 metre radius. What can you say?",
+    "options": [
+     [
+      "The phone was at the mast",
+      false,
+      "Masts cover an area. The phone was somewhere in range."
+     ],
+     [
+      "The phone was somewhere within the mast's coverage",
+      true,
+      "Right. Cell sites give an area, not a point."
+     ],
+     [
+      "The phone was exactly 900 metres away",
+      false,
+      "The radius is the coverage, not a distance to the phone."
+     ]
+    ]
+   },
+   "sandbox": {
+    "task": "Open the Statements tab and send the customer's address claim to the map.",
+    "tab": "statements",
+    "steps": [
+     {
+      "label": "Send a claim with a place to the map",
+      "check": {
+       "kind": "pins",
+       "min": 1
+      }
+     },
+     {
+      "label": "Open the Map tab",
+      "check": {
+       "kind": "tab",
+       "tab": "map"
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "A cell site circle shows…",
+     "options": [
+      "The exact location",
+      "The area the phone could be in",
+      "The phone's owner"
+     ],
+     "answer": 1,
+     "hint": "It is coverage."
+    },
+    {
+     "q": "The time slider lets you…",
+     "options": [
+      "Watch movements over time",
+      "Change evidence times",
+      "Skip stages"
+     ],
+     "answer": 0,
+     "hint": "Try it on a case with location data."
+    },
+    {
+     "q": "A witness's place sent to the map is…",
+     "options": [
+      "Proven",
+      "A witness account, marked as such",
+      "Hidden"
+     ],
+     "answer": 1,
+     "hint": "Its source stays visible."
+    }
+   ],
+   "learn_more": "feature.map"
+  },
+  {
+   "id": "analysis.fia",
+   "title": "Fact, inference and assumption",
+   "minutes": 4,
+   "picture": "scales",
+   "intro": "A fact is what the evidence directly shows. An inference follows from evidence. An assumption has no support and must be labelled. When statements differ, compare them fairly: a difference is not a lie.",
+   "tryit": {
+    "type": "sort",
+    "prompt": "Label each statement.",
+    "buckets": [
+     "Fact",
+     "Inference",
+     "Assumption"
+    ],
+    "items": [
+     [
+      "The label shows 41 Linnet Close.",
+      0
+     ],
+     [
+      "The parcel was probably left at number 14 by mistake.",
+      1
+     ],
+     [
+      "The driver was careless on purpose.",
+      2
+     ],
+     [
+      "The doorbell recorded nobody between 13:02 and 17:20.",
+      0
+     ]
+    ]
+   },
+   "sandbox": {
+    "task": "In the Statements tab, mark the conflict between the customer and the driver.",
+    "tab": "statements",
+    "badge_on_done": null,
+    "steps": [
+     {
+      "label": "Link two claims as conflicting",
+      "check": {
+       "kind": "claim_link",
+       "relation": "conflicts"
+      }
+     },
+     {
+      "label": "Link a claim to evidence that supports or contradicts it",
+      "check": {
+       "kind": "claim_link",
+       "relation": "evidence"
+      }
+     }
+    ]
+   },
+   "check": [
+    {
+     "q": "'The parcel was probably left at number 14.' This is…",
+     "options": [
+      "A fact",
+      "An inference",
+      "An assumption"
+     ],
+     "answer": 1,
+     "hint": "It follows from evidence but is not stated outright."
+    },
+    {
+     "q": "Two witnesses disagree. You should…",
+     "options": [
+      "Decide one is lying",
+      "Note the conflict and look for evidence that resolves it",
+      "Ignore both"
+     ],
+     "answer": 1,
+     "hint": "Memory, knowledge and mistakes explain most differences."
+    },
+    {
+     "q": "A claim nobody can check is…",
+     "options": [
+      "False",
+      "Unverified",
+      "A fact"
+     ],
+     "answer": 1,
+     "hint": "Unchecked is not the same as wrong."
+    }
+   ],
+   "learn_more": "concept.fact_inference_assumption"
+  }
+ ]
+}

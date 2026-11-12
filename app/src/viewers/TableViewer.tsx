@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import type { EvidenceItem } from "../lib/types";
 import { parseCsv } from "../lib/util";
+import { useSetting } from "../lib/settings";
 
 export default function TableViewer({ item, text, onTimeline }: { item: EvidenceItem; text: string; onTimeline: (p: { time: string; description: string }) => void }) {
   const rows = useMemo(() => parseCsv(text), [text]);
@@ -27,7 +28,7 @@ export default function TableViewer({ item, text, onTimeline }: { item: Evidence
     }
     return r;
   }, [body, q, sort]);
-  const PER = 200;
+  const PER = Math.max(1, parseInt(useSetting<string>("viewers.rows_per_page"), 10) || 50);
   const pages = Math.max(1, Math.ceil(filtered.length / PER));
   const shown = filtered.slice(page * PER, page * PER + PER);
   const numericCols = head.map((_, c) => body.length > 0 && body.every((r) => r[c] === "" || (!isNaN(Number(r[c])) && /\./.test(r[c] || "") )));

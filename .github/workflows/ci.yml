@@ -31,6 +31,11 @@ jobs:
           if bad:
               sys.exit(f"Out of date, run build-all and commit: {bad}")
           PY
+      - name: Settings, Academy and help centre content builds
+        run: |
+          python tools/content/make_settings.py
+          python tools/content/make_academy.py
+          python tools/content/build_help.py
       - run: PYTHONPATH=tools python -m pytest tests/python -q
 
   core:
@@ -55,4 +60,7 @@ jobs:
       - run: npm ci
         working-directory: app
       - run: npm run build
+        working-directory: app
+      - name: Help centre question bank (at least 95% in the top three)
+        run: npm run test:help
         working-directory: app

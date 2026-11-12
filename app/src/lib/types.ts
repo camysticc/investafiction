@@ -87,7 +87,14 @@ export type CaseState = {
   map: MapData | null;
   osint: { enabled: boolean; sites: any[]; pages: { id: string; url: string; title: string; site: string }[] };
   evidence: EvidenceItem[];
+  statements: Statement[];
 };
+
+export type Claim = { id: string; text: string; time?: string; place?: string; entities?: string[] };
+export type Statement = { id: string; evidence: string; witness: string; role: string; date: string; claims: Claim[] };
+export type ClaimLink = { id: string; claim: string; relation: string; other_claim?: string | null; evidence: string[]; note: string; created: string };
+export type MapPin = { id: string; claim: string; location: string; label: string; time?: string | null; source: string };
+export type ScoreSettings = { hints_available: number; warnings: boolean };
 
 export type AttemptState = {
   id: string;
@@ -119,6 +126,9 @@ export type AttemptState = {
   submitted: boolean;
   result: any;
   report_issues: string[];
+  claim_links: ClaimLink[];
+  pins: MapPin[];
+  score_settings: ScoreSettings;
 };
 
 export type GameState = { profile: Profile | null; case: CaseState; attempt: AttemptState };

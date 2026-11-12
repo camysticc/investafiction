@@ -5,11 +5,22 @@ import { fmtDuration, fmtTime } from "../lib/util";
 import { Avatar, PRESETS } from "./Welcome";
 import BriefView from "./BriefView";
 import { Modal } from "./common";
-import { SettingsButton } from "./Settings";
-import { openSettings } from "../lib/ui";
+import { openHelp, openSettings, goTo } from "../lib/nav";
+import { useSetting } from "../lib/settings";
+import { useProgress, totalXp, rankFor } from "../lib/progress";
+import { Icon } from "./LeftMenu";
+import { useFrameSync } from "./Welcome";
 
 export default function TopBar({ onLeave }: { onLeave: () => void }) {
   const { profile, setProfile, game, saving, lastSaved, act, run } = useApp();
+  useFrameSync();
+  const clockMode = useSetting<string>("gameplay.case_clock");
+  const badgeStyle = useSetting<string>("profile.badge_style");
+  const showRank = useSetting<boolean>("profile.show_academy_rank_on_badge");
+  const notice = useSetting<string>("notifications.autosave_notice");
+  useSetting("profile.avatar");
+  const prog = useProgress();
+  const rank = rankFor(totalXp(prog)).name;
   const [menu, setMenu] = useState(false);
   const [brief, setBrief] = useState(false);
   const [changing, setChanging] = useState(false);
@@ -21,8 +32,12 @@ export default function TopBar({ onLeave }: { onLeave: () => void }) {
   }, []);
   const a = game?.attempt;
   const unread = a?.messages.filter((m) => !m.read).length ?? 0;
-  const scale = profile?.text_scale ?? 1;
-  const setScale = (s: number) => run(async () => setProfile((await call("profile.set", { name: profile!.name, text_scale: s })).profile));
+  useEffect(() => {
+    const h = (e: Event) => (e as CustomEvent).detail === "case.brief" && setBrief(true);
+    window.addEventListener("inv:cmd", h);
+    return () => window.removeEventListener("inv:cmd", h);
+  }, []);
+  const left = Math.max(0, (game?.case.manifest.estimated_minutes ?? 0) * 60 - (a?.active_seconds ?? 0));
 
   return (
     <header className="topbar">
@@ -39,13 +54,17 @@ export default function TopBar({ onLeave }: { onLeave: () => void }) {
             <strong>{game.case.manifest.title}</strong>
             <span className={`mode-pill ${a!.mode}`}>{a!.mode === "training" ? "Training" : "Assessment"}</span>
           </div>
-          <div className="clock" title="Case clock: the in-case time, which advances while you work">
-            <span className="muted">Case clock</span> {fmtTime(a!.case_time)} UTC
-            <span className="muted"> · {fmtDuration(a!.active_seconds)} worked</span>
-          </div>
-          <div className="save-status" aria-live="polite">
-            {saving ? "Saving…" : lastSaved ? `Saved ${lastSaved.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}` : "Autosave on"}
-          </div>
+          {clockMode !== "hidden" && (
+            <div className="clock" title="Case clock: the in-case time, which advances while you work" data-help="topbar.case_clock">
+              <span className="muted">Case clock</span> {fmtTime(a!.case_time)} UTC
+              <span className="muted"> · {clockMode === "time_left_against_the_estimate" ? `${fmtDuration(left)} left of the estimate` : `${fmtDuration(a!.active_seconds)} worked`}</span>
+            </div>
+          )}
+          {notice !== "off" && (
+            <div className="save-status" aria-live="polite">
+              {saving ? "Saving…" : lastSaved ? `Saved ${lastSaved.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}` : "Autosave on"}
+            </div>
+          )}
           <button onClick={() => act({ type: "save" })}>Save</button>
           <button data-tour="brief" onClick={() => setBrief(true)}>
             Brief{unread ? <span className="badge">{unread}</span> : null}
@@ -53,11 +72,21 @@ export default function TopBar({ onLeave }: { onLeave: () => void }) {
         </div>
       )}
       <div className="topbar-end">
-      <SettingsButton onOpen={openSettings} />
+      <button className="ghost gear" aria-label="Settings" title="Settings" data-tour="settings" data-help="topbar.settings" onClick={() => openSettings()}>
+        <Icon name="settings" size={18} />
+      </button>
+      <button className="ghost gear help-btn" aria-label="Help" title="Help centre" data-help="topbar.help" onClick={() => openHelp()}>
+        <span aria-hidden="true">?</span>
+      </button>
       <div className="profile" ref={ref}>
-        <button className="profile-badge" aria-haspopup="menu" aria-expanded={menu} onClick={() => setMenu(!menu)}>
-          <Avatar name={profile!.name} size={28} />
-          <span>{profile!.name}</span>
+        <button className="profile-badge" aria-haspopup="menu" aria-expanded={menu} onClick={() => setMenu(!menu)} data-help="topbar.profile">
+          {badgeStyle !== "name_only" && <Avatar name={profile!.name} size={28} />}
+          {badgeStyle !== "avatar_only" && (
+            <span className="pb-text">
+              <span>{profile!.name}</span>
+              {showRank && <span className="pb-rank">{rank}</span>}
+            </span>
+          )}
         </button>
         {menu && (
           <div className="menu" role="menu">
@@ -65,21 +94,21 @@ export default function TopBar({ onLeave }: { onLeave: () => void }) {
               <Avatar name={profile!.name} size={40} />
               <div>
                 <strong>{profile!.name}</strong>
-                <div className="muted small">Shown on your report sign-off</div>
+                <div className="muted small">{rank} · shown on your report sign-off</div>
               </div>
             </div>
             <button role="menuitem" onClick={() => { setChanging(true); setMenu(false); }}>
               Change name
             </button>
-            <button role="menuitem" onClick={() => { openSettings(); setMenu(false); }}>
-              Settings…
+            <button role="menuitem" onClick={() => { goTo("profile"); setMenu(false); }}>
+              Profile and badges
             </button>
-            <div className="menu-row">
-              <span>Text size</span>
-              <button aria-label="Smaller text" onClick={() => setScale(Math.max(0.8, +(scale - 0.1).toFixed(1)))}>A−</button>
-              <span>{Math.round(scale * 100)}%</span>
-              <button aria-label="Larger text" onClick={() => setScale(Math.min(1.6, +(scale + 0.1).toFixed(1)))}>A+</button>
-            </div>
+            <button role="menuitem" onClick={() => { goTo("progress"); setMenu(false); }}>
+              Progress
+            </button>
+            <button role="menuitem" onClick={() => { openSettings("profile"); setMenu(false); }}>
+              Profile settings…
+            </button>
           </div>
         )}
       </div>

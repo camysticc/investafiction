@@ -1,0 +1,17 @@
+[
+ {"id": "recommended", "label": "Recommended", "description": "The defaults. A good balance for most people.", "values": {}},
+ {"id": "minimal", "label": "Minimal", "description": "Fewer panels, prompts and pop-ups.",
+  "values": {"appearance.show_status_bar": false, "appearance.tooltips": "long_delay", "gameplay.show_stage_objectives": "required_only",
+             "gameplay.show_stretch_objectives": false, "gameplay.message_from_the_case_lead": "panel", "academy.tips_frequency": "never",
+             "academy.academy_reminders": false, "academy.contextual_help_icons": false, "notifications.autosave_notice": "off",
+             "notifications.stage_unlock_banner": false, "sound.interface_sounds": false, "graph.mini_map": false, "osint.capture_reminder": false}},
+ {"id": "accessibility", "label": "Accessibility first", "description": "Larger text, stronger contrast, less motion and bigger targets.",
+  "values": {"appearance.text_size": "large", "appearance.font": "dyslexia_friendly", "appearance.line_spacing": "relaxed", "appearance.layout_density": "spacious",
+             "accessibility.reduce_motion": true, "accessibility.reduce_transparency": true, "accessibility.high_contrast_evidence_viewers": true,
+             "accessibility.focus_outline_thickness": "thick", "accessibility.large_click_targets": true, "accessibility.underline_links": true,
+             "accessibility.strengthen_graph_and_timeline_lines": true, "accessibility.announce_saves_and_stage_changes": true,
+             "accessibility.show_shortcut_hints_on_buttons": true, "notifications.notification_duration": "until_closed"}},
+ {"id": "assessment", "label": "Assessment style", "description": "Hints and warnings off, as in a real test. New attempts start in assessment mode.",
+  "values": {"gameplay.mode": "assessment", "gameplay.hints_available": "none", "gameplay.procedural_warnings": false,
+             "notifications.hint_available_indicator": false, "academy.tips_frequency": "never", "academy.academy_reminders": false}}
+]

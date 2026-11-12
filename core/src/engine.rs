@@ -520,6 +520,16 @@ impl Engine {
         Ok(json!({"markdown": crate::report::markdown(&s.case, &s.attempt, &s.player), "issues": s.report_issues()}))
     }
 
+    /// Write a file into the exports folder (Downloads/Investafiction when available).
+    pub fn write_export(&self, name: &str, bytes: &[u8]) -> R<Value> {
+        let dir = dirs::download_dir().map(|d| d.join("Investafiction")).unwrap_or_else(|| self.data_dir.join("exports"));
+        let dir = if fs::create_dir_all(&dir).is_ok() { dir } else { self.data_dir.join("exports") };
+        fs::create_dir_all(&dir)?;
+        let path = dir.join(name);
+        fs::write(&path, bytes)?;
+        Ok(json!({"path": path.display().to_string(), "filename": name, "data_b64": base64::engine::general_purpose::STANDARD.encode(bytes)}))
+    }
+
     /// Replay of a submitted attempt. Works for the open attempt or any saved one.
     pub fn replay(&mut self, case_id: &str, attempt_id: &str) -> R<Value> {
         if let Some(s) = self.session.as_ref() {
@@ -601,6 +611,7 @@ impl Session {
     pub fn save(&mut self, data_dir: &Path) -> std::io::Result<()> {
         self.attempt.updated = now_iso();
         let path = data_dir.join("saves").join(&self.attempt.case_id).join(format!("{}.json", self.attempt.id));
+        crate::records::backup_save(&path, crate::records::setting_u64(data_dir, "saves.backup_copies_kept", 5));
         write_json(&path, &self.attempt)
     }
 
@@ -1123,6 +1134,22 @@ impl Session {
                 Ok(Outcome::default())
             }
             "claim_send" => self.claim_send(a),
+            "open_all_stages" => {
+                // Academy sandbox only: every stage of a training pack opens at once.
+                if self.case.manifest.difficulty != "Training" {
+                    return Err(bad("Only Academy training packs can open every stage at once."));
+                }
+                let mut notices = vec![];
+                let stages: Vec<Stage> = self.case.stages.stages.iter().filter(|s| !self.attempt.open_stages.contains(&s.id)).cloned().collect();
+                for st in stages {
+                    self.open_stage(&st, &mut notices);
+                }
+                if !self.attempt.scope_acknowledged {
+                    self.attempt.scope_acknowledged = true;
+                }
+                self.log("academy", "sandbox_opened", "", "");
+                Ok(Outcome::default())
+            }
             "report" => {
                 let r = &mut self.attempt.report;
                 for (k, slot) in [("summary", &mut r.summary), ("scope_method", &mut r.scope_method), ("gaps", &mut r.gaps), ("recommendations", &mut r.recommendations)] {
@@ -1794,7 +1821,8 @@ impl Session {
             return Err(bad(if allowed == 3 { "All three hints for this objective have been used.".to_string() } else { format!("This attempt allows {allowed} hint level{} per objective.", if allowed == 1 { "" } else { "s" }) }));
         }
         let text = self.case.solution.hints.get(&ob).and_then(|h| h.get(used)).cloned().unwrap_or_else(|| "No hint is available for this objective.".into());
-        let cost = HINT_COST[used];
+        // Hints are always free on Academy training packs.
+        let cost = if self.case.manifest.difficulty == "Training" { 0.0 } else { HINT_COST[used] };
         self.attempt.hints.push(HintUse { objective: ob.clone(), level: used as u8 + 1, text: text.clone(), cost, time: self.case_time() });
         self.log("hints", "hint_used", &ob, &format!("level {}", used + 1));
         Ok(Outcome { result: json!({"level": used + 1, "text": text, "cost": cost}), ..Default::default() })
